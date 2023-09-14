@@ -2,10 +2,10 @@ import * as dotenv from "dotenv";
 import cors from "cors";
 import express from "express";
 import { connectToDatabase } from "./database";
-import { commentRouter } from "./routes/comment.routes";
-import { imageRouter } from './routes/image.routes'
-import { recipeRouter } from './routes/recipe.routes'
-import { userRouter } from './routes/user.routes'
+import { commentRouter } from "./comment/comment.routes";
+import { imageRouter } from './image/image.routes'
+import { recipeRouter } from './recipe/recipe.routes'
+import { userRouter } from './user/user.routes'
 
  
 // Load environment variables from the .env file, where the ATLAS_URI is configured

@@ -1,13 +1,13 @@
 import * as mongodb from "mongodb";
-import { Recipe } from "./models/recipe";
-import { Comment } from "./models/comment";
-// import { User } from "./models/user";
-import { Image } from "./models/image";
+import { Recipe } from "./recipe/recipe";
+import { Comment } from "./comment/comment";
+import { User } from "./user/user";
+import { Image } from "./image/image";
  
 export const collections: {
    recipes?: mongodb.Collection<Recipe>;
    comments?: mongodb.Collection<Comment>;
-//    users?: mongodb.Collection<User>;
+   users?: mongodb.Collection<User>;
    images?: mongodb.Collection<Image>;
 } = {};
  
@@ -24,8 +24,8 @@ export async function connectToDatabase(uri: string) {
    const CommentsCollection = db.collection<Comment>("comments");
    collections.comments = CommentsCollection;
    
-//    const UsersCollection = db.collection<User>("users");
-//    collections.users = UsersCollection;
+   const UsersCollection = db.collection<User>("users");
+   collections.users = UsersCollection;
    
    const ImagesCollection = db.collection<Image>("images");
    collections.images = ImagesCollection;
@@ -103,46 +103,46 @@ async function applySchemaValidation(db: mongodb.Db) {
         },
     };
 
-    // const jsonSchemaUser = {
-    //     $jsonSchema: {
-    //         bsonType: "object",
-    //         required: ["name", "email","password","tssci","username"],
-    //         additionalProperties: false,
-    //         properties: {
-    //             _id: {},
-    //            name: {
-    //                bsonType: "string",
-    //                description: "'name' is required and is a string",
-    //            },
-    //            email: {
-    //                bsonType: "string",
-    //                description: "'email' is required and is a string",
-    //            },
-    //            username:{
-    //                 bsonType: "string",
-    //                 description: "'username' is required and is a string",
-    //            }
-    //            ,
-    //            password: {
-    //                bsonType: "string",
-    //                description: "'password' is required and is a string",
-    //            },
-    //            comments: {
-    //                bsonType: "string[]",
-    //            },
-    //            images: {
-    //                bsonType: "string[]",
-    //            },
-    //            recipe: {
-    //                bsonType: "string[]",
-    //            },
-    //            tssci: {
-    //                bsonType: "string[]",
-    //                description: "'tssci' is required and is a string",
-    //            },
-    //         },
-    //     },
-    // };
+    const jsonSchemaUser = {
+        $jsonSchema: {
+            bsonType: "object",
+            required: ["name", "email","password","tssci","username"],
+            additionalProperties: false,
+            properties: {
+                _id: {},
+               name: {
+                   bsonType: "string",
+                   description: "'name' is required and is a string",
+               },
+               email: {
+                   bsonType: "string",
+                   description: "'email' is required and is a string",
+               },
+               username:{
+                    bsonType: "string",
+                    description: "'username' is required and is a string",
+               }
+               ,
+               password: {
+                   bsonType: "string",
+                   description: "'password' is required and is a string",
+               },
+               comments: {
+                   bsonType: "string[]",
+               },
+               images: {
+                   bsonType: "string[]",
+               },
+               recipe: {
+                   bsonType: "string[]",
+               },
+               tssci: {
+                   bsonType: "string[]",
+                   description: "'tssci' is required and is a string",
+               },
+            },
+        },
+    };
 
     const jsonSchemaImage = {
         $jsonSchema: {
@@ -192,14 +192,14 @@ async function applySchemaValidation(db: mongodb.Db) {
         }
     });
 
-    // await db.command({
-    //     collMod: "Users",
-    //     validator: jsonSchemaUser
-    // }).catch(async (error: mongodb.MongoServerError) => {
-    //     if (error.codeName === 'NamespaceNotFound') {
-    //         await db.createCollection("users", {validator: jsonSchemaUser});
-    //     }
-    // });
+    await db.command({
+        collMod: "Users",
+        validator: jsonSchemaUser
+    }).catch(async (error: mongodb.MongoServerError) => {
+        if (error.codeName === 'NamespaceNotFound') {
+            await db.createCollection("users", {validator: jsonSchemaUser});
+        }
+    });
 
     await db.command({
         collMod: "Images",
