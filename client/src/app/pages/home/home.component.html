@@ -1,0 +1,16 @@
+<div class="mainContainer container">
+  <div class="row">
+    <div [ngClass]="isMobile ? 'col-12' : 'col-8'">
+      <app-featured-meal></app-featured-meal>
+    </div>
+    <div class="loginDiv" [ngClass]="isMobile ? 'hide' : 'col-4'">
+      <app-user-menu></app-user-menu>
+    </div>
+    <div class="col-12">
+      <app-recipe-list
+        [isMobile]="isMobile"
+        [recipes]="recipes$"
+      ></app-recipe-list>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,29 @@
+<div class="mainContainer border-gray">
+  <div class="row">
+    <div class="listHeader" [ngClass]="isMobile ? 'col-12' : 'col-6'">
+      <h2>Tutoriales y Recetas</h2>
+    </div>
+    <div [ngClass]="isMobile ? 'col-12 ' : 'col-6 floatRight'">
+      <input type="text" placeholder="Search.." name="search">
+      <button class="btn btn-green" type="submit" [ngClass]="isMobile ? '' : 'widerBtn'"><i class="fa fa-search fa-xs"></i></button>
+    </div>
+    <div ngbAccordion>
+      <div class="accordionItem" *ngFor="let category of categoryList" ngbAccordionItem>
+        <h2 ngbAccordionHeader>
+          <button class="categoryBtnTxt" ngbAccordionButton>{{category.name}}</button>
+        </h2>
+        <div ngbAccordionCollapse>
+          <div ngbAccordionBody>
+            <ng-template>
+              <!-- Content for the first item <div *ngIf="isMobile">sdnkjsnjkdvnds</div> -->
+              <div class="row">
+                <div class="categoryBtnOptionDiv text-center my-3" *ngFor="let option of category.recipes" [ngClass]="isMobile ? 'col-12' : 'col-4'">
+                  <a class="p-3 categoryBtnOptionTxt" href="/recipe/{{option._id}}">{{ option.name }}</a>
+                </div>
+              </div>
+            </ng-template>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

@@ -1,0 +1,72 @@
+.mainContainer{
+  margin: 1em;
+  cursor: pointer;
+}
+
+.hoverBtn{
+  display: none;
+}
+
+.mainContainer:hover .mealImg, .mainContainer:hover .mainTxt{
+  opacity: .3;
+  transition-duration: .65s;
+}
+
+.mainContainer:hover .hoverBtn{
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-75%, -50%);
+}
+
+.mealImg{
+  max-width: 37em;
+  max-height: 20em;
+  margin: 1em;
+  z-index: 1;
+}
+
+
+.mainTxt{
+  margin-top: 0em;
+  margin-left: 1.5em;
+}
+
+ul, ol {
+  list-style-position: inside;
+}
+
+li{
+  text-align: left;
+  margin-left: .5em;
+}
+
+.ingredientList, .stepList{
+  max-height: 8em;
+  overflow: auto;
+}
+
+.ingredientList{
+  border-bottom: 1px solid rgba(203, 205, 203, .5);
+}
+
+
+@media (max-width: 950px) {
+  .mainContainer{
+    margin-right: 0;
+  }
+
+  .mealImg{
+    max-width: 100%;
+    margin: 5%;
+    z-index: 1;
+  }
+
+
+  .ingredientList, .stepList{
+    display: none;
+  }
+}
+

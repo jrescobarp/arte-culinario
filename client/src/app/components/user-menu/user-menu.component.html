@@ -1,0 +1,12 @@
+<div class="mainContainer border-gray">
+  <div class="notLoggedIn" *ngIf="!loggedIn">
+    <div class="userIcon"><i class="fa fa-user-circle fa-3x" aria-hidden="true"></i></div>
+    <app-login class="login"
+      [loginType]="'none'">
+    </app-login>
+  </div>
+
+  <div *ngIf="loggedIn">
+    User Logged in
+  </div>
+</div>
