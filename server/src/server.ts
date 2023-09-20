@@ -2,10 +2,8 @@ import * as dotenv from "dotenv";
 import cors from "cors";
 import express from "express";
 import { connectToDatabase } from "./database";
-import { commentRouter } from "./comment/comment.routes";
-import { imageRouter } from './image/image.routes'
-import { recipeRouter } from './recipe/recipe.routes'
-import { userRouter } from './user/user.routes'
+var recipeRouter = require("./routes/recipe.routes");
+var userRouter = require('./routes/user.routes');
 
  
 // Load environment variables from the .env file, where the ATLAS_URI is configured
@@ -22,9 +20,6 @@ connectToDatabase(ATLAS_URI)
    .then(() => {
        const app = express();
        app.use(cors());
- 
-       app.use("/comments", commentRouter);
-       app.use("/images", imageRouter);
        app.use("/recipes", recipeRouter);
        app.use("/user", userRouter);
 

@@ -8,6 +8,7 @@ import {
   NgbNavModule,
   NgbModule,
 } from '@ng-bootstrap/ng-bootstrap';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { RecipeListComponent } from './recipe-list/recipe-list.component';
 import { ViewRecipeComponent } from './view-recipe/view-recipe.component';
 import { FeaturedMealComponent } from './featured-meal/featured-meal.component';
@@ -32,6 +33,8 @@ import { UserMenuComponent } from './user-menu/user-menu.component';
     NgbDropdownModule,
     NgbNavModule,
     NgbModule,
+    ReactiveFormsModule,
+    FormsModule
   ],
   exports:[
     RecipeListComponent,

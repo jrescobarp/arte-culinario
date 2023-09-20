@@ -13,16 +13,16 @@ export class HomeComponent implements OnInit {
   recipes$: Observable<Recipe[]> = new Observable();
   isMobile = false;
 
- constructor(private ApiService: ApiService) { }
+ constructor(private apiService: ApiService) { }
 
   ngOnInit(): void {
-    this.fetchEmployees();
+    this.fetchRecipes();
     if(window.innerWidth <= 1000){
       this.isMobile = true;
     }
   }
 
-  private fetchEmployees(): void {
-    this.recipes$ = this.ApiService.getRecipes();
+  private fetchRecipes(): void {
+    this.recipes$ = this.apiService.getRecipes();
   }
 }
