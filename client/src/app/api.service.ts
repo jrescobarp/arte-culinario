@@ -7,11 +7,9 @@ import { Recipe, Comment, User, Image } from './models';
   providedIn: 'root'
 })
 export class ApiService {
-  private url = 'http://localhost:5200';
+  private url = 'http://localhost:4200/api/';
   private recipes$: Subject<Recipe[]> = new Subject();
-  private comments$: Subject<Comment[]> = new Subject();
-  private user$: Subject<User[]> = new Subject();
-  private images$: Subject<Image[]> = new Subject();
+  private user$: Subject<User> = new Subject();
 
   constructor(private httpClient: HttpClient) { }
 
@@ -47,8 +45,24 @@ export class ApiService {
 
 
   //User handlers
-  registerUser(user:User): Observable<string>{
-    return this.httpClient.post('${this.url}/user', user, {responseType: 'text'});
+  private refreshUser() {
+    this.httpClient.get<User>(`${this.url}/user`)
+      .subscribe(user => {
+        this.user$.next(user);
+      });
+  }
+
+  isLoggedIn():Observable<any>{
+    this.refreshUser();
+    return this.user$;
+  }
+
+  registerUser(user:User): Observable<any>{
+    return this.httpClient.post(`${this.url}/user/register`, user, {responseType: 'text'});
+  }
+
+  login(user:User): Observable<any>{
+    return this.httpClient.post(`${this.url}/user/login`, user, {responseType: 'text'});
   }
 
 

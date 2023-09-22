@@ -2,11 +2,14 @@
   <div class="notLoggedIn" *ngIf="!loggedIn">
     <div class="userIcon"><i class="fa fa-user-circle fa-3x" aria-hidden="true"></i></div>
     <app-login class="login"
-      [loginType]="'none'">
+      [loginType]="'none'"
+      (logInChangeStatus)="updateloginStatus($event)">
     </app-login>
   </div>
 
   <div *ngIf="loggedIn">
     User Logged in
+    {{userInfo.first_name + userInfo.last_name}}
+    <div><button class="btn btn-red">logout</button></div>
   </div>
 </div>

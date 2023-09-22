@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { User } from "../../models"
 import { ApiService } from '../../api.service';
 
@@ -8,7 +8,7 @@ import { ApiService } from '../../api.service';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
-  newUser: User = {
+  user: User = {
     first_name: "",
     last_name: "",
     username: "",
@@ -21,14 +21,23 @@ export class LoginComponent {
   };
 
   @Input() loginType!: string;
+  @Output() logInChange: EventEmitter<any> = new EventEmitter<any>();
+
 
   constructor(private apiService: ApiService) {}
 
   registerUser(){
-    console.log("Registering: ", this.newUser);
-    this.apiService.registerUser(this.newUser);
-    console.log("Registered: ", this.newUser);
+    this.apiService.registerUser(this.user).subscribe(result =>{
+      console.log("RESULTRegister: ", result);
+    });
+  }
 
+  login(){
+    this.apiService.login(this.user).subscribe((result: any) =>{
+      let userInfo = result;
+      console.log("RESULTLogin: ", userInfo);
+      this.logInChange.emit(userInfo);
+    });
   }
 
 }

@@ -1,10 +1,11 @@
 import express from "express";
 const recipeRouter = express.Router();
+const {isLoggedIn} = require('../middlewares/isLoggedIn');
 
 const recipe_controller = require("../controllers/recipesController");
 
  
-recipeRouter.get("/",recipe_controller.get_all_recipes);
+recipeRouter.get("/", recipe_controller.get_all_recipes);
 
 recipeRouter.get("/:id",recipe_controller.get_one_recipes);
 

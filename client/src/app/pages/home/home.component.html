@@ -4,7 +4,10 @@
       <app-featured-meal></app-featured-meal>
     </div>
     <div class="loginDiv" [ngClass]="isMobile ? 'hide' : 'col-4'">
-      <app-user-menu></app-user-menu>
+      <app-user-menu
+      (logInChange)="fetchUser()"
+      [user]="user$"
+      ></app-user-menu>
     </div>
     <div class="col-12">
       <app-recipe-list
