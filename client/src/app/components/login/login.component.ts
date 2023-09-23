@@ -21,7 +21,7 @@ export class LoginComponent {
   };
 
   @Input() loginType!: string;
-  @Output() logInChange: EventEmitter<any> = new EventEmitter<any>();
+  @Output() logInChangeStatus: EventEmitter<any> = new EventEmitter<any>();
 
 
   constructor(private apiService: ApiService) {}
@@ -29,14 +29,14 @@ export class LoginComponent {
   registerUser(){
     this.apiService.registerUser(this.user).subscribe(result =>{
       console.log("RESULTRegister: ", result);
+      this.logInChangeStatus.emit(result);
     });
   }
 
   login(){
     this.apiService.login(this.user).subscribe((result: any) =>{
-      let userInfo = result;
-      console.log("RESULTLogin: ", userInfo);
-      this.logInChange.emit(userInfo);
+      console.log("RESULTLogin: ", result);
+      this.logInChangeStatus.emit(result);
     });
   }
 

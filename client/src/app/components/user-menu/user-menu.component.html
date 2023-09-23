@@ -8,8 +8,8 @@
   </div>
 
   <div *ngIf="loggedIn">
-    User Logged in
     {{userInfo.first_name + userInfo.last_name}}
-    <div><button class="btn btn-red">logout</button></div>
+    <div><button class="btn btn-red" (click)="logout()">logout</button></div>
+    {{loggedIn}}
   </div>
 </div>

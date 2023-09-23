@@ -7,7 +7,7 @@ import { Recipe, Comment, User, Image } from './models';
   providedIn: 'root'
 })
 export class ApiService {
-  private url = 'http://localhost:4200/api/';
+  private url = 'http://localhost:4200/api';
   private recipes$: Subject<Recipe[]> = new Subject();
   private user$: Subject<User> = new Subject();
 
@@ -63,6 +63,10 @@ export class ApiService {
 
   login(user:User): Observable<any>{
     return this.httpClient.post(`${this.url}/user/login`, user, {responseType: 'text'});
+  }
+
+  logout():Observable<any>{
+    return this.httpClient.get(`${this.url}/user/logout`);
   }
 
 
