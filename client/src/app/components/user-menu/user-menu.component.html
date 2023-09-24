@@ -1,5 +1,5 @@
 <div class="mainContainer border-gray">
-  <div class="notLoggedIn" *ngIf="!loggedIn">
+  <div class="notLoggedInDiv" *ngIf="!loggedIn">
     <div class="userIcon"><i class="fa fa-user-circle fa-3x" aria-hidden="true"></i></div>
     <app-login class="login"
       [loginType]="'none'"
@@ -7,9 +7,9 @@
     </app-login>
   </div>
 
-  <div *ngIf="loggedIn">
-    {{userInfo.first_name + userInfo.last_name}}
+  <div *ngIf="loggedIn" class="loggedInDiv">
+    <!-- <div class="loggedInTitle">Chef {{userInfo.username + (userInfo.username.slice(-1) === "s" ? "'" : "'s")}} </div> -->
+    <div class="loggedInTitle">Chef {{userInfo.username}} </div>
     <div><button class="btn btn-red" (click)="logout()">logout</button></div>
-    {{loggedIn}}
   </div>
 </div>

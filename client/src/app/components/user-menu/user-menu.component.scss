@@ -5,6 +5,14 @@
   overflow-y: scroll;
 }
 
-.notLoggedIn{
+.notLoggedInDiv{
   padding-top: 7%;
+}
+
+.loggedInDiv{
+  padding-top: 7%;
+}
+
+.loggedInTitle{
+  text-transform: capitalize;
 }

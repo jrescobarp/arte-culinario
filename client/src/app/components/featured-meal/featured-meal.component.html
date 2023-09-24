@@ -1,15 +1,15 @@
 <div class="mainContainer border-gray">
   <div class="row text-center">
     <div [ngClass]="isMobile ? 'col-11' : 'col-7'">
-      <img class="mealImg" src="https://galbanicheese.com/wp-content/uploads/2019/09/Cheese-Lasagna-72DPI1-e1476892466909-800x600.jpg" alt="">
+      <div><img class="mealImg" src="https://galbanicheese.com/wp-content/uploads/2019/09/Cheese-Lasagna-72DPI1-e1476892466909-800x600.jpg" alt=""></div>
+      <div><h2>5 Cheese Lasagna</h2></div>
     </div>
     <div class="col text-left mainTxt">
-      <h2>5 Cheese Lasagna</h2>
       <div class="ingredientList">
         <h3>Ingredients:</h3>
         <ul>
           <li *ngFor="let ingredient of exampleIngred ; let i = index">
-            {{ingredient.quantity}} of {{ingredient.name}}
+            {{ ingredient.quantity}} of {{ingredient.name}}
           </li>
         </ul>
       </div>

@@ -14,6 +14,8 @@ import { ViewRecipeComponent } from './view-recipe/view-recipe.component';
 import { FeaturedMealComponent } from './featured-meal/featured-meal.component';
 import { LoginComponent } from './login/login.component';
 import { UserMenuComponent } from './user-menu/user-menu.component';
+import { NavbarComponent } from './navbar/navbar.component';
+import { FooterComponent } from './footer/footer.component';
 
 
 
@@ -23,7 +25,9 @@ import { UserMenuComponent } from './user-menu/user-menu.component';
     ViewRecipeComponent,
     FeaturedMealComponent,
     LoginComponent,
-    UserMenuComponent
+    UserMenuComponent,
+    NavbarComponent,
+    FooterComponent
   ],
   imports: [
     CommonModule,
@@ -40,7 +44,9 @@ import { UserMenuComponent } from './user-menu/user-menu.component';
     RecipeListComponent,
     FeaturedMealComponent,
     LoginComponent,
-    UserMenuComponent
+    UserMenuComponent,
+    NavbarComponent,
+    FooterComponent
   ]
 })
 export class ComponentsModule { }

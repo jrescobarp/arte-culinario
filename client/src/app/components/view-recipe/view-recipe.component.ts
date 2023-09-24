@@ -22,7 +22,7 @@ export class ViewRecipeComponent {
     connected_recipes: [],
     comments: [],
   });
-  // recipe: any;
+  isMobile = false;
 
   constructor(
     private router: Router,
@@ -31,6 +31,10 @@ export class ViewRecipeComponent {
   ) { }
 
   ngOnInit() {
+    if(window.innerWidth <= 1000){
+      this.isMobile = true;
+    };
+
     const id = this.route.snapshot.paramMap.get('id');
     if (!id) {
       alert('No id provided');

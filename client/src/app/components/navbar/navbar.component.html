@@ -1,0 +1,29 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">Aprendamos a Cocinar</a>
+
+
+  <nav class="navbar navbar bg">
+    <div class="container-fluid">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+        <img class="chefUserIcon" src="../../../assets/chefUser.png" alt="">
+      </button>
+    </div>
+  </nav>
+
+  <div class="collapse" id="navbarToggleExternalContent">
+    <!-- Mobile/Tablet View -->
+    <div class="bg p-4">
+      <app-user-menu
+      [user]="this.user"
+      ></app-user-menu>
+    </div>
+  </div>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul *ngIf="path" class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="/">/{{path}}</a>
+      </li>
+    </ul>
+  </div>
+</nav>
