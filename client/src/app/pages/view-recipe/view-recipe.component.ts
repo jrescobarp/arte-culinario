@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Recipe } from '../../models'
 import { ApiService } from '../../api.service'
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { User } from '../../models'
 
 @Component({
   selector: 'app-view-recipe',
@@ -21,8 +22,12 @@ export class ViewRecipeComponent {
     type: [],
     connected_recipes: [],
     comments: [],
+    featuredMealCount:0,
+    book: [],
+    images:[]
   });
   isMobile = false;
+  user$: Observable<User[]> = new Observable();
 
   constructor(
     private router: Router,
@@ -42,9 +47,10 @@ export class ViewRecipeComponent {
 
     this.apiService.getRecipe(id !).subscribe((recipe) => {
       this.recipe.next(recipe);
-      // this.recipe = recipe;
       console.log("RECIPEE: ", this.recipe.value);
     });
+
+    this.user$ = this.apiService.isLoggedIn();
 
   }
 }

@@ -5,7 +5,10 @@
 <div class="mainContainer container">
   <div class="row">
     <div [ngClass]="isMobile ? 'col-12' : 'col-8'">
-      <app-featured-meal></app-featured-meal>
+      <app-featured-meal
+      [isMobile]="isMobile"
+      [featuredRecipe]="featuredMeals"
+      ></app-featured-meal>
     </div>
     <div class="loginDiv" [ngClass]="isMobile ? 'hide' : 'col-4'">
       <app-user-menu

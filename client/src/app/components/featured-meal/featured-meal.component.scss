@@ -3,70 +3,95 @@
   cursor: pointer;
 }
 
-.hoverBtn{
-  display: none;
+.container{
+  min-height: 23em;
+  max-height: 25em;
+  overflow-y: auto;
 }
 
-.mainContainer:hover .mealImg, .mainContainer:hover .mainTxt{
-  opacity: .3;
-  transition-duration: .65s;
+.titleDiv{
+  display: flex;
+  justify-content: space-between;
+  margin-top: .75em;
 }
 
-.mainContainer:hover .hoverBtn{
-  display: block;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  -ms-transform: translate(-75%, -50%);
-}
-
-.mealImg{
-  max-width: 37em;
-  max-height: 20em;
-  margin: 1em;
-  z-index: 1;
-}
-
-
-.mainTxt{
-  margin-top: 0em;
+.titleTxt{
+  text-transform: capitalize;
+  text-align: left;
   margin-left: 1.5em;
+}
+
+.clickeHereTxt{
+  display: none;
+  text-align: right;
+  font-size: 1.2rem;
+  margin-top: .4em;
+}
+
+.mainContainer:hover .clickeHereTxt{
+  display: flex;
+  animation: fadeInAnimation ease 2s;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+}
+@keyframes fadeInAnimation {
+  0% {
+      opacity: 0;
+  }
+  100% {
+      opacity: 1;
+   }
 }
 
 ul, ol {
   list-style-position: inside;
+  padding-right: 1em;
 }
 
 li{
   text-align: left;
-  margin-left: .5em;
 }
 
 .ingredientList, .stepList{
-  max-height: 8em;
+  text-align: left;
+  max-height: 10.5em;
   overflow: auto;
 }
 
-.ingredientList{
-  border-bottom: 1px solid rgba(203, 205, 203, .5);
+.stepListTopBorder{
+  border-top: 1px solid gray;
 }
 
-
-@media (max-width: 950px) {
-  .mainContainer{
-    margin-right: 0;
-  }
-
-  .mealImg{
-    max-width: 100%;
-    margin: 5%;
-    z-index: 1;
-  }
-
-
-  .ingredientList, .stepList{
-    display: none;
-  }
+.recipeImgDiv{
+  padding-left: 2em;
+  padding-top: .5em;
+  padding-bottom: .5em;
 }
+
+.recipeImgDisplay{
+  width: 100%;
+  height: 100%;
+}
+
+.noImgDiv{
+  padding-top: 2em;
+}
+
+.noImgIngredTitle{
+  padding-left: 1.25em;
+}
+
+.carousel-control-prev{
+  left: -2.2em;
+}
+
+.carousel-control-next{
+  right: -2.2em;
+}
+
+// @media (max-width: 950px) {
+//   .mainContainer{
+//     margin-right: 0;
+//   }
+// }
 

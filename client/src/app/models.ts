@@ -9,6 +9,9 @@ export interface Recipe {
   type: string[];
   connected_recipes: string[];
   comments: string[];
+  images: string[]
+  featuredMealCount: number;
+  book: string[];
 }
 
 export interface User {

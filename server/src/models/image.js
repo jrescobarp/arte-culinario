@@ -22,11 +22,3 @@ const ImageSchema = new Schema({
 
 
 module.exports = mongoose.model("Image", ImageSchema);
-// export interface  {
-//     _id?: mongodb.ObjectId;
-//     user_id: string;
-//     url: string;
-//     upvotes: number;
-//     // report: string;
-//     comments: string[];
-// }

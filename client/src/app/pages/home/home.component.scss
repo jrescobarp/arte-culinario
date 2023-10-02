@@ -4,8 +4,8 @@
 .mainContainer {
   text-align: center;
   position: absolute;
-  left: 2em;
-  right: 2em;
+  left: 1em;
+  right: 1em;
   overflow: auto;
 }
 
@@ -29,7 +29,7 @@
 
 @media (max-width: 950px) {
   .mainContainer {
-    left: .75em;
-    right: .75em;
+    left: 0em;
+    right: 0em;
   }
 }

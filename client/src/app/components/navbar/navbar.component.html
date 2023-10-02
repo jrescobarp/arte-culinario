@@ -12,18 +12,18 @@
 
   <div class="collapse" id="navbarToggleExternalContent">
     <!-- Mobile/Tablet View -->
-    <div class="bg p-4">
+    <div class="bg p-4" style="display: inline-block;">
       <app-user-menu
-      [user]="this.user"
+      [user]="user"
       ></app-user-menu>
     </div>
   </div>
 
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+  <!-- <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul *ngIf="path" class="navbar-nav mr-auto">
       <li class="nav-item">
         <a class="nav-link" href="/">/{{path}}</a>
       </li>
     </ul>
-  </div>
+  </div> -->
 </nav>

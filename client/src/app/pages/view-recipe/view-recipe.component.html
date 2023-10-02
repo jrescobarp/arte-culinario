@@ -1,6 +1,9 @@
 <!-- <app-navbar [path]="recipe.value.name"></app-navbar> -->
 <!-- {{ isMobile ? recipe.value.name :  "" }} -->
-<app-navbar></app-navbar>
+<app-navbar
+[user]="user$"
+[path]="recipe.value.name"
+></app-navbar>
 {{ recipe.value.name }}
 
 

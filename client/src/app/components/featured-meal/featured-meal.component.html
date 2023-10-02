@@ -1,29 +1,91 @@
 <div class="mainContainer border-gray">
-  <div class="row text-center">
-    <div [ngClass]="isMobile ? 'col-11' : 'col-7'">
-      <div><img class="mealImg" src="https://galbanicheese.com/wp-content/uploads/2019/09/Cheese-Lasagna-72DPI1-e1476892466909-800x600.jpg" alt=""></div>
-      <div><h2>5 Cheese Lasagna</h2></div>
+  <div id="carouselExample" class="carousel carousel-dark slide">
+    <div class="carousel-inner">
+
+    <div class="carousel-item active container">
+      Aprendamos a Cocinar
+      recetas de Vilma G. de Escobar
     </div>
-    <div class="col text-left mainTxt">
-      <div class="ingredientList">
-        <h3>Ingredients:</h3>
-        <ul>
-          <li *ngFor="let ingredient of exampleIngred ; let i = index">
-            {{ ingredient.quantity}} of {{ingredient.name}}
-          </li>
-        </ul>
+
+    <div *ngFor="let recipe of featuredRecipe" class="carousel-item container" (click)="viewRecipe(recipe._id)">
+      <div class="row">
+
+        <div class="titleDiv col-12" [ngClass]="isMobile ? 'text-center' : ''">
+          <div class="titleTxt"><h1>{{recipe.name.toLowerCase()}}</h1></div>
+          <div class="clickeHereTxt">
+            <div class="mx-2">view recipe </div>
+            <div><i class="fa-solid fa-chevron-right"></i></div>
+          </div>
+        </div>
+
+        <div [ngClass]="isMobile ? 'col-12' : 'col-6'">
+          <div class="recipeImgDiv">
+            <img *ngIf="recipe.images.length" class="recipeImgDisplay" src="{{showImg}}" alt="">
+            <div *ngIf="!recipe.images.length" class="mb-2 mt-5">
+              <i class="fa-solid fa-kitchen-set fa-2xl"></i>
+              <div class="pt-3">No images available for this recipe.</div>
+            </div>
+            <div class="pt-1"><a href="">Add your own for everyone to see!</a></div>
+          </div>
+          <!-- <div  class="text-center noImgDiv">
+
+              <a href="">Click here</a> to add your own for everyone to see!
+          </div> -->
+        </div>
+
+        <div [ngClass]="isMobile ? 'col-12' : 'col-6'">
+          <div *ngIf="recipe.ingredients[0]" class="text-left mainTxt ingredientList">
+            <h3>Ingredients:</h3>
+            <ul>
+              <li *ngFor="let ingredient of recipe.ingredients ; let i = index">
+                {{ingredient}}
+              </li>
+            </ul>
+          </div>
+          <div *ngIf="recipe.steps[0]" class="stepList" [ngClass]="recipe.ingredients[0] ? 'stepListTopBorder' : ''">
+            <h3>Steps:</h3>
+            <ol>
+              <li *ngFor="let step of recipe.steps ; let i = index">
+                {{step}}
+              </li>
+            </ol>
+          </div>
+        </div>
+        <!-- <ng-container *ngIf="!recipe.images.length && !isMobile">
+          <div class="col-12 text-center noImgDiv">
+            <div class="mb-2"><i class="fa-solid fa-kitchen-set fa-2xl"></i></div>
+            No images available for this recipe. <a href="">Click here</a> to add your own for everyone to see!
+          </div>
+          <div *ngIf="recipe.ingredients[0]" class="text-left mainTxt ingredientList col-5">
+            <h3 class="noImgIngredTitle">Ingredients:</h3>
+            <ul class="ingrListNoImg">
+              <li *ngFor="let ingredient of recipe.ingredients ; let i = index">
+                {{ingredient}}
+              </li>
+            </ul>
+          </div>
+          <div *ngIf="recipe.steps[0]" class="stepList col-7">
+            <h3>Steps:</h3>
+            <ol>
+              <li *ngFor="let step of recipe.steps ; let i = index">
+                {{step}}
+              </li>
+            </ol>
+          </div>
+        </ng-container> -->
+
       </div>
-      <div class="stepList">
-        <h3>Steps:</h3>
-        <ol>
-          <li *ngFor="let step of exampleSteps ; let i = index">
-            {{step.verb}} {{step.text}} for {{step.duration}}
-          </li>
-        </ol>
-      </div>
     </div>
-    <div class="hoverBtn">
-      <button class="btn btn-red viewRecBtn">View Recipe</button>
-    </div>
+
+
+    <!-- Carousel Controls -->
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
   </div>
 </div>

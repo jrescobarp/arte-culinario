@@ -10,7 +10,6 @@ import {
 } from '@ng-bootstrap/ng-bootstrap';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { RecipeListComponent } from './recipe-list/recipe-list.component';
-import { ViewRecipeComponent } from './view-recipe/view-recipe.component';
 import { FeaturedMealComponent } from './featured-meal/featured-meal.component';
 import { LoginComponent } from './login/login.component';
 import { UserMenuComponent } from './user-menu/user-menu.component';
@@ -22,7 +21,6 @@ import { FooterComponent } from './footer/footer.component';
 @NgModule({
   declarations: [
     RecipeListComponent,
-    ViewRecipeComponent,
     FeaturedMealComponent,
     LoginComponent,
     UserMenuComponent,

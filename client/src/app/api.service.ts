@@ -26,7 +26,7 @@ export class ApiService {
     return this.recipes$;
   }
 
-  getRecipe(id: string): Observable<Recipe> {
+  getRecipe(id: string) {
     return this.httpClient.get<Recipe>(`${this.url}/recipes/${id}`);
   }
 

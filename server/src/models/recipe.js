@@ -31,9 +31,20 @@ const RecipeSchema = new Schema({
         type: [Schema.Types.ObjectId],
             ref: 'Recipe'
     },
+    images: {
+        type: [Schema.Types.ObjectId],
+            ref: 'Image'
+    },
     comments: {
         type: [Schema.Types.ObjectId],
         ref: 'Comment'
+    },
+    featuredMealCount:{
+        type: Number
+    },
+    book:{
+        type:[String],
+        required:[true, "Book is required and is of type [String]"]
     }
 });
  
