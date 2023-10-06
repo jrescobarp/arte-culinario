@@ -12,7 +12,6 @@ export class FeaturedMealComponent implements OnInit {
   showImg = "";
 
   ngOnInit(): void {
-    console.log("RECEIVED RECIPES: ", this.featuredRecipe);
     let randImg = Date.now() % this.imgEx.length;
     this.showImg = this.imgEx[randImg];
   }

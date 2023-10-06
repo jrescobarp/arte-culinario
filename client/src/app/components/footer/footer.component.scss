@@ -1,9 +1,5 @@
-.footerDiv {
-  max-height: 5px;
-  display: flex;
-  flex-direction: column;
-}
-
-footer {
-  max-height: 5vh;
+footer{
+  position:absolute;
+  bottom: 0;
+  width: 100%;
 }

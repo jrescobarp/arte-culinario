@@ -19,11 +19,8 @@
     </div>
   </div>
 
-  <!-- <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul *ngIf="path" class="navbar-nav mr-auto">
-      <li class="nav-item">
-        <a class="nav-link" href="/">/{{path}}</a>
-      </li>
-    </ul>
-  </div> -->
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <a *ngIf="path" class="nav-link pathNameTxt" href="/">/ {{path}}</a>
+    <div *ngIf="recName" class="nav-link recipeNameTxt" [ngClass]="path ? '' : 'negativeMargin'" href="/">/ {{recName.toLowerCase()}}</div>
+  </div>
 </nav>

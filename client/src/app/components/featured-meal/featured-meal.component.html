@@ -28,14 +28,13 @@
             <div class="pt-1"><a href="">Add your own for everyone to see!</a></div>
           </div>
           <!-- <div  class="text-center noImgDiv">
-
               <a href="">Click here</a> to add your own for everyone to see!
           </div> -->
         </div>
 
         <div [ngClass]="isMobile ? 'col-12' : 'col-6'">
           <div *ngIf="recipe.ingredients[0]" class="text-left mainTxt ingredientList">
-            <h3>Ingredients:</h3>
+            <h3>Ingredientes:</h3>
             <ul>
               <li *ngFor="let ingredient of recipe.ingredients ; let i = index">
                 {{ingredient}}
@@ -43,7 +42,7 @@
             </ul>
           </div>
           <div *ngIf="recipe.steps[0]" class="stepList" [ngClass]="recipe.ingredients[0] ? 'stepListTopBorder' : ''">
-            <h3>Steps:</h3>
+            <h3>Instrucciones:</h3>
             <ol>
               <li *ngFor="let step of recipe.steps ; let i = index">
                 {{step}}
@@ -51,29 +50,6 @@
             </ol>
           </div>
         </div>
-        <!-- <ng-container *ngIf="!recipe.images.length && !isMobile">
-          <div class="col-12 text-center noImgDiv">
-            <div class="mb-2"><i class="fa-solid fa-kitchen-set fa-2xl"></i></div>
-            No images available for this recipe. <a href="">Click here</a> to add your own for everyone to see!
-          </div>
-          <div *ngIf="recipe.ingredients[0]" class="text-left mainTxt ingredientList col-5">
-            <h3 class="noImgIngredTitle">Ingredients:</h3>
-            <ul class="ingrListNoImg">
-              <li *ngFor="let ingredient of recipe.ingredients ; let i = index">
-                {{ingredient}}
-              </li>
-            </ul>
-          </div>
-          <div *ngIf="recipe.steps[0]" class="stepList col-7">
-            <h3>Steps:</h3>
-            <ol>
-              <li *ngFor="let step of recipe.steps ; let i = index">
-                {{step}}
-              </li>
-            </ol>
-          </div>
-        </ng-container> -->
-
       </div>
     </div>
 

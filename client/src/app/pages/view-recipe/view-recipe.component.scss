@@ -1,0 +1,39 @@
+.carouselDiv{
+  height: 25em;
+}
+
+.carouselDiv img{
+  background-size: contain;
+  border-radius: 5px;
+}
+
+.ingrDiv{
+  border: 1px solid gray;
+  border-radius: 5px;
+  max-height: 25em;
+  overflow-y: auto;
+  font-size: 1.3em;
+}
+
+.stepsDiv{
+  border: 1px solid gray;
+  border-radius: 5px;
+  max-height: 15em;
+  overflow-y: auto;
+  font-size: 1.2em;
+}
+
+.noImgIcon{
+  font-size: 4em;
+  color: #900C3F;
+  padding-bottom: .5em;
+}
+
+@media (max-width: 1000px) {
+  .carouselDiv{
+    height: 20em;
+  }
+  .ingrDiv{
+    max-height: 15em;
+  }
+}
