@@ -8,7 +8,7 @@
       <button class="btn btn-green" type="submit" [ngClass]="isMobile ? '' : 'widerBtn'"><i class="fa fa-search fa-xs"></i></button>
     </div>
     <div ngbAccordion>
-      <div class="accordionItem" *ngIf="userInfo" ngbAccordionItem>
+      <div class="accordionItem" *ngIf="favoritesList.length" ngbAccordionItem>
         <h2 ngbAccordionHeader>
           <button class="categoryBtnTxt" ngbAccordionButton>Favorite Recipes</button>
         </h2>

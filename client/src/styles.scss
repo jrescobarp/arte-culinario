@@ -40,3 +40,21 @@
   border: 1px solid #CBCDCB;
   border-radius: 10px;
 }
+
+.mat-mdc-snack-bar-container {
+  &.aac-red {
+    --mdc-snackbar-container-color: #900C3F;
+    --mat-mdc-snack-bar-button-color: #fff;
+    --mdc-snackbar-supporting-text-color: #fff;
+    text-align: center;
+  }
+}
+
+.mat-mdc-snack-bar-container {
+  &.aac-green {
+    --mdc-snackbar-container-color: #5d8102;
+    --mat-mdc-snack-bar-button-color: #fff;
+    --mdc-snackbar-supporting-text-color: #fff;
+    text-align: center;
+  }
+}

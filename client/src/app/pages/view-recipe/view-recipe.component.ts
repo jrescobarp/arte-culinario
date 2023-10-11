@@ -4,6 +4,8 @@ import { Recipe } from '../../models'
 import { ApiService } from '../../api.service'
 import { BehaviorSubject, Observable } from 'rxjs';
 import { User } from '../../models'
+import { MatSnackBar } from '@angular/material/snack-bar';
+
 
 @Component({
   selector: 'app-view-recipe',
@@ -35,6 +37,7 @@ export class ViewRecipeComponent {
     private router: Router,
     private route: ActivatedRoute,
     private apiService: ApiService,
+    private _snackbar: MatSnackBar
   ) { }
 
   ngOnInit() {
@@ -87,11 +90,13 @@ export class ViewRecipeComponent {
     if(!this.isFavorite){
       this.userInfo.recipes.push(this.recipe.value._id!);
       this.apiService.updateUser(this.userInfo._id!, this.userInfo).subscribe((userInfo:any)=>{
-        alert(this.recipe.value.name + " ha sido agregada a tu lista de favoritos");
+        // alert(this.recipe.value.name + " ha sido agregada a tu lista de favoritos");
+        this._snackbar.open(this.recipe.value.name + " ha sido agregada a tu lista de favoritos", '', {duration: 2500, panelClass: ['aac-green']});
         this.isFavorite = true;
       });
     }else{
-      alert("Ya esta la receta en tu lista de favoritos");
+      // alert("Ya esta la receta en tu lista de favoritos");
+      this._snackbar.open("Ya esta la receta en tu lista de favoritos", '', {duration: 2500, panelClass: ['aac-red']});
     }
   }
 
@@ -103,7 +108,8 @@ export class ViewRecipeComponent {
     });
     this.apiService.updateUser(this.userInfo._id!, this.userInfo).subscribe((userInfo:any)=>{
       this.isFavorite = false;
-      alert(this.recipe.value.name + " ha sido borrado de tu lista de favoritos");
+      // alert(this.recipe.value.name + " ha sido borrado de tu lista de favoritos");
+      this._snackbar.open(this.recipe.value.name + " ha sido borrado de tu lista de favoritos", '', {duration: 2500, panelClass: ['aac-red']});
     });
   }
 }

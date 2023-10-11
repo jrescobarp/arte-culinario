@@ -22,7 +22,6 @@ export class RecipeListComponent implements OnInit{
   ngOnInit(): void {
     this.checkUser();
     this.createOptionsList();
-    console.log("FLFLFL: ", this.favoritesList)
   }
 
   checkUser(){
@@ -30,7 +29,7 @@ export class RecipeListComponent implements OnInit{
       if(userInfo){
         this.userInfo = userInfo;
       }
-      });
+    });
   }
 
   async createOptionsList(){
@@ -58,11 +57,13 @@ export class RecipeListComponent implements OnInit{
             });
           }
         });
-        this.userInfo.recipes.forEach(element => {
-          if(element === r._id){
-            this.favoritesList.push(r);
-          }
-        });
+        if(this.userInfo){
+          this.userInfo.recipes.forEach(element => {
+            if(element === r._id){
+              this.favoritesList.push(r);
+            }
+          });
+        }
     });
     });
   }

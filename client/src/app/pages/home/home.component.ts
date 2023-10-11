@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Recipe, User } from '../../models';
 import { ApiService } from '../../api.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 @Component({
@@ -15,7 +16,7 @@ export class HomeComponent implements OnInit {
   isMobile = false;
   featuredMeals: any[]= [];
 
- constructor(private apiService: ApiService) { }
+ constructor(private apiService: ApiService, private _snackbar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.fetchRecipes();
