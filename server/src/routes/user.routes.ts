@@ -9,6 +9,7 @@ userRouter.get("/", userController.get_user_info);
 userRouter.post("/register",userController.register_user);
 userRouter.post("/login", passport.authenticate('local', {failureFlash:true}), userController.login);
 userRouter.get("/logout", userController.logout);
+userRouter.put("/:id", userController.update_user);
 // userRouter.get("/userDisplay", isLoggedIn, userController.userDisplay);
  
 module.exports = userRouter;

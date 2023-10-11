@@ -2,7 +2,7 @@
 
 /* Importing Bootstrap SCSS file. */
 @import 'bootstrap/scss/bootstrap';
-
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
 
 .btn{
   margin-top: .5em;
@@ -12,7 +12,7 @@
 .btn-green{
   border: 1px solid #5d8102;
   background-color: white;
-  color: black;
+  color: #5d8102;
 }
 
 .btn-green:hover{
@@ -23,7 +23,7 @@
 .btn-red{
   border: 1px solid #900C3F;
   background-color: white;
-  color: black;
+  color: #900C3F;
 }
 
 .btn-red:hover{

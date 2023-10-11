@@ -28,6 +28,8 @@ export class ViewRecipeComponent {
   });
   isMobile = false;
   user$: Observable<User[]> = new Observable();
+  userInfo : User;
+  isFavorite = false;
 
   constructor(
     private router: Router,
@@ -47,10 +49,61 @@ export class ViewRecipeComponent {
 
     this.apiService.getRecipe(id !).subscribe((recipe) => {
       this.recipe.next(recipe);
-      console.log("RECIPEE: ", this.recipe.value);
+      this.apiService.isLoggedIn().subscribe((userInfo:any) => {
+        if(userInfo){
+          this.userInfo = userInfo;
+          // console.log("UserInfo: ", this.userInfo);
+          this.checkFavorites();
+        }
+      });
     });
+  }
 
-    this.user$ = this.apiService.isLoggedIn();
+  copyToClipboard(type:string){
+    let copyTxt = "";
+    if(type === "ingredients"){
+      this.recipe.value.ingredients.forEach((element, index) => {
+        copyTxt += element + (index < (this.recipe.value.ingredients.length - 1) ? "\n" : "");
+      });
+    }
+    if(type === "steps"){
+      this.recipe.value.steps.forEach((element, index) => {
+        copyTxt += (index + 1) + ". "+ element + (index < (this.recipe.value.steps.length - 1) ? "\n" : "");
+      });
+    }
+    navigator.clipboard.writeText(copyTxt);
+  }
 
+  checkFavorites(){
+    this.userInfo.recipes.forEach(element => {
+      if(element === this.recipe.value._id){
+        this.isFavorite = true;
+      }
+    });
+  }
+
+  addRecipeToFavorites(){
+    this.checkFavorites();
+    if(!this.isFavorite){
+      this.userInfo.recipes.push(this.recipe.value._id!);
+      this.apiService.updateUser(this.userInfo._id!, this.userInfo).subscribe((userInfo:any)=>{
+        alert(this.recipe.value.name + " ha sido agregada a tu lista de favoritos");
+        this.isFavorite = true;
+      });
+    }else{
+      alert("Ya esta la receta en tu lista de favoritos");
+    }
+  }
+
+  removeRecipeFromFavorites(){
+    this.userInfo.recipes.forEach((element, index) => {
+      if(element === this.recipe.value._id){
+        this.userInfo.recipes.splice(index, 1);
+      }
+    });
+    this.apiService.updateUser(this.userInfo._id!, this.userInfo).subscribe((userInfo:any)=>{
+      this.isFavorite = false;
+      alert(this.recipe.value.name + " ha sido borrado de tu lista de favoritos");
+    });
   }
 }

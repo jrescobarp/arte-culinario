@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { HomeComponent } from './home/home.component';
 import { ComponentsModule } from '../components/components.module'
 import { ViewRecipeComponent } from './view-recipe/view-recipe.component';
+import {TooltipPosition, MatTooltipModule} from '@angular/material/tooltip';
 
 
 
@@ -13,7 +14,8 @@ import { ViewRecipeComponent } from './view-recipe/view-recipe.component';
   ],
   imports: [
     CommonModule,
-    ComponentsModule
+    ComponentsModule,
+    MatTooltipModule
   ]
 })
 export class PagesModule { }

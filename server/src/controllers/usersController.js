@@ -33,3 +33,8 @@ exports.logout = asyncHandler(async (req, res, next) => {
     });
     res.send(req.user);
 });
+
+exports.update_user = asyncHandler(async (req, res, next) => {
+    const updatedUser = await User.findOneAndUpdate({_id: req.body._id}, req.body);
+    res.send(updatedUser);
+});

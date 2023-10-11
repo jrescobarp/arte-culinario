@@ -69,6 +69,11 @@ export class ApiService {
     return this.httpClient.get(`${this.url}/user/logout`);
   }
 
+  updateUser(id: string, user: User): Observable<any> {
+    console.log("SENT: ", id, user);
+    return this.httpClient.put(`${this.url}/user/${id}`, user, { responseType: 'text' });
+  }
+
 
 
 

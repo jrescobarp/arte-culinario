@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { lastValueFrom } from 'rxjs';
+import { User } from '../../models'
 
 @Component({
   selector: 'app-recipe-list',
@@ -9,16 +10,28 @@ import { lastValueFrom } from 'rxjs';
 export class RecipeListComponent implements OnInit{
   @Input() isMobile!: boolean;
   @Input() recipes: any;
+  @Input() user: any;
   categoryObj = {
     name : "",
     recipes: []
   };
   categoryList: any[] = [];
+  favoritesList: any[] = [];
+  userInfo: User;
 
   ngOnInit(): void {
+    this.checkUser();
     this.createOptionsList();
+    console.log("FLFLFL: ", this.favoritesList)
   }
 
+  checkUser(){
+    this.user.subscribe((userInfo:any) => {
+      if(userInfo){
+        this.userInfo = userInfo;
+      }
+      });
+  }
 
   async createOptionsList(){
     this.recipes.subscribe((recipe:any) => {
@@ -44,7 +57,12 @@ export class RecipeListComponent implements OnInit{
               recipes: [r]
             });
           }
-      });
+        });
+        this.userInfo.recipes.forEach(element => {
+          if(element === r._id){
+            this.favoritesList.push(r);
+          }
+        });
     });
     });
   }

@@ -28,14 +28,12 @@ export class LoginComponent {
 
   registerUser(){
     this.apiService.registerUser(this.user).subscribe(result =>{
-      console.log("RESULTRegister: ", result);
       this.logInChangeStatus.emit(result);
     });
   }
 
   login(){
     this.apiService.login(this.user).subscribe((result: any) =>{
-      console.log("RESULTLogin: ", result);
       this.logInChangeStatus.emit(result);
     });
   }
