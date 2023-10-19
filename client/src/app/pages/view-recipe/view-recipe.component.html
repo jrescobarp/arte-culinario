@@ -1,28 +1,18 @@
-<!-- <app-navbar [path]="recipe.value.name"></app-navbar> -->
-<!-- {{ isMobile ? recipe.value.name :  "" }} -->
 <app-navbar
 [user]="user$"
 ></app-navbar>
 
-<div class="container">
-  <div *ngIf="isMobile" class="text-center mt-3" style="margin-bottom: 3em;">
-    <div style="display: inline;padding-top: 5em;font-size: 1.5em;border-bottom: 1px solid #5d8102;">{{recipe.value.name}}</div>
-    <div *ngIf="isMobile" style="display: inline;padding-left: .5em;">
-      <button *ngIf="userInfo && !isFavorite" class="btn btn-sm btn-green" matTooltip="agregar a favoritos" [matTooltipPosition]="'above'" style="margin-top: -.25em;" (click)="addRecipeToFavorites()"><i class="fa-solid fa-plus"></i></button>
-      <button *ngIf="userInfo && isFavorite" class="btn btn-sm btn-red" matTooltip="borrar de favoritos" [matTooltipPosition]="'above'" style="margin-top: -.25em;" (click)="removeRecipeFromFavorites()"><i class="fa-solid fa-minus"></i></button>
-    </div>
-  </div>
-
+<div class="container mainContainer">
   <div class="row">
-
-    <div [ngClass]="isMobile ? 'col-12' : 'col-5'">
-      <div *ngIf="!isMobile" class="text-left mt-3 row" style="border-bottom: 1px solid #5d8102;margin-bottom: 5em;margin-right: 1em;">
-        <div class="col-9" style="font-size: 1.88em;">{{recipe.value.name}}</div>
-        <div class="col-3" style="padding-top: .75em;text-align: right;">
-          <button *ngIf="userInfo && !isFavorite" class="btn btn-sm btn-green" style="margin-top: -.25em;" matTooltip="agregar a favoritos" [matTooltipPosition]="'above'" (click)="addRecipeToFavorites()"><i class="fa-solid fa-plus"></i></button>
-          <button *ngIf="userInfo && isFavorite" class="btn btn-sm btn-red" style="margin-top: -.25em;" matTooltip="borrar de favoritos" [matTooltipPosition]="'above'" (click)="removeRecipeFromFavorites()"><i class="fa-solid fa-minus"></i></button>
-        </div>
+    <div class="col-12 row mt-3">
+      <div [ngClass]="isMobile ? 'recipeNameMobile col-10' : 'recipeNameFull col-9'">{{recipe.value.name}}</div>
+      <div class="col" style="padding-top: .4em;text-align: right;">
+        <button *ngIf="!isFavorite" class="btn btn-sm btn-red btn-red-title" style="margin-top: -.25em;" matTooltip="agregar a favoritos" [matTooltipPosition]="'above'" (click)="addRecipeToFavorites()"><i class="fa-solid fa-plus"></i></button>
+        <button *ngIf="isFavorite" class="btn btn-sm btn-red btn-red-title" style="margin-top: -.25em;" matTooltip="borrar de favoritos" [matTooltipPosition]="'above'" (click)="removeRecipeFromFavorites()"><i class="fa-solid fa-minus"></i></button>
       </div>
+    </div>
+
+    <div class="mainImgCarousel" [ngClass]="isMobile ? 'col-12' : 'col-7'">
       <div *ngIf="recipe.value.images.length" id="imgCarousel" class="carousel slide">
         <div class="carousel-inner">
           <div class="carousel-item carouselDiv" *ngFor="let img of recipe.value.images;let index = index;let isFirst = first" [ngClass]="{active:isFirst}">
@@ -47,11 +37,11 @@
       </div>
     </div>
 
-    <div class="ingrDiv my-4" [ngClass]="isMobile ? 'col-12' : 'col-7'">
+    <div class="ingrDiv my-4" [ngClass]="isMobile ? 'col-12' : 'col-5'">
       <div class="row">
         <div class="col-8 mt-2" style="font-size: 1em;">Ingredientes:</div>
         <div class="col-4" style="text-align: right;">
-          <button class="mx-3 btn btn-green" matTooltip="copiar texto" [matTooltipPosition]="'above'" (click)="copyToClipboard('ingredients')"><i class="fa-regular fa-clipboard"></i></button>
+          <button class="mx-3 btn btn-red" matTooltip="copiar texto" [matTooltipPosition]="'above'" (click)="copyToClipboard('ingredients')"><i class="fa-regular fa-clipboard"></i></button>
         </div>
       </div>
       <ul>
@@ -65,7 +55,7 @@
       <div class="row mt-2">
         <div class="col-8" style="font-size: 1em;">Instrucciones:</div>
         <div class="col-4" style="text-align: right;">
-          <button class="mx-3 btn mt-0 btn-green" matTooltip="copiar texto" [matTooltipPosition]="'above'" (click)="copyToClipboard('steps')"><i class="fa-regular fa-clipboard"></i></button>
+          <button class="mx-3 btn mt-0 btn-red" matTooltip="copiar texto" [matTooltipPosition]="'above'" (click)="copyToClipboard('steps')"><i class="fa-regular fa-clipboard"></i></button>
         </div>
       </div>
       <ol>

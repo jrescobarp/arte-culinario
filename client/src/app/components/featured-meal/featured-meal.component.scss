@@ -9,6 +9,14 @@
   overflow-y: auto;
 }
 
+.mainHeader{
+  font-size: 4em;
+}
+
+.subTxt{
+  font-size: .75em;
+}
+
 .titleDiv{
   display: flex;
   justify-content: space-between;
@@ -24,8 +32,8 @@
 .clickeHereTxt{
   display: none;
   text-align: right;
-  font-size: 1.2rem;
-  margin-top: .4em;
+  font-size: .8rem;
+  margin-top: 1.6em;
 }
 
 .mainContainer:hover .clickeHereTxt{
@@ -90,12 +98,20 @@ li{
 }
 
 .fa-kitchen-set{
-  color: #900C3F;
+  color: rgba(206,60,81,1);
 }
 
-// @media (max-width: 950px) {
-//   .mainContainer{
-//     margin-right: 0;
-//   }
-// }
+@media (max-width: 950px) {
+  .mainHeader{
+    font-size: 2em;
+  }
+
+  .subTxt{
+    font-size: .5em;
+  }
+
+  .recipeImgDiv{
+    padding-left: 0em;
+  }
+}
 

@@ -4,6 +4,10 @@
 @import 'bootstrap/scss/bootstrap';
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 
+* {
+  font-family: 'Merriweather';
+}
+
 .btn{
   margin-top: .5em;
   margin-bottom: .5em;
@@ -12,7 +16,7 @@
 .btn-green{
   border: 1px solid #5d8102;
   background-color: white;
-  color: #5d8102;
+  color: black;
 }
 
 .btn-green:hover{
@@ -21,13 +25,13 @@
 }
 
 .btn-red{
-  border: 1px solid #900C3F;
+  border: 1px solid rgba(206,60,81,1);
   background-color: white;
-  color: #900C3F;
+  color: rgba(206,60,81,1);
 }
 
 .btn-red:hover{
-  background-color: #900C3F;
+  background-color: rgba(206,60,81,1);
   color: white;
 }
 
@@ -43,7 +47,7 @@
 
 .mat-mdc-snack-bar-container {
   &.aac-red {
-    --mdc-snackbar-container-color: #900C3F;
+    --mdc-snackbar-container-color: rgba(206,60,81,1);
     --mat-mdc-snack-bar-button-color: #fff;
     --mdc-snackbar-supporting-text-color: #fff;
     text-align: center;
@@ -57,4 +61,17 @@
     --mdc-snackbar-supporting-text-color: #fff;
     text-align: center;
   }
+}
+
+body{
+  min-height: 40em;
+  background-color: rgba(207,200,181, .1);
+}
+
+.blackFont{
+  color: black;
+}
+
+.redFont{
+  color: rgba(206,60,81,1);
 }

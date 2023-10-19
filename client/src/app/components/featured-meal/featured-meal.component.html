@@ -3,16 +3,16 @@
     <div class="carousel-inner">
 
     <div class="carousel-item active container">
-      Aprendamos a Cocinar
-      recetas de Vilma G. de Escobar
+      <div class="mainHeader mt-4 blackFont">Aprendamos a Cocinar!</div>
+      <div class="subTxt redFont">recetas de Vilma G. de Escobar</div>
     </div>
 
-    <div *ngFor="let recipe of featuredRecipe" class="carousel-item container" (click)="viewRecipe(recipe._id)">
+    <div *ngFor="let recipe of featuredRecipe" class="carousel-item container redFont" (click)="viewRecipe(recipe._id)">
       <div class="row">
 
         <div class="titleDiv col-12" [ngClass]="isMobile ? 'text-center' : ''">
-          <div class="titleTxt"><h1>{{recipe.name.toLowerCase()}}</h1></div>
-          <div class="clickeHereTxt">
+          <div class="titleTxt blackFont"><h1>{{recipe.name.toLowerCase()}}</h1></div>
+          <div class="clickeHereTxt redFont">
             <div class="mx-2">view recipe </div>
             <div><i class="fa-solid fa-chevron-right"></i></div>
           </div>
@@ -21,18 +21,15 @@
         <div [ngClass]="isMobile ? 'col-12' : 'col-6'">
           <div class="recipeImgDiv">
             <img *ngIf="recipe.images.length" class="recipeImgDisplay" src="{{showImg}}" alt="">
-            <div *ngIf="!recipe.images.length" class="mb-2 mt-5">
+            <div *ngIf="!recipe.images.length" class="mb-2" [ngClass]="isMobile ? 'mt-3' : 'mt-5'">
               <i class="fa-solid fa-kitchen-set fa-2xl"></i>
-              <div class="pt-3">No images available for this recipe.</div>
+              <div class="pt-3 blackFont">No images available for this recipe.</div>
             </div>
-            <div class="pt-1"><a href="">Add your own for everyone to see!</a></div>
+            <div class="pt-1 blackFont"><a href="">Add your own for everyone to see!</a></div>
           </div>
-          <!-- <div  class="text-center noImgDiv">
-              <a href="">Click here</a> to add your own for everyone to see!
-          </div> -->
         </div>
 
-        <div [ngClass]="isMobile ? 'col-12' : 'col-6'">
+        <div class="blackFont" [ngClass]="isMobile ? 'col-12' : 'col-6'">
           <div *ngIf="recipe.ingredients[0]" class="text-left mainTxt ingredientList">
             <h3>Ingredientes:</h3>
             <ul>

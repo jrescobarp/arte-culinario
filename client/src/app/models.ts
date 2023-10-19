@@ -9,7 +9,7 @@ export interface Recipe {
   type: string[];
   connected_recipes: string[];
   comments: string[];
-  images: string[]
+  images: string[];
   featuredMealCount: number;
   book: string[];
 }
@@ -31,6 +31,7 @@ export interface Comment {
   _id?: string;
   user_id: string;
   text: string;
+  upvotes: number;
   // location: string;
 }
 

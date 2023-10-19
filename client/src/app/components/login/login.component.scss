@@ -13,10 +13,14 @@ input{
 }
 
 .createAcctBtn{
-  color: #3880ff;
-  background-color: white;
+  color: rgba(206,60,81,1);
   text-decoration: underline;
   margin-top: .55em;
+  border: none;
+  background-color: transparent;
+  background-repeat: no-repeat;
+  border: none;
+  outline:none
 }
 
 .createAcctBtn:hover{

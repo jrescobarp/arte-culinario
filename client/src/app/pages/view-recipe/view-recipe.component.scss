@@ -1,3 +1,7 @@
+.mainContainer{
+  min-height: 45em;
+}
+
 .carouselDiv{
   height: 25em;
 }
@@ -25,9 +29,29 @@
 
 .noImgIcon{
   font-size: 4em;
-  color: #900C3F;
+  color: rgba(206,60,81,1);
   padding-bottom: .5em;
 }
+
+.recipeNameFull{
+  font-size: 1.88em;
+  text-decoration: underline;
+  text-decoration-color: rgba(206,60,81,1);
+  margin-right: 1em;
+}
+
+.recipeNameMobile{
+  display: inline;
+  // padding-top: 5em;
+  font-size: 1.34em;
+  text-decoration: underline;
+  text-decoration-color: rgba(206,60,81,1);
+}
+
+.mainImgCarousel{
+  margin-top: 7.5em;
+}
+
 
 @media (max-width: 1000px) {
   .carouselDiv{
@@ -35,5 +59,13 @@
   }
   .ingrDiv{
     max-height: 15em;
+  }
+  .mainImgCarousel{
+    margin-top: 3em;
+  }
+  .btn-red-title{
+    margin-top: -0.3em;
+    width: 2em;
+    height: 2.2em;
   }
 }

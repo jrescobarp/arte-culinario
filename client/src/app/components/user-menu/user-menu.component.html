@@ -1,6 +1,6 @@
 <div class="mainContainer border-gray">
   <div class="notLoggedInDiv" *ngIf="!loggedIn">
-    <div class="userIcon"><i class="fa fa-user-circle fa-3x" aria-hidden="true"></i></div>
+    <div class="userIcon"><i class="far fa-user-circle fa-3x blackFont" aria-hidden="true"></i></div>
     <app-login class="login"
       [loginType]="'none'"
       (logInChangeStatus)="updateloginStatus($event)">
