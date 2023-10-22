@@ -1,0 +1,24 @@
+<!-- <div class="container">
+  <div class="row"> -->
+<div class="comentariosTitle">Comentarios</div>
+
+<div>
+  <div>
+    <textarea name="comment_txt" class="comentariosTxtArea" [(ngModel)]="comment.text" (click)="commentBtnToggle(true)" placeholder="recomendaciones o comentarios de la receta" id="comment_txt"></textarea>
+  </div>
+  <div *ngIf="showBtns" style="text-align: right;">
+    <button class="btn- btn-red" style="margin-right: 1em;" (click)="deleteCommentTxt()" (click)="commentBtnToggle(false)">Cancel</button>
+    <button class="btn- btn-green" (click)="submitComment()">Submit</button>
+  </div>
+</div>
+
+<div *ngIf="!comments_arr.length">
+  <i class="fa-solid fa-comment-slash"></i><br>
+  No hay comentarios para esta receta
+</div>
+
+<ng-container *ngIf="comments_arr.length">
+  <div *ngFor="let comment of parentObject.comments">
+    {{comment.text}}
+  </div>
+</ng-container>

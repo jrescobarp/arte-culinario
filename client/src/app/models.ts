@@ -10,7 +10,7 @@ export interface Recipe {
   connected_recipes: string[];
   comments: string[];
   images: string[];
-  featuredMealCount: number;
+  featured_meal_count: number;
   book: string[];
 }
 
@@ -32,8 +32,13 @@ export interface Comment {
   user_id: string;
   text: string;
   upvotes: number;
+  replies: Comment[];
+  parent_id: string,
+  parent_type: string,
+  update_arr: Comment[];
   // location: string;
 }
+
 
 export interface Image {
   _id?: string;

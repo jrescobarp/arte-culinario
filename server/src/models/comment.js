@@ -8,14 +8,17 @@ const CommentSchema = new Schema({
         required: true
     },
     text: {
-        type: string,
+        type: String,
         required: true
     },
     upvotes:{
         type: Number,
         default: 0
+    },
+    replies:{
+        type: [Schema.Types.ObjectId],
+        ref: 'Comment'
     }
-    // location: string;
 });
 
 

@@ -15,6 +15,7 @@ import { LoginComponent } from './login/login.component';
 import { UserMenuComponent } from './user-menu/user-menu.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { FooterComponent } from './footer/footer.component';
+import { CommentsSectionComponent } from './comments-section/comments-section.component';
 
 
 
@@ -25,7 +26,8 @@ import { FooterComponent } from './footer/footer.component';
     LoginComponent,
     UserMenuComponent,
     NavbarComponent,
-    FooterComponent
+    FooterComponent,
+    CommentsSectionComponent
   ],
   imports: [
     CommonModule,
@@ -44,7 +46,8 @@ import { FooterComponent } from './footer/footer.component';
     LoginComponent,
     UserMenuComponent,
     NavbarComponent,
-    FooterComponent
+    FooterComponent,
+    CommentsSectionComponent
   ]
 })
 export class ComponentsModule { }

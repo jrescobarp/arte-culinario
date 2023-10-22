@@ -10,6 +10,7 @@ const flash = require('connect-flash');
 const MongoStore = require("connect-mongo");
 var recipeRouter = require("./routes/recipe.routes");
 var userRouter = require('./routes/user.routes');
+var commentRouter = require('./routes/comment.routes');
 var User = require('./models/user');
 
  
@@ -64,6 +65,7 @@ app.use((req:any, res, next) => {
 //initialize routes
 app.use("/recipes", recipeRouter);
 app.use("/user", userRouter);
+app.use("/comments", commentRouter);
 
 // start the Express server
 app.listen(5200, () => {

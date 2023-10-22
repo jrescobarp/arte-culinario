@@ -29,7 +29,7 @@ const RecipeSchema = new Schema({
     },
     connected_recipes: {
         type: [Schema.Types.ObjectId],
-            ref: 'Recipe'
+        ref: 'Recipe'
     },
     images: {
         type: [Schema.Types.ObjectId],

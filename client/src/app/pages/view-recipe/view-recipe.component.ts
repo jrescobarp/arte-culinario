@@ -24,7 +24,7 @@ export class ViewRecipeComponent {
     type: [],
     connected_recipes: [],
     comments: [],
-    featuredMealCount:0,
+    featured_meal_count:0,
     book: [],
     images:[]
   });
@@ -55,7 +55,6 @@ export class ViewRecipeComponent {
       this.apiService.isLoggedIn().subscribe((userInfo:any) => {
         if(userInfo){
           this.userInfo = userInfo;
-          // console.log("UserInfo: ", this.userInfo);
           this.checkFavorites();
         }
       });
@@ -64,15 +63,20 @@ export class ViewRecipeComponent {
 
   copyToClipboard(type:string){
     let copyTxt = "";
-    if(type === "ingredients"){
+    if(type === "all"){
+      copyTxt += this.recipe.value.name + "\n\n";
+    }
+    if(type === "ingredients" || type === "all"){
       this.recipe.value.ingredients.forEach((element, index) => {
         copyTxt += element + (index < (this.recipe.value.ingredients.length - 1) ? "\n" : "");
       });
+      copyTxt += "\n\n";
     }
-    if(type === "steps"){
+    if(type === "steps" || type === "all"){
       this.recipe.value.steps.forEach((element, index) => {
         copyTxt += (index + 1) + ". "+ element + (index < (this.recipe.value.steps.length - 1) ? "\n" : "");
       });
+      copyTxt += "\n\n";
     }
     navigator.clipboard.writeText(copyTxt);
   }

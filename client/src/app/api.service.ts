@@ -10,6 +10,7 @@ export class ApiService {
   private url = 'http://localhost:4200/api';
   private recipes$: Subject<Recipe[]> = new Subject();
   private user$: Subject<User> = new Subject();
+  private comments$: Subject<Comment[]> = new Subject();
 
   constructor(private httpClient: HttpClient) { }
 
@@ -70,32 +71,31 @@ export class ApiService {
   }
 
   updateUser(id: string, user: User): Observable<any> {
-    console.log("SENT: ", id, user);
     return this.httpClient.put(`${this.url}/user/${id}`, user, { responseType: 'text' });
   }
 
 
 
 
-  // private refreshComments() {
-  //   this.httpClient.get<Comment[]>(`${this.url}/comments`)
-  //     .subscribe(comments => {
-  //       this.comments$.next(comments);
-  //     });
-  // }
+  private refreshComments() {
+    this.httpClient.get<Comment[]>(`${this.url}/comments`)
+      .subscribe(comments => {
+        this.comments$.next(comments);
+      });
+  }
 
-  // getComments(): Subject<Comment[]> {
-  //   this.refreshComments();
-  //   return this.comments$;
-  // }
+  getComments(): Subject<Comment[]> {
+    this.refreshComments();
+    return this.comments$;
+  }
 
-  // getComment(id: string): Observable<Comment> {
-  //   return this.httpClient.get<Comment>(`${this.url}/comments/${id}`);
-  // }
+  getComment(id: string): Observable<Comment> {
+    return this.httpClient.get<Comment>(`${this.url}/comments/${id}`);
+  }
 
-  // createComment(comment: Comment): Observable<string> {
-  //   return this.httpClient.post(`${this.url}/comments`, comment, { responseType: 'text' });
-  // }
+  createComment(comment: Comment): Observable<string> {
+    return this.httpClient.post(`${this.url}/comments`, comment, { responseType: 'text' });
+  }
 
   // updateComment(id: string, comment: Comment): Observable<string> {
   //   return this.httpClient.put(`${this.url}/comments/${id}`, comment, { responseType: 'text' });
