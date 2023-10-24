@@ -76,21 +76,8 @@ export class ApiService {
 
 
 
-
-  private refreshComments() {
-    this.httpClient.get<Comment[]>(`${this.url}/comments`)
-      .subscribe(comments => {
-        this.comments$.next(comments);
-      });
-  }
-
-  getComments(): Subject<Comment[]> {
-    this.refreshComments();
-    return this.comments$;
-  }
-
-  getComment(id: string): Observable<Comment> {
-    return this.httpClient.get<Comment>(`${this.url}/comments/${id}`);
+  getComments(id: string): Observable<any>{
+    return this.httpClient.get(`${this.url}/comments/${id}`);
   }
 
   createComment(comment: Comment): Observable<string> {

@@ -4,6 +4,7 @@ const {isLoggedIn} = require('../middlewares/isLoggedIn');
 
 const commentController = require('../controllers/commentsController');
 
+commentRouter.get("/:id",commentController.get_comments);
 commentRouter.post("/",commentController.create_comment);
 
 module.exports = commentRouter;

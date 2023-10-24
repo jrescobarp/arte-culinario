@@ -2,13 +2,13 @@
   <div class="row"> -->
 <div class="comentariosTitle">Comentarios</div>
 
-<div>
+<div class="mb-4">
   <div>
     <textarea name="comment_txt" class="comentariosTxtArea" [(ngModel)]="comment.text" (click)="commentBtnToggle(true)" placeholder="recomendaciones o comentarios de la receta" id="comment_txt"></textarea>
   </div>
   <div *ngIf="showBtns" style="text-align: right;">
-    <button class="btn- btn-red" style="margin-right: 1em;" (click)="deleteCommentTxt()" (click)="commentBtnToggle(false)">Cancel</button>
-    <button class="btn- btn-green" (click)="submitComment()">Submit</button>
+    <button class="btn- btn-red" style="margin-right: 1em;" (click)="deleteCommentTxt();commentBtnToggle(false);" >Cancel</button>
+    <button class="btn- btn-green" (click)="submitComment(parentObject._id, parentObject.comments, parentType)">Submit</button>
   </div>
 </div>
 
@@ -18,7 +18,35 @@
 </div>
 
 <ng-container *ngIf="comments_arr.length">
-  <div *ngFor="let comment of parentObject.comments">
-    {{comment.text}}
-  </div>
+  <ul style="padding-left: 1em;">
+    <li *ngFor="let comment of parentObject.comments" style="list-style-type: square;">
+      <div class="row mb-4">
+        <div class="col-9">{{comment.text}}</div>
+        <div class="col-3 tr row">
+          <button class="col-6">upvote</button>
+          <button class="col-6" (click)="showReplyInput(comment._id, 'block')">Reply</button>
+        </div>
+        <div class="col-12 row mt-4">
+          <div class="col-9">
+            <button *ngIf="comment.replies.length" class="replyBtn" (click)="viewReplies(comment._id, comment)"><i class="fa-solid fa-chevron-down fa-xs"></i> {{comment.replies.length}} respuesta{{comment.replies.length > 1 ? 's' : ''}}</button>
+            <button *ngIf="!comment.replies.length" class="replyBtn">0 respuesta{{comment.replies.length != 1 ? 's' : ''}}</button>
+          </div>
+          <div class="col-3 tr">-{{comment.username}}</div>
+        </div>
+        <div id="{{comment._id}}-comment" class="col-12" style="margin-left: 2em;display: none;">
+          <textarea name="replyTxt" class="comentariosTxtArea" [(ngModel)]="replyTxt" placeholder="responder a {{comment.username}}" id="reply_comment_txt"></textarea>
+          <div style="text-align: right;">
+            <button class="btn- btn-red" style="margin-right: 1em;" (click)="replyTxt = '';showReplyInput(comment._id, 'none')">Cancel</button>
+            <button class="btn- btn-green" (click)="submitComment(comment._id, comment.replies, 'comment', true)">Submit</button>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div *ngFor="let reply of comment.replies">
+          {{reply.text}}
+        </div>
+      </div>
+    </li>
+  </ul>
+
 </ng-container>

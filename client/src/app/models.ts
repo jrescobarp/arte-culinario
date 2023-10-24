@@ -30,6 +30,7 @@ export interface User {
 export interface Comment {
   _id?: string;
   user_id: string;
+  username: string;
   text: string;
   upvotes: number;
   replies: Comment[];
