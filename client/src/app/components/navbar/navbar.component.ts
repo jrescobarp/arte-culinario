@@ -9,6 +9,7 @@ export class NavbarComponent implements OnInit {
   @Input() recName: string;
   @Input() path: string;
   @Input() user: any;
+  @Input() showProfileDropdown: boolean = false;
   isMobile = false;
 
   ngOnInit(): void {
@@ -16,4 +17,10 @@ export class NavbarComponent implements OnInit {
       this.isMobile = true;
     };
   }
+
+  hover(imgName:string) {
+    var el = document.getElementById("navUserIcon");
+    el!.setAttribute('src', '../../../assets/'+imgName);
+  }
+
 }

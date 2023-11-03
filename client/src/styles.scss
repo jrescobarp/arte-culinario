@@ -14,14 +14,14 @@
 }
 
 .btn-green{
-  border: 1px solid #5d8102;
+  border: 1px solid rgba(80,131,17,255);
   background-color: white;
   // color: black;
-  color: #5d8102;
+  color: rgba(80,131,17,255);
 }
 
 .btn-green:hover{
-  background-color: #5d8102;
+  background-color: rgba(80,131,17,255);
   color: white;
 }
 
@@ -58,9 +58,9 @@
 
 .mat-mdc-snack-bar-container {
   &.aac-green {
-    --mdc-snackbar-container-color: #5d8102;
-    --mat-mdc-snack-bar-button-color: #fff;
-    --mdc-snackbar-supporting-text-color: #fff;
+    --mdc-snackbar-container-color: rgba(80,131,17,255);
+    --mat-mdc-snack-bar-button-color: white;
+    --mdc-snackbar-supporting-text-color: white;
     text-align: center;
   }
 }

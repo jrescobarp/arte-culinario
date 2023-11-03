@@ -11,6 +11,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class UserMenuComponent {
 
   @Input() user: any;
+  @Input() dropdownDisplay: boolean = false;
   @Output() logInChange: EventEmitter<any> = new EventEmitter<any>();
   loggedIn = false;
   userInfo: User;

@@ -9,8 +9,8 @@ exports.get_comments = asyncHandler(async(req, res, next) => {
 });
 
 exports.create_comment = asyncHandler(async(req, res, next) => {
-    const { user_id, text, upvotes, replies, username } = req.body;
-    const comment = new Comment({user_id, text, upvotes, replies, username});
+    const { user_id, text, upvotes, replies, username, date_created } = req.body;
+    const comment = new Comment({user_id, text, upvotes, replies, username, date_created});
     req.body.update_arr.push(comment._id);
     await comment.save();
     let response;
@@ -27,4 +27,14 @@ exports.create_comment = asyncHandler(async(req, res, next) => {
         });
     }
     res.status(200).send(response);
+});
+
+exports.edit_comment = asyncHandler(async(req, res, next) => {
+    response = Comment.findByIdAndUpdate(req.body._id, {text: req.body.text, upvotes: req.body.upvotes}).then((res) => {
+        console.log("RESULT: ", res);
+    }).catch((err) => {
+        console.log("ERROR: ", err);
+        //catch error
+    });
+    res.status(200);
 });

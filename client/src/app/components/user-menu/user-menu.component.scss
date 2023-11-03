@@ -16,3 +16,18 @@
 .loggedInTitle{
   text-transform: capitalize;
 }
+
+.noPaddingTop{
+  padding-top: 0%;
+}
+
+.chefIcon{
+  width: 4em;
+  border: 1px solid rgba(206,60,81,1);
+  border-radius: 50%;
+  padding: .5em;
+}
+
+.minHeight{
+  min-height: 12em;
+}

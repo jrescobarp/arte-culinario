@@ -5,7 +5,7 @@
     </div>
     <div class="pt-1" [ngClass]="isMobile ? 'col-12 ' : 'col-6 floatRight'">
       <input class="searchInput" type="text" placeholder="Search.." name="search">
-      <button class="btn btn-red searchInputBtn" type="submit" [ngClass]="isMobile ? '' : 'widerBtn'"><i class="fa fa-search fa-xs"></i></button>
+      <button class="btn btn-green searchInputBtn" type="submit" [ngClass]="isMobile ? '' : 'widerBtn'"><i class="fa fa-search fa-xs"></i></button>
     </div>
     <div ngbAccordion>
       <div class="accordionItem" *ngIf="favoritesList.length" ngbAccordionItem>

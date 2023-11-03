@@ -1,52 +1,108 @@
-<!-- <div class="container">
-  <div class="row"> -->
-<div class="comentariosTitle">Comentarios</div>
+<div class="comentariosTitle mb-2">
+  <div style="display: inline-flex;">{{comments_arr.length}} Comentario{{comments_arr.length === 1 ?  '' : 's'}}</div>
+  <button class="filterBtn" *ngIf="comments_arr.length" matTooltip="ordernar comentarios" [matTooltipPosition]="'above'"><i class="fa-solid fa-filter fa-xs"></i> ordenar </button>
+</div>
 
-<div class="mb-4">
+<div class="mb-3">
   <div>
-    <textarea name="comment_txt" class="comentariosTxtArea" [(ngModel)]="comment.text" (click)="commentBtnToggle(true)" placeholder="recomendaciones o comentarios de la receta" id="comment_txt"></textarea>
+    <textarea name="comment_txt" class="comentariosTxtArea" [(ngModel)]="comment.text" (click)="commentBtnToggle(true)" placeholder="hacer recomendacion o comentario de la receta" id="comment_txt"></textarea>
   </div>
-  <div *ngIf="showBtns" style="text-align: right;">
+  <div *ngIf="showBtns" class="mb-4" style="text-align: right;">
     <button class="btn- btn-red" style="margin-right: 1em;" (click)="deleteCommentTxt();commentBtnToggle(false);" >Cancel</button>
     <button class="btn- btn-green" (click)="submitComment(parentObject._id, parentObject.comments, parentType)">Submit</button>
   </div>
 </div>
 
-<div *ngIf="!comments_arr.length">
+<div *ngIf="!comments_arr.length" class="text-center">
   <i class="fa-solid fa-comment-slash"></i><br>
   No hay comentarios para esta receta
 </div>
 
 <ng-container *ngIf="comments_arr.length">
-  <ul style="padding-left: 1em;">
-    <li *ngFor="let comment of parentObject.comments" style="list-style-type: square;">
-      <div class="row mb-4">
-        <div class="col-9">{{comment.text}}</div>
-        <div class="col-3 tr row">
-          <button class="col-6">upvote</button>
-          <button class="col-6" (click)="showReplyInput(comment._id, 'block')">Reply</button>
+  <div *ngFor="let comment of parentObject.comments; index as i" class="row mx-1 pt-3" style="background-color: white;">
+    <div class="col-12">
+      <strong style="text-transform: capitalize;">
+        <img class="chefUserIcon" src="../../../assets/chefUser.png" alt=""> chef {{comment.username}}
+      </strong>
+      <div style="display: inline;margin-left: .75em;font-size: .75em;color: gray;">( {{comment.date_created | date}} )</div>
+    </div>
+    <div class="col-12 mt-1 mb-2 commentTxt">{{comment.text}}</div>
+    <div class="col-12 mb-1">
+      <!-- UpvoteBTn -->
+      <button *ngIf="comment.upvotes && userInfo && !comment.upvotes.includes(userInfo._id)" class="upvoteBtn" matTooltip="like" [matTooltipPosition]="'above'" (click)="upvote(comment)">
+        <img class="upvoteIcon" src="../../../assets/avocadoNormal.png" alt="">
+        <div style="display: inline-flex;color: rgba(181,216,0,255);margin-left: .75em;font-size: 1em;">
+          ( <span style="color: rgba(153,90,1,255);">{{comment.upvotes.length ? comment.upvotes.length : '0'}}</span> )
         </div>
-        <div class="col-12 row mt-4">
-          <div class="col-9">
-            <button *ngIf="comment.replies.length" class="replyBtn" (click)="viewReplies(comment._id, comment)"><i class="fa-solid fa-chevron-down fa-xs"></i> {{comment.replies.length}} respuesta{{comment.replies.length > 1 ? 's' : ''}}</button>
-            <button *ngIf="!comment.replies.length" class="replyBtn">0 respuesta{{comment.replies.length != 1 ? 's' : ''}}</button>
+      </button>
+
+      <button *ngIf="comment.upvotes && userInfo && comment.upvotes.includes(userInfo._id)" class="upvoteBtn" matTooltip="like" [matTooltipPosition]="'above'" (click)="removeUpvote(comment)">
+        <img class="upvoteIcon" src="../../../assets/happyAvocado.png" alt="">
+        <div style="display: inline-flex;color: rgba(181,216,0,255);margin-left: .75em;font-size: 1em;">
+          ( <span style="color: rgba(153,90,1,255);">{{comment.upvotes.length ? comment.upvotes.length : '0'}}</span> )
+        </div>
+      </button>
+
+      <button *ngIf="!userInfo" class="upvoteBtn" matTooltip="inicia sesion para darle like" [matTooltipPosition]="'above'" (click)="loginToUpvote()">
+        <img class="upvoteIcon" src="../../../assets/avocadoNormal.png" alt="">
+        <div style="display: inline-flex;color: rgba(181,216,0,255);margin-left: .75em;font-size: 1em;">
+          ( <span style="color: rgba(153,90,1,255);">{{comment.upvotes.length ? comment.upvotes.length : '0'}}</span> )
+        </div>
+      </button>
+
+      <button class="filterBtn" (click)="showReplyInput(comment._id, 'block')" style="font-size: 1em;">responder</button>
+    </div>
+
+    <div class="col-12 mb-1">
+      <div><button class="filterBtn" *ngIf="comment.replies.length" (click)="viewReplies(comment._id, comment, i)"><i class="fa-solid fa-chevron-down fa-xs" ></i> {{comment.replies.length}} respuesta{{comment.replies.length > 1 ? 's' : ''}}</button></div>
+      <div class="noRepliesTxt" *ngIf="!comment.replies.length">0 respuesta{{comment.replies.length != 1 ? 's' : ''}}</div>
+    </div>
+
+    <div id="{{comment._id + '-' + i}}-comment-replies" class="mt-2" style="display: none;">
+      <div *ngFor="let reply of comment.replies"  class="row mx-3 mb-3" style="background-color: white;">
+        <div class="col-12" style="text-transform: capitalize;">
+          <div style="display: inline-flex;"><strong>chef {{reply.username}}</strong></div>
+          <div style="display: inline-flex;margin-left: .75em;font-size: .75em;color: gray;">( {{comment.date_created | date}} )</div>
+          <div style="display: inline-flex;">
+            <!-- <button class="upvoteBtn" (click)="upvote(reply)">
+              <img *ngIf="reply.upvotes && userInfo && !reply.upvotes.includes(userInfo._id)" class="upvoteIconReplies" src="../../../assets/happyAvocado.png" alt="">
+              <div style="display: inline-flex;color: rgba(181,216,0,255);margin-left: .75em;font-size: .75em;">
+                ( <span style="color: rgba(153,90,1,255);">{{(reply.upvotes && reply.upvotes.length) ? reply.upvotes.length : '0'}}</span> )
+              </div>
+            </button> -->
+            <button *ngIf="reply.upvotes && userInfo && !reply.upvotes.includes(userInfo._id)" class="upvoteBtn" matTooltip="like" [matTooltipPosition]="'above'" (click)="upvote(reply)">
+              <img class="upvoteIcon" src="../../../assets/avocadoNormal.png" alt="">
+              <div style="display: inline-flex;color: rgba(181,216,0,255);margin-left: .75em;font-size: 1em;">
+                ( <span style="color: rgba(153,90,1,255);">{{reply.upvotes.length ? reply.upvotes.length : '0'}}</span> )
+              </div>
+            </button>
+
+            <button *ngIf="reply.upvotes && userInfo && reply.upvotes.includes(userInfo._id)" class="upvoteBtn" matTooltip="like" [matTooltipPosition]="'above'" (click)="removeUpvote(reply)">
+              <img class="upvoteIcon" src="../../../assets/happyAvocado.png" alt="">
+              <div style="display: inline-flex;color: rgba(181,216,0,255);margin-left: .75em;font-size: 1em;">
+                ( <span style="color: rgba(153,90,1,255);">{{reply.upvotes.length ? reply.upvotes.length : '0'}}</span> )
+              </div>
+            </button>
+
+            <button *ngIf="!userInfo" class="upvoteBtn" matTooltip="inicia sesion para darle like" [matTooltipPosition]="'above'" (click)="loginToUpvote()">
+              <img class="upvoteIcon" src="../../../assets/avocadoNormal.png" alt="">
+              <div style="display: inline-flex;color: rgba(181,216,0,255);margin-left: .75em;font-size: 1em;">
+                ( <span style="color: rgba(153,90,1,255);">{{reply?.upvotes?.length ? reply.upvotes.length : '0'}}</span> )
+              </div>
+            </button>
           </div>
-          <div class="col-3 tr">-{{comment.username}}</div>
         </div>
-        <div id="{{comment._id}}-comment" class="col-12" style="margin-left: 2em;display: none;">
-          <textarea name="replyTxt" class="comentariosTxtArea" [(ngModel)]="replyTxt" placeholder="responder a {{comment.username}}" id="reply_comment_txt"></textarea>
-          <div style="text-align: right;">
-            <button class="btn- btn-red" style="margin-right: 1em;" (click)="replyTxt = '';showReplyInput(comment._id, 'none')">Cancel</button>
-            <button class="btn- btn-green" (click)="submitComment(comment._id, comment.replies, 'comment', true)">Submit</button>
-          </div>
-        </div>
+        <div class="col-12" style="margin-left: .75em;">{{reply.text}}</div>
       </div>
-      <div>
-        <div *ngFor="let reply of comment.replies">
-          {{reply.text}}
-        </div>
+    </div>
+
+    <div id="{{comment._id}}-comment" class="col-12 mx-3" style="display: none;">
+      <textarea name="replyTxt" class="comentariosTxtArea replyTextarea" [(ngModel)]="replyTxt" placeholder="responder a {{comment.username}}" id="reply_comment_txt"></textarea>
+      <div style="text-align: right;margin-right: 2em;">
+        <button class="btn btn-red" style="margin-right: 1em;" (click)="replyTxt = '';showReplyInput(comment._id, 'none')">Cancel</button>
+        <button class="btn btn-green" (click)="submitComment(comment._id, comment.replies, 'comment', true)">Submit</button>
       </div>
-    </li>
-  </ul>
+    </div>
+  </div>
 
 </ng-container>

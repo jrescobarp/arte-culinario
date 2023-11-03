@@ -4,8 +4,73 @@
 
 .comentariosTxtArea{
   width: 100%;
+  height: 1.7em;
+  border: none;
+  border-bottom: 2px solid #ccc;
+}
+
+.replyTextarea{
+  width: 98%;
 }
 
 .tr{
   text-align: right;
+}
+
+.chefUserIcon{
+  max-width: 1.5em;
+  max-height: 1.5em;
+}
+
+.commentTxt{
+  padding-left: 1.5em;
+}
+
+.filterBtn{
+  margin-left: 1em;
+  background-color: transparent;
+  border: none;
+  min-height: 1.2em;
+}
+
+.noRepliesTxt{
+  margin-left: .75em;
+}
+
+.filterBtn:hover{
+  background-color: rgb(93, 129, 2, .25);
+  border-radius: 15px;
+}
+
+.upvoteBtn{
+  background-color: transparent;
+  border: none;
+  margin-left: .75em;
+}
+
+.upvoteIcon{
+  max-height: 1.75em;
+}
+
+.upvoteBtn:hover{
+  background-color: rgb(93, 129, 2, .25);
+  border-radius: 50px;
+}
+
+.upvoteBtn:hover .upvoteIcon{
+  max-height: 2.5em;
+}
+
+.upvoteIconReplies{
+  max-height: 1.35em;
+}
+
+.upvoteBtn:hover .upvoteIconReplies{
+  max-height: 2em;
+}
+
+@media (max-width: 1000px) {
+  .replyTextarea{
+    width: 92%;
+  }
 }

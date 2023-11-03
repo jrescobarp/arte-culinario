@@ -16,12 +16,16 @@ const CommentSchema = new Schema({
         required: true
     },
     upvotes:{
-        type: Number,
-        default: 0
+        type: [Schema.Types.ObjectId],
+        ref: 'User'
     },
     replies:{
         type: [Schema.Types.ObjectId],
         ref: 'Comment'
+    },
+    date_created:{
+        type: Number,
+        required: true
     }
 });
 

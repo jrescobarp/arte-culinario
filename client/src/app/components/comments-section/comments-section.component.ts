@@ -20,7 +20,8 @@ export class CommentsSectionComponent {
     user_id: "",
     username: "",
     text: "",
-    upvotes: 0,
+    upvotes: [],
+    date_created: 0,
     replies: [],
     parent_id: "",
     parent_type: "",
@@ -49,7 +50,7 @@ export class CommentsSectionComponent {
   submitComment(id:string, updateArr: [], parentType: string, reply = false){
     this.comment.user_id = this.userInfo._id ? this.userInfo._id : '';
     this.comment.username = this.userInfo.username ? this.userInfo.username : '';
-
+    this.comment.date_created = Date.now();
     this.comment.parent_id = id;
     this.comment.update_arr = updateArr;
     this.comment.parent_type = parentType;
@@ -63,13 +64,38 @@ export class CommentsSectionComponent {
   }
 
   showReplyInput(id:string, showTxt:string){
-    document.getElementById(id + "-comment")!.style.display=showTxt;
+    if(this.userInfo){
+      document.getElementById(id + "-comment")!.style.display=showTxt;
+    }else{
+      this._snackbar.open("inicia sesión o crea una cuenta para comentar", '', {duration: 2500, panelClass: ['aac-red']});
+    }
+    // document.getElementById(id + "-comment")!.style.display=showTxt;
   }
 
-  viewReplies(id:string, comment: any){
+  viewReplies(id:string, comment: any, index: number){
     this.apiService.getComments(id).subscribe((result:any) =>{
-      console.log("RESULT: ", result);
+      // console.log("RESULT: ", result);
       comment.replies = result.replies
+      document.getElementById(id + "-" + index + "-comment-replies")!.style.display='';
     });
+  }
+
+  upvote(comment:Comment){
+    if(this.userInfo && this.userInfo._id){
+      comment.upvotes.push(this.userInfo._id);
+      this.apiService.updateComment(comment._id!, comment).subscribe((result:any) =>{
+        console.log("RESULT: ", result);
+      });
+    }else{
+      this._snackbar.open("inicia sesión o crea una cuenta para poder votar en comentarios", '', {duration: 2500, panelClass: ['aac-red']});
+    }
+  }
+
+  removeUpvote(comment:Comment){
+    console.log("REOMOVMREMKE");
+  }
+
+  loginToUpvote(){
+    this._snackbar.open("inicia sesión o crea una cuenta para poder votar en comentarios", '', {duration: 2500, panelClass: ['aac-red']});
   }
 }

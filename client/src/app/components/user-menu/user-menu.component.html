@@ -1,6 +1,8 @@
-<div class="mainContainer border-gray">
-  <div class="notLoggedInDiv" *ngIf="!loggedIn">
-    <div class="userIcon"><i class="far fa-user-circle fa-3x blackFont" aria-hidden="true"></i></div>
+<div class="mainContainer" [ngClass]="dropdownDisplay ? 'noPaddingTop minHeight' : 'border-gray'">
+  <div class="notLoggedInDiv" *ngIf="!loggedIn" [ngClass]="dropdownDisplay ? 'noPaddingTop' : ''">
+    <div *ngIf="!dropdownDisplay" class="userIcon" style="text-align: center;">
+      <img class="chefIcon" src="../../../assets//redChef.png" alt="">
+    </div>
     <app-login class="login"
       [loginType]="'none'"
       (logInChangeStatus)="updateloginStatus($event)">

@@ -72,7 +72,7 @@ export class HomeComponent implements OnInit {
 
   async createFeaturedMealArray(){
     let featuredMealSetTime = Number(localStorage.getItem("featuredMealSetTime"));
-    // 86400000ms is 24hrs
+    // 86400000ms = 24hrs
     // if(featuredMealSetTime && (Date.now() > Number(featuredMealSetTime + 86400000))){
     if(featuredMealSetTime && (Date.now() > Number(featuredMealSetTime + 20000))){
       let appetizers = JSON.parse(localStorage.getItem("appsArr") || "[]");

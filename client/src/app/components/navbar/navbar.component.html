@@ -1,23 +1,20 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-light bg-light">
   <a class="navbar-brand" href="#"><img class="logo" src="../../../assets/AacLogo.png" alt=""></a>
 
-
-  <nav class="navbar navbar bg">
-    <div class="container-fluid">
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
-        <img class="chefUserIcon" src="../../../assets/chefUser.png" alt="">
-      </button>
-    </div>
-  </nav>
-
-  <div class="collapse" id="navbarToggleExternalContent">
-    <!-- Mobile/Tablet View -->
-    <div class="bg p-4" style="display: inline-block;">
+  <ul *ngIf="isMobile || showProfileDropdown" class="nav justify-content-end" style="margin-right: .6em;">
+  <li class="nav-item dropdown btn-red" style="border-radius: 25px;border-width: .5px;">
+    <a class="nav-link" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"
+    style="padding: .25em;" (mouseover)="hover('whiteChef.png');" (mouseout)="hover('redChef.png');" data-bs-auto-close="outside">
+      <img class="chefUserIcon" src="../../../assets/redChef.png" alt="" id="navUserIcon">
+    </a>
+    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown" style="min-width: 15em;">
       <app-user-menu
       [user]="user"
+      [dropdownDisplay]="true"
       ></app-user-menu>
     </div>
-  </div>
+  </li>
+  </ul>
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <a *ngIf="path" class="nav-link pathNameTxt" href="/">/ {{path}}</a>

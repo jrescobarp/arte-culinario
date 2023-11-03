@@ -8,6 +8,7 @@ import {
   NgbNavModule,
   NgbModule,
 } from '@ng-bootstrap/ng-bootstrap';
+import {MatTooltipModule} from '@angular/material/tooltip';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { RecipeListComponent } from './recipe-list/recipe-list.component';
 import { FeaturedMealComponent } from './featured-meal/featured-meal.component';
@@ -38,7 +39,8 @@ import { CommentsSectionComponent } from './comments-section/comments-section.co
     NgbNavModule,
     NgbModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    MatTooltipModule
   ],
   exports:[
     RecipeListComponent,

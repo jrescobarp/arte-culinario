@@ -84,9 +84,9 @@ export class ApiService {
     return this.httpClient.post(`${this.url}/comments`, comment, { responseType: 'text' });
   }
 
-  // updateComment(id: string, comment: Comment): Observable<string> {
-  //   return this.httpClient.put(`${this.url}/comments/${id}`, comment, { responseType: 'text' });
-  // }
+  updateComment(id: string, comment: Comment): Observable<string> {
+    return this.httpClient.put(`${this.url}/comments/${id}`, comment, { responseType: 'text' });
+  }
 
   // deleteComment(id: string): Observable<string> {
   //   return this.httpClient.delete(`${this.url}/comments/${id}`, { responseType: 'text' });

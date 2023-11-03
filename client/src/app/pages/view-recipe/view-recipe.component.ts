@@ -50,15 +50,19 @@ export class ViewRecipeComponent {
       alert('No id provided');
     }
 
+    this.user$ = this.apiService.isLoggedIn();
+    this.user$.subscribe((userInfo:any) => {
+      if(userInfo){
+        this.userInfo = userInfo;
+      }
+    });
     this.apiService.getRecipe(id !).subscribe((recipe) => {
       this.recipe.next(recipe);
-      this.apiService.isLoggedIn().subscribe((userInfo:any) => {
-        if(userInfo){
-          this.userInfo = userInfo;
-          this.checkFavorites();
-        }
-      });
+      if(this.userInfo){
+        this.checkFavorites();
+      }
     });
+
   }
 
   copyToClipboard(type:string){

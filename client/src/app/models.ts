@@ -32,11 +32,12 @@ export interface Comment {
   user_id: string;
   username: string;
   text: string;
-  upvotes: number;
+  upvotes: string[];
   replies: Comment[];
   parent_id: string,
   parent_type: string,
   update_arr: Comment[];
+  date_created: number;
   // location: string;
 }
 
