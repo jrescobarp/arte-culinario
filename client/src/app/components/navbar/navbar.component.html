@@ -2,12 +2,13 @@
   <a class="navbar-brand" href="#"><img class="logo" src="../../../assets/AacLogo.png" alt=""></a>
 
   <ul *ngIf="isMobile || showProfileDropdown" class="nav justify-content-end" style="margin-right: .6em;">
-  <li class="nav-item dropdown btn-red" style="border-radius: 25px;border-width: .5px;">
+  <li class="nav-item dropdown btn-red-filled" style="border-radius: 25px;border-width: .5px;">
     <a class="nav-link" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"
-    style="padding: .25em;" (mouseover)="hover('whiteChef.png');" (mouseout)="hover('redChef.png');" data-bs-auto-close="outside">
-      <img class="chefUserIcon" src="../../../assets/redChef.png" alt="" id="navUserIcon">
+    style="padding: .25em;" (mouseover)="hover('redChef.png');" (mouseout)="hover('whiteChef.png');" data-bs-auto-close="outside">
+      <img class="chefUserIcon" src="../../../assets/whiteChef.png" alt="" id="navUserIcon">
     </a>
-    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown" style="min-width: 15em;">
+    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown" style="min-width: 15em;"
+    (mouseover)="hover('redChef.png');" (mouseout)="hover('whiteChef.png');">
       <app-user-menu
       [user]="user"
       [dropdownDisplay]="true"

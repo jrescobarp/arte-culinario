@@ -31,7 +31,7 @@ exports.create_comment = asyncHandler(async(req, res, next) => {
 
 exports.edit_comment = asyncHandler(async(req, res, next) => {
     response = Comment.findByIdAndUpdate(req.body._id, {text: req.body.text, upvotes: req.body.upvotes}).then((res) => {
-        console.log("RESULT: ", res);
+        // console.log("RESULT: ", res);
     }).catch((err) => {
         console.log("ERROR: ", err);
         //catch error

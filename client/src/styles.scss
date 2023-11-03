@@ -37,6 +37,17 @@
   color: white;
 }
 
+.btn-red-filled{
+  border: 1px solid rgba(206,60,81,1);
+  background-color: rgba(206,60,81,1);
+  color: white;
+}
+
+.btn-red-filled:hover{
+  background-color: white;
+  color: rgba(206,60,81,1);
+}
+
 .border-gold{
   border:1px solid #e8cb6d;
   border-radius: 10px;
