@@ -17,6 +17,7 @@ import { UserMenuComponent } from './user-menu/user-menu.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { FooterComponent } from './footer/footer.component';
 import { CommentsSectionComponent } from './comments-section/comments-section.component';
+import { ImageDisplayComponent } from './image-display/image-display.component';
 
 
 
@@ -28,7 +29,8 @@ import { CommentsSectionComponent } from './comments-section/comments-section.co
     UserMenuComponent,
     NavbarComponent,
     FooterComponent,
-    CommentsSectionComponent
+    CommentsSectionComponent,
+    ImageDisplayComponent
   ],
   imports: [
     CommonModule,
@@ -49,7 +51,8 @@ import { CommentsSectionComponent } from './comments-section/comments-section.co
     UserMenuComponent,
     NavbarComponent,
     FooterComponent,
-    CommentsSectionComponent
+    CommentsSectionComponent,
+    ImageDisplayComponent
   ]
 })
 export class ComponentsModule { }

@@ -8,8 +8,8 @@ export interface Recipe {
   ingredients: string[];
   type: string[];
   connected_recipes: string[];
-  comments: string[];
-  images: string[];
+  comments: Comment[];
+  images: Image[];
   featured_meal_count: number;
   book: string[];
 }
@@ -21,8 +21,8 @@ export interface User {
   username:string;
   email: string;
   password: string;
-  comments: string[];
-  images: string[];
+  comments: Comment[];
+  images: Image[];
   recipes: string[];
   tssci: boolean;
 }
@@ -46,7 +46,10 @@ export interface Image {
   _id?: string;
   url: string;
   user_id:string;
+  recipe_id:string;
+  description:string;
+  username: string;
   upvotes: number;
   // report: string;
-  comments: string[];
+  comments: Comment[];
 }

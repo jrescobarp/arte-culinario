@@ -11,6 +11,7 @@ const MongoStore = require("connect-mongo");
 var recipeRouter = require("./routes/recipe.routes");
 var userRouter = require('./routes/user.routes');
 var commentRouter = require('./routes/comment.routes');
+var imageRouter = require('./routes/comment.routes');
 var User = require('./models/user');
 
  
@@ -66,6 +67,7 @@ app.use((req:any, res, next) => {
 app.use("/recipes", recipeRouter);
 app.use("/user", userRouter);
 app.use("/comments", commentRouter);
+app.use("/image", imageRouter);
 
 // start the Express server
 app.listen(5200, () => {

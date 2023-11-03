@@ -1,0 +1,20 @@
+.fa-kitchen-set{
+  color: rgba(206,60,81,1);
+}
+
+.upload-photo-btn{
+  color: rgba(206,60,81,1);
+  text-decoration: underline;
+  margin-top: .55em;
+  border: none;
+  background-color: transparent;
+  background-repeat: no-repeat;
+  border: none;
+  outline:none
+}
+
+.upload-photo-btn:hover{
+  text-decoration: underline;
+  cursor: pointer;
+  color: rgba(206,60,81,.5);
+}

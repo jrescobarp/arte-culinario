@@ -20,7 +20,7 @@
     </div>
 
     <div class="mainImgCarousel" [ngClass]="isMobile ? 'col-12' : 'col-7'">
-      <div *ngIf="recipe.value.images.length" id="imgCarousel" class="carousel slide">
+      <!-- <div *ngIf="recipe.value.images.length" id="imgCarousel" class="carousel slide">
         <div class="carousel-inner">
           <div class="carousel-item carouselDiv" *ngFor="let img of recipe.value.images;let index = index;let isFirst = first" [ngClass]="{active:isFirst}">
             <img src="{{img}}" class="d-block w-100" alt="...">
@@ -41,7 +41,13 @@
         <i class="fa-solid fa-kitchen-set fa-2xl noImgIcon"></i>
         <div class="pt-3">No images available for this recipe.</div>
         <div class="pt-1"><a href="">Add your own for everyone to see!</a></div>
-      </div>
+      </div> -->
+      <app-image-display
+          [images]="recipe.value.images"
+          [isMobile]="isMobile"
+          [recipe_id]="recipe.value._id!"
+          [recipe_name]="recipe.value.name"
+      ></app-image-display>
     </div>
 
     <div class="ingrDiv my-4" [ngClass]="isMobile ? 'col-12' : 'col-5'" style="background-color: white;">
