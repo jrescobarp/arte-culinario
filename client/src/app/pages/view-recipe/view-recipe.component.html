@@ -5,7 +5,7 @@
 
 <div class="container mainContainer">
   <div class="row">
-    <div class="col-12 row mt-3" style="padding-right: 0px;">
+    <div class="col-12 row mt-3" style="padding-right: 0px;border-bottom:1px solid gray;">
       <div [ngClass]="isMobile ? 'recipeNameMobile col-10' : 'recipeNameFull col-9'">{{recipe.value.name}}</div>
       <div class="col" style="padding-top: .4em;text-align: right;padding-right: 0em;">
         <button *ngIf="userInfo && !isFavorite" class="btn btn-sm btn-red btn-red-title" style="margin-top: -.25em;" matTooltip="agregar a favoritos" [matTooltipPosition]="'above'" (click)="addRecipeToFavorites()"><i class="fa-solid fa-plus"></i></button>
