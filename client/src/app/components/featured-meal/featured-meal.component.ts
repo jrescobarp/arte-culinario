@@ -8,6 +8,8 @@ import { Component, OnInit, Input } from '@angular/core';
 export class FeaturedMealComponent implements OnInit {
   @Input() featuredRecipe: any[];
   @Input() isMobile!: boolean;
+  @Input() isHomePage: boolean;
+
 
   ngOnInit(): void {}
 

@@ -78,9 +78,7 @@ export class HomeComponent implements OnInit {
       let appetizers = JSON.parse(localStorage.getItem("appsArr") || "[]");
       // let entrees = JSON.parse(localStorage.getItem("entreeArr") || "[]");
       // let desserts = JSON.parse(localStorage.getItem("dessertArr") || "[]");
-      console.log("FEATUREDNJSANJDKSNS: ", this.findLowestFeaturedCount(appetizers,"appsArr"));
       this.apiService.getRecipe(this.findLowestFeaturedCount(appetizers,"appsArr")).subscribe((recipe:any) =>{
-      console.log("FEATUREDNJSANJDKSNS2222: ", recipe);
       this.featuredMeals.push(recipe);
         localStorage.setItem("featuredMealArr",JSON.stringify(this.featuredMeals));
       });

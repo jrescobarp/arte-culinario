@@ -7,7 +7,8 @@
     <i class="fa-solid fa-kitchen-set fa-2xl"></i>
     <div class="pt-3 blackFont">No hay imagenes para esta receta.</div>
     <div>
-      <button class="upload-photo-btn" (click)="open(content)">Compartir fotos</button>
+      <button *ngIf="!isHomePage" class="upload-photo-btn" (click)="open(content)">compartir fotos</button>
+      <button *ngIf="isHomePage" class="upload-photo-btn">abrir receta para compartir fotos</button>
     </div>
   </div>
 </div>
@@ -30,6 +31,6 @@
 	</div>
 	<div class="modal-footer">
 		<button type="button" class="btn btn-red" (click)="clearImgData();modal.close('Save click')">Cancelar</button>
-		<button type="button" class="btn btn-green" (click)="modal.close('Save click')">Subir</button>
+		<button type="button" class="btn btn-green" (click)="uploadImg();modal.close('Save click')">Subir</button>
 	</div>
 </ng-template>
