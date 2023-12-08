@@ -11,7 +11,7 @@ const MongoStore = require("connect-mongo");
 var recipeRouter = require("./routes/recipe.routes");
 var userRouter = require('./routes/user.routes');
 var commentRouter = require('./routes/comment.routes');
-var imageRouter = require('./routes/comment.routes');
+var imageRouter = require('./routes/image.routes');
 var User = require('./models/user');
 
  

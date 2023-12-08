@@ -1,6 +1,10 @@
 <div class="recipeImgDiv">
-  <img *ngIf="images.length" class="recipeImgDisplay" src="../../../assets/spatula-pan.png" alt="">
-
+  <div *ngIf="images.length">
+    <div *ngFor="let image of images">
+      <img src="{{image.imgDataArr[0].url}}" alt="" style="max-height: 28em;margin-top: 1.5em;">
+    </div>
+    <button class="upload-photo-btn" (click)="open(content)">compartir fotos</button>
+  </div>
 
   <!-- No Imgs -->
   <div *ngIf="!images.length" class="my-4 text-center" [ngClass]="isMobile ? 'mt-3' : 'mt-5'">
@@ -21,12 +25,14 @@
 	</div>
 	<div class="modal-body">
     <div class="row text-center mx-5">
-      <div class="col-12 my-4">
-        <input class="form-control" type="file" [(ngModel)]="imageFiles" id="formFileMultiple" multiple>
-      </div>
-      <div class="col-12 mb-4">
-        <textarea name="comment_txt" class="comentariosTxtArea" [(ngModel)]="newImage.description" placeholder="descripcion" id="comment_txt" style="width: 100%;"></textarea>
-      </div>
+      <form id="modalForm">
+        <div class="col-12 my-4">
+          <input class="form-control" type="file" name="form-imgs" id="form-file" multiple>
+        </div>
+        <div class="col-12 mb-4">
+          <textarea name="description" class="comentariosTxtArea" placeholder="descripcion" id="description" style="width: 100%;"></textarea>
+        </div>
+      </form>
     </div>
 	</div>
 	<div class="modal-footer">

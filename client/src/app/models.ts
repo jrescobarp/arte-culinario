@@ -41,10 +41,14 @@ export interface Comment {
   // location: string;
 }
 
+export interface imageData {
+  url: string;
+  filename: string;
+}
 
 export interface Image {
   _id?: string;
-  url: string;
+  imgDataArr: imageData[];
   user_id:string;
   recipe_id:string;
   description:string;

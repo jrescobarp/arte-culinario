@@ -19,35 +19,14 @@
       </div>
     </div>
 
-    <div class="mainImgCarousel" [ngClass]="isMobile ? 'col-12' : 'col-7'">
-      <!-- <div *ngIf="recipe.value.images.length" id="imgCarousel" class="carousel slide">
-        <div class="carousel-inner">
-          <div class="carousel-item carouselDiv" *ngFor="let img of recipe.value.images;let index = index;let isFirst = first" [ngClass]="{active:isFirst}">
-            <img src="{{img}}" class="d-block w-100" alt="...">
-          </div>
-        </div>
-        <div class="pt-1"><a href="">Add your own for everyone to see!</a></div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#imgCarousel" data-bs-slide="prev">
-          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#imgCarousel" data-bs-slide="next">
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Next</span>
-        </button>
-      </div>
-
-      <div *ngIf="!recipe.value.images.length" class="text-center" style="font-size: .9em;">
-        <i class="fa-solid fa-kitchen-set fa-2xl noImgIcon"></i>
-        <div class="pt-3">No images available for this recipe.</div>
-        <div class="pt-1"><a href="">Add your own for everyone to see!</a></div>
-      </div> -->
+    <div class="mainImgCarousel" [ngClass]="isMobile || recipe.value.images.length ? 'col-12' : 'col-7'">
       <app-image-display
           [images]="recipe.value.images"
           [isMobile]="isMobile"
           [recipe_id]="recipe.value._id!"
           [recipe_name]="recipe.value.name"
           [isHomePage]="false"
+          [userInfo]="userInfo"
       ></app-image-display>
     </div>
 
@@ -65,7 +44,7 @@
       </ul>
     </div>
 
-    <div class="col-12 stepsDiv my-3" style="background-color: white;">
+    <div class="stepsDiv my-3" [ngClass]="isMobile || !recipe.value.images.length ? 'col-12' : 'col-7'" style="background-color: white;">
       <div class="row mt-2">
         <div class="col-8" style="font-size: 1em;">Instrucciones:</div>
         <div class="col-4" style="text-align: right;">

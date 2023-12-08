@@ -1,6 +1,11 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
+const imgData = new Schema({
+    url: String,
+    filename: String
+});
+
 const ImageSchema = new Schema({
         user_id: {
             type:Schema.Types.ObjectId,
@@ -16,8 +21,8 @@ const ImageSchema = new Schema({
             type: String,
             required: true
         },
-        url: {
-            type: [String],
+        imgDataArr: {
+            type: [imgData],
             required: true
         },
         description: {

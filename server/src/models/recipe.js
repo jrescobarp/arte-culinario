@@ -33,7 +33,7 @@ const RecipeSchema = new Schema({
     },
     images: {
         type: [Schema.Types.ObjectId],
-            ref: 'Image'
+        ref: 'Image'
     },
     comments: {
         type: [Schema.Types.ObjectId],

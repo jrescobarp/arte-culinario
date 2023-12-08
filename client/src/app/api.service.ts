@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, Subject, tap } from 'rxjs';
 import { Recipe, Comment, User, Image } from './models';
+import { HttpHeaders } from '@angular/common/http';
+
 
 @Injectable({
   providedIn: 'root'
@@ -86,6 +88,15 @@ export class ApiService {
 
   updateComment(id: string, comment: Comment): Observable<string> {
     return this.httpClient.put(`${this.url}/comments/${id}`, comment, { responseType: 'text' });
+  }
+
+  createImage(image: any): Observable<any> {
+    return this.httpClient.post(`${this.url}/image`, image, {
+      // headers: new HttpHeaders({
+      //  "Content-Type": "multipart/form-data"
+      // }),
+      responseType: 'text'
+    });
   }
 
   // deleteComment(id: string): Observable<string> {
