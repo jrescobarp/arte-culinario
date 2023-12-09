@@ -1,9 +1,40 @@
 <div class="recipeImgDiv">
-  <div *ngIf="images.length">
-    <div *ngFor="let image of images">
-      <img src="{{image.imgDataArr[0].url}}" alt="" style="max-height: 28em;margin-top: 1.5em;">
+  <div *ngIf="images.length" class="showImgsDiv container">
+    <!-- img carousel -->
+    <div *ngFor="let image of images" class="row mt-5 ">
+      <div [ngClass]="isMobile ? 'col-12' : 'col-9'">
+        <div id="carouselExampleControls-{{image._id}}" class="carousel slide" data-bs-ride="carousel">
+          <div class="carousel-inner">
+            <div *ngFor="let img of image.imgDataArr;index as i" class="carousel-item" [ngClass]="i === 0 ? 'active' : ''">
+              <div class="d-flex justify-content-center carouselImgDiv">
+                <img class="d-block" src="{{img.url}}">
+              </div>
+            </div>
+          </div>
+          <button class="carousel-control-prev" type="button" [attr.data-bs-target]="'#carouselExampleControls-' + image._id" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button class="carousel-control-next" type="button" [attr.data-bs-target]="'#carouselExampleControls-' + image._id" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
+        </div>
+      </div>
+
+      <div [ngClass]="isMobile ? 'col-12' : 'col-3'">
+        <div>foto{{image.imgDataArr.length > 1 ? 's' : ''}} de chef {{image.username}}</div>
+        <div>
+          <app-comments-section
+            [comments_arr]="image.comments"
+            [isMobile]="isMobile"
+            [userInfo]="userInfo"
+            [parentObject]="image"
+            [parentType]="'image'"
+          ></app-comments-section>
+        </div>
+      </div>
     </div>
-    <button class="upload-photo-btn" (click)="open(content)">compartir fotos</button>
   </div>
 
   <!-- No Imgs -->

@@ -2,15 +2,28 @@
   color: rgba(206,60,81,1);
 }
 
-.upload-photo-btn{
-  color: rgba(206,60,81,1);
-  text-decoration: underline;
-  margin-top: .55em;
-  border: none;
-  background-color: transparent;
-  background-repeat: no-repeat;
-  border: none;
-  outline:none
+.showImgsDiv{
+  width: 100%;
+  max-height: 32em;
+  overflow-y: auto;
+}
+
+.carousel{
+  height: 32em;
+}
+
+.carousel img{
+  height: 32em;
+  width: auto;
+}
+
+.carousel-control-next,
+.carousel-control-prev /*, .carousel-indicators */ {
+    filter: invert(90%);
+}
+
+.carouselImgDiv{
+  background-color: rgba(0, 0, 0, 0.03);
 }
 
 .upload-photo-btn:hover{
