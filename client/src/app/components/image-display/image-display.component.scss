@@ -4,16 +4,16 @@
 
 .showImgsDiv{
   width: 100%;
-  max-height: 32em;
+  max-height: 35em;
   overflow-y: auto;
 }
 
 .carousel{
-  height: 32em;
+  height: 35em;
 }
 
 .carousel img{
-  height: 32em;
+  height: 34em;
   width: auto;
 }
 
@@ -22,12 +22,53 @@
     filter: invert(90%);
 }
 
-.carouselImgDiv{
-  background-color: rgba(0, 0, 0, 0.03);
+.commentSection{
+  border: .5px solid gray;
+  height: 25em;
 }
 
 .upload-photo-btn:hover{
   text-decoration: underline;
   cursor: pointer;
   color: rgba(206,60,81,.5);
+}
+
+.usernameTxt{
+  font-size: 1.7em;
+}
+
+
+
+
+
+
+
+
+
+
+
+.upvoteBtn{
+  background-color: transparent;
+  border: none;
+}
+
+.upvoteIcon{
+  max-height: 1.75em;
+}
+
+.upvoteBtn:hover{
+  background-color: rgb(93, 129, 2, .25);
+  border-radius: 50px;
+}
+
+.upvoteBtn:hover .upvoteIcon{
+  max-height: 2.5em;
+}
+
+.upvoteIconReplies{
+  max-height: 1.35em;
+}
+
+.upvoteBtn:hover .upvoteIconReplies{
+  max-height: 2em;
 }

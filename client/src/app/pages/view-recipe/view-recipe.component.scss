@@ -2,19 +2,19 @@
   min-height: 45em;
 }
 
-.carouselDiv{
-  height: 25em;
+.titleDiv{
+  border-bottom:1px solid gray;
 }
 
-.carouselDiv img{
-  background-size: contain;
+.mainImgCarousel{
+  border: 1px solid gray;
   border-radius: 5px;
 }
 
 .ingrDiv{
   border: 1px solid gray;
   border-radius: 5px;
-  max-height: 25em;
+  max-height: 15em;
   overflow-y: auto;
   font-size: 1.3em;
 }
@@ -55,9 +55,6 @@
 
 
 @media (max-width: 1000px) {
-  .carouselDiv{
-    height: 20em;
-  }
   .ingrDiv{
     max-height: 15em;
   }

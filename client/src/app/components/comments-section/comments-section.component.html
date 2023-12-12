@@ -1,11 +1,12 @@
 <div class="comentariosTitle mb-2">
-  <div style="display: inline-flex;">{{comments_arr.length}} Comentario{{comments_arr.length === 1 ?  '' : 's'}}</div>
+  <div style="display: inline-flex;" [ngClass]="mainCommentSection ? 'lgTitleTxt' : 'smTitleTxt'">{{comments_arr.length}} Comentario{{comments_arr.length === 1 ?  '' : 's'}}</div>
   <button class="filterBtn" *ngIf="comments_arr.length" matTooltip="ordernar comentarios" [matTooltipPosition]="'above'"><i class="fa-solid fa-filter fa-xs"></i> ordenar </button>
 </div>
 
 <div class="mb-3">
   <div>
-    <textarea name="comment_txt" class="comentariosTxtArea" [(ngModel)]="comment.text" (click)="commentBtnToggle(true)" placeholder="hacer recomendacion o comentario de la receta" id="comment_txt"></textarea>
+    <textarea name="comment_txt" class="comentariosTxtArea"
+    [(ngModel)]="comment.text" (click)="commentBtnToggle(true)" placeholder="hacer recomendacion o comentario de la receta"></textarea>
   </div>
   <div *ngIf="showBtns" class="mb-4" style="text-align: right;">
     <button class="btn- btn-red" style="margin-right: 1em;" (click)="deleteCommentTxt();commentBtnToggle(false);" >Cancel</button>

@@ -5,21 +5,23 @@
 
 <div class="container mainContainer">
   <div class="row">
-    <div class="col-12 row mt-3" style="padding-right: 0px;border-bottom:1px solid gray;">
-      <div [ngClass]="isMobile ? 'recipeNameMobile col-10' : 'recipeNameFull col-9'">{{recipe.value.name}}</div>
-      <div class="col" style="padding-top: .4em;text-align: right;padding-right: 0em;">
-        <button *ngIf="userInfo && !isFavorite" class="btn btn-sm btn-red btn-red-title" style="margin-top: -.25em;" matTooltip="agregar a favoritos" [matTooltipPosition]="'above'" (click)="addRecipeToFavorites()"><i class="fa-solid fa-plus"></i></button>
-        <button *ngIf="userInfo && isFavorite" class="btn btn-sm btn-red btn-red-title" style="margin-top: -.25em;" matTooltip="borrar de favoritos" [matTooltipPosition]="'above'" (click)="removeRecipeFromFavorites()"><i class="fa-solid fa-minus"></i></button>
-        <!-- <button *ngIf="!userInfo" class="btn btn-sm btn-red btn-red-title" style="margin-top: -.25em;" matTooltip="inicia sesion para agregar a lista de recetas favoritas" [matTooltipPosition]="'above'" >
-          <i class="fa-solid fa-plus"></i>
-        </button> -->
-        <button class="btn btn-sm btn-green" matTooltip="copiar todo texto" [matTooltipPosition]="'above'" (click)="copyToClipboard('all')"  style="margin-top: -.25em;margin-left: 1em;">
-          <i class="fa-regular fa-clipboard"></i>
-        </button>
+    <div class="col-12 my-3 titleDiv">
+      <div class="row">
+        <div [ngClass]="isMobile ? 'recipeNameMobile col-9' : 'recipeNameFull col-9'">{{recipe.value.name}}</div>
+        <div class="col" style="padding-top: .4em;text-align: right;padding-right: 0em;">
+          <button *ngIf="userInfo && !isFavorite" class="btn btn-sm btn-red btn-red-title" style="margin-top: -.25em;" matTooltip="agregar a favoritos" [matTooltipPosition]="'above'" (click)="addRecipeToFavorites()"><i class="fa-solid fa-plus"></i></button>
+          <button *ngIf="userInfo && isFavorite" class="btn btn-sm btn-red btn-red-title" style="margin-top: -.25em;" matTooltip="borrar de favoritos" [matTooltipPosition]="'above'" (click)="removeRecipeFromFavorites()"><i class="fa-solid fa-minus"></i></button>
+          <!-- <button *ngIf="!userInfo" class="btn btn-sm btn-red btn-red-title" style="margin-top: -.25em;" matTooltip="inicia sesion para agregar a lista de recetas favoritas" [matTooltipPosition]="'above'" >
+            <i class="fa-solid fa-plus"></i>
+          </button> -->
+          <button class="btn btn-sm btn-green" matTooltip="copiar todo texto" [matTooltipPosition]="'above'" (click)="copyToClipboard('all')"  style="margin-top: -.25em;margin-left: 1em;">
+            <i class="fa-regular fa-clipboard"></i>
+          </button>
+        </div>
       </div>
     </div>
 
-    <div class="mainImgCarousel" [ngClass]="isMobile || recipe.value.images.length ? 'col-12' : 'col-7'">
+    <div class="mainImgCarousel bg-white col-12 mb-3 px-0">
       <app-image-display
           [images]="recipe.value.images"
           [isMobile]="isMobile"
@@ -30,7 +32,7 @@
       ></app-image-display>
     </div>
 
-    <div class="ingrDiv my-4" [ngClass]="isMobile ? 'col-12' : 'col-5'" style="background-color: white;">
+    <div class="ingrDiv bg-white" [ngClass]="isMobile ? 'col-12' : 'col-5'">
       <div class="row">
         <div class="col-8 mt-2" style="font-size: 1em;">Ingredientes:</div>
         <div class="col-4" style="text-align: right;">
@@ -44,7 +46,7 @@
       </ul>
     </div>
 
-    <div class="stepsDiv my-3" [ngClass]="isMobile || !recipe.value.images.length ? 'col-12' : 'col-7'" style="background-color: white;">
+    <div class="stepsDiv bg-white" [ngClass]="isMobile ? 'col-12 mt-3' : 'col-7'">
       <div class="row mt-2">
         <div class="col-8" style="font-size: 1em;">Instrucciones:</div>
         <div class="col-4" style="text-align: right;">
@@ -64,6 +66,7 @@
         [userInfo]="userInfo"
         [parentObject]="recipe.value"
         [parentType] = "'recipe'"
+        [mainCommentSection]="true"
       ></app-comments-section>
     </div>
   </div>

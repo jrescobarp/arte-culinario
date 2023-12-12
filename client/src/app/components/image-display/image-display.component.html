@@ -1,45 +1,71 @@
 <div class="recipeImgDiv">
   <div *ngIf="images.length" class="showImgsDiv container">
     <!-- img carousel -->
-    <div *ngFor="let image of images" class="row mt-5 ">
-      <div [ngClass]="isMobile ? 'col-12' : 'col-9'">
-        <div id="carouselExampleControls-{{image._id}}" class="carousel slide" data-bs-ride="carousel">
-          <div class="carousel-inner">
-            <div *ngFor="let img of image.imgDataArr;index as i" class="carousel-item" [ngClass]="i === 0 ? 'active' : ''">
-              <div class="d-flex justify-content-center carouselImgDiv">
-                <img class="d-block" src="{{img.url}}">
+    <div *ngFor="let image of images;index as i">
+      <div class="row" id="{{'div-' + image._id}}">
+
+        <div [ngClass]="isMobile ? 'col-12' : 'col-9'">
+          <div id="carouselExampleControls-{{image._id}}" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+              <div *ngFor="let img of image.imgDataArr;index as i" class="carousel-item" [ngClass]="i === 0 ? 'active' : ''">
+                <div class="d-flex justify-content-center carouselImgDiv">
+                  <img class="d-block" src="{{img.url}}">
+                </div>
               </div>
             </div>
+            <button class="carousel-control-prev" type="button" [attr.data-bs-target]="'#carouselExampleControls-' + image._id" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" [attr.data-bs-target]="'#carouselExampleControls-' + image._id" data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
           </div>
-          <button class="carousel-control-prev" type="button" [attr.data-bs-target]="'#carouselExampleControls-' + image._id" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-          </button>
-          <button class="carousel-control-next" type="button" [attr.data-bs-target]="'#carouselExampleControls-' + image._id" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-          </button>
         </div>
-      </div>
 
-      <div [ngClass]="isMobile ? 'col-12' : 'col-3'">
-        <div>foto{{image.imgDataArr.length > 1 ? 's' : ''}} de chef {{image.username}}</div>
-        <div>
-          <app-comments-section
-            [comments_arr]="image.comments"
-            [isMobile]="isMobile"
-            [userInfo]="userInfo"
-            [parentObject]="image"
-            [parentType]="'image'"
-          ></app-comments-section>
+        <div [ngClass]="isMobile ? 'col-12' : 'col-3'">
+          <div class="row mt-2">
+            <div class="col-8 usernameTxt">
+              chef {{image.username}}
+            </div>
+            <div class="col-4" style="text-align: right;">
+              <!-- <button *ngIf="i > 0" (click)="scroll('div-' + images[i-1]._id)"><i class="fa-solid fa-angles-up"></i></button>
+              <button *ngIf="(i+1) < images.length" (click)="scroll('div-' + images[i+1]._id)"><i class="fa-solid fa-angles-down"></i></button> -->
+                <!-- upvote btn -->
+              <button class="upvoteBtn" matTooltip="like" [matTooltipPosition]="'above'">
+                <img class="upvoteIcon" src="../../../assets/avocadoNormal.png" alt="">
+                <div style="display: inline-flex;color: rgba(181,216,0,255);margin-left: .5em;font-size: 1em;">
+                  ( <span style="color: rgba(153,90,1,255);">4</span> )
+                </div>
+              </button>
+            </div>
+          </div>
+          <div class="descripcionDiv my-3">
+            {{image.description}}
+          </div>
+          <div class="commentSection">
+            <app-comments-section
+              [comments_arr]="image.comments"
+              [isMobile]="isMobile"
+              [userInfo]="userInfo"
+              [parentObject]="image"
+              [parentType]="'image'"
+              [mainCommentSection]="false"
+            ></app-comments-section>
+          </div>
+          <div>
+            <button *ngIf="i > 0" (click)="scroll('div-' + images[i-1]._id)"><i class="fa-solid fa-angles-up"></i></button>
+            <button *ngIf="(i+1) < images.length" (click)="scroll('div-' + images[i+1]._id)"><i class="fa-solid fa-angles-down"></i></button>
+          </div>
         </div>
       </div>
     </div>
   </div>
 
   <!-- No Imgs -->
-  <div *ngIf="!images.length" class="my-4 text-center" [ngClass]="isMobile ? 'mt-3' : 'mt-5'">
-    <i class="fa-solid fa-kitchen-set fa-2xl"></i>
+  <div *ngIf="!images.length" class="text-center noImgDiv my-4">
+    <div class="mt-4 mb-2"><i class="fa-solid fa-kitchen-set fa-2xl"></i></div>
     <div class="pt-3 blackFont">No hay imagenes para esta receta.</div>
     <div>
       <button *ngIf="!isHomePage" class="upload-photo-btn" (click)="open(content)">compartir fotos</button>

@@ -27,7 +27,11 @@ export class ImageDisplayComponent implements OnInit{
     upvotes: 0,
     comments: []
   }
-  constructor(private modalService: NgbModal, private apiService: ApiService, private _snackbar: MatSnackBar){}
+  constructor(
+    private modalService: NgbModal,
+    private apiService: ApiService,
+    private _snackbar: MatSnackBar,
+    ){}
 
   ngOnInit(): void {}
 
@@ -50,9 +54,12 @@ export class ImageDisplayComponent implements OnInit{
     formData.append("user_id", this.userInfo._id!);
     formData.append("recipe_id", this.recipe_id);
     this.apiService.createImage(formData).subscribe((result: any) =>{
-      console.log("HELLOWORLD: ", result);
       location.reload();
     });
-    // setTimeout(function(){ location.reload(); }, 1500);
+  }
+
+  scroll(el: string) {
+    let scrollHere = document.getElementById(el)!;
+    scrollHere.scrollIntoView({ behavior: 'instant', block: 'nearest', inline: 'nearest' });
   }
 }

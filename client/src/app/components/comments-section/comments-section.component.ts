@@ -14,6 +14,7 @@ export class CommentsSectionComponent {
   @Input() userInfo: User;
   @Input() parentObject: any;
   @Input() parentType: any;
+  @Input() mainCommentSection: boolean;
   showBtns = false;
   replyTxt = "";
   comment : Comment = {
@@ -33,7 +34,10 @@ export class CommentsSectionComponent {
     private _snackbar: MatSnackBar
 ) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    console.log("PT: ", this.parentType);
+    console.log("CS: ", this.mainCommentSection);
+  }
 
   deleteCommentTxt(){
     this.comment.text = "";
