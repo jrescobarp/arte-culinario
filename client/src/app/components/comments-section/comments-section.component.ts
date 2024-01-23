@@ -77,18 +77,15 @@ export class CommentsSectionComponent {
   }
 
   viewReplies(id:string, comment: any, index: number){
-    this.apiService.getComments(id).subscribe((result:any) =>{
-      // console.log("RESULT: ", result);
-      comment.replies = result.replies
-      document.getElementById(id + "-" + index + "-comment-replies")!.style.display='';
-    });
+    document.getElementById(id + "-" + index + "-comment-replies")!.style.display='';
+
   }
 
   upvote(comment:Comment){
     if(this.userInfo && this.userInfo._id){
       comment.upvotes.push(this.userInfo._id);
       this.apiService.updateComment(comment._id!, comment).subscribe((result:any) =>{
-        console.log("RESULT: ", result);
+        // console.log("RESULT: ", result);
       });
     }else{
       this._snackbar.open("inicia sesión o crea una cuenta para poder votar en comentarios", '', {duration: 2500, panelClass: ['aac-red']});

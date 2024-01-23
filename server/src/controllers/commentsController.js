@@ -1,5 +1,6 @@
 const Comment = require("../models/comment");
 const Recipe = require("../models/recipe");
+const Image = require("../models/image");
 const asyncHandler = require("express-async-handler");
 
 exports.get_comments = asyncHandler(async(req, res, next) => {
@@ -16,6 +17,12 @@ exports.create_comment = asyncHandler(async(req, res, next) => {
     let response;
     if(req.body.parent_type === 'recipe'){
         response = Recipe.findByIdAndUpdate(req.body.parent_id, {comments:req.body.update_arr}).then((res) => {
+        }).catch((err) => {
+            //catch error
+        });
+    }
+    if(req.body.parent_type === 'image'){
+        response = Image.findByIdAndUpdate(req.body.parent_id, {comments:req.body.update_arr}).then((res) => {
         }).catch((err) => {
             //catch error
         });

@@ -8,8 +8,21 @@ exports.get_all_recipes = asyncHandler(async(req, res, next) => {
 });
 
 exports.get_one_recipes = asyncHandler(async(req, res, next) => {
-    Recipe.findById(req.params.id).populate('comments').populate('images').then((recipe) =>{
-        // console.log("RECIPE: ",recipe);
+    Recipe.findById(req.params.id)
+        .populate({
+            path: 'comments',
+            populate: { path:'replies' }
+        })
+        .populate({
+            path: 'images',
+            populate: { 
+                path:'comments', 
+                populate: 'replies'
+            }
+        })
+        .then((recipe) =>{
+        console.log("RECIPE: ",recipe.images.comments);
+        console.log("RECIPECommeents: ",recipe.comments);
         res.status(200).send(recipe);
     });
 });
