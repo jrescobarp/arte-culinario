@@ -24,15 +24,15 @@
           </div>
         </div>
 
-        <div [ngClass]="isMobile ? 'col-12' : 'col-3'">
+        <div class="imgActionsDiv" [ngClass]="isMobile ? 'col-12' : 'col-3'">
           <div class="row mt-2">
-            <div class="col-8 usernameTxt">
+            <div class="col-12 usernameTxt">
               chef {{image.username}}
             </div>
-            <div class="col-4" style="text-align: right;">
-              <!-- <button *ngIf="i > 0" (click)="scroll('div-' + images[i-1]._id)"><i class="fa-solid fa-angles-up"></i></button>
-              <button *ngIf="(i+1) < images.length" (click)="scroll('div-' + images[i+1]._id)"><i class="fa-solid fa-angles-down"></i></button> -->
-                <!-- upvote btn -->
+            <div class="col-12 descripcionDiv my-3 p-2">
+              {{image.description}}
+            </div>
+            <div class="col-6">
               <button class="upvoteBtn" matTooltip="like" [matTooltipPosition]="'above'">
                 <img class="upvoteIcon" src="../../../assets/avocadoNormal.png" alt="">
                 <div style="display: inline-flex;color: rgba(181,216,0,255);margin-left: .5em;font-size: 1em;">
@@ -40,25 +40,33 @@
                 </div>
               </button>
             </div>
+            <div class="col-6">
+              <button *ngIf="userInfo && image.user_id === userInfo._id" (click)="open(content, 'edit', i)" class="btn-sm btn-red" style="border-radius: 5px;"
+                matTooltip="editar post" [matTooltipPosition]="'above'">
+                <i class="fa-regular fa-pen-to-square"></i>
+              </button>
+            </div>
+            <div class="col-12 commentSection">
+              <app-comments-section
+                [comments_arr]="image.comments"
+                [isMobile]="isMobile"
+                [userInfo]="userInfo"
+                [parentObject]="image"
+                [parentType]="'image'"
+                [mainCommentSection]="false"
+              ></app-comments-section>
+            </div>
+            <div>
+              <button class="halfWidth prevImgBtn btn my-0" (click)="scroll('div-' + images[i-1]._id)" matTooltip="ultimas fotos" [matTooltipPosition]="'above'"
+              [disabled]="i === 0" [ngClass]="i === 0 ? 'disabled-btn-red':'btn-red'"><i class="fa-solid fa-angles-up"></i></button>
+
+              <button class="halfWidth nextImgBtn btn my-0" (click)="scroll('div-' + images[i+1]._id)" matTooltip="proximas fotos" [matTooltipPosition]="'above'"
+              [disabled]="(i+1) >= images.length" [ngClass]="(i+1) >= images.length ? 'disabled-btn-red':'btn-red'"><i class="fa-solid fa-angles-down"></i></button>
+            </div>
+            <div>
+              <button class="btn btn-green" (click)="open(content, 'create')" style="width: 100%;">compartir tus fotos</button>
+            </div>
           </div>
-          <div class="descripcionDiv my-3">
-            {{image.description}}
-          </div>
-          <div class="commentSection">
-            <app-comments-section
-              [comments_arr]="image.comments"
-              [isMobile]="isMobile"
-              [userInfo]="userInfo"
-              [parentObject]="image"
-              [parentType]="'image'"
-              [mainCommentSection]="false"
-            ></app-comments-section>
-          </div>
-          <div>
-            <button *ngIf="i > 0" (click)="scroll('div-' + images[i-1]._id)"><i class="fa-solid fa-angles-up"></i></button>
-            <button *ngIf="(i+1) < images.length" (click)="scroll('div-' + images[i+1]._id)"><i class="fa-solid fa-angles-down"></i></button>
-          </div>
-        </div>
       </div>
     </div>
   </div>
@@ -68,7 +76,7 @@
     <div class="mt-4 mb-2"><i class="fa-solid fa-kitchen-set fa-2xl"></i></div>
     <div class="pt-3 blackFont">No hay imagenes para esta receta.</div>
     <div>
-      <button *ngIf="!isHomePage" class="upload-photo-btn" (click)="open(content)">compartir fotos</button>
+      <button *ngIf="!isHomePage" class="upload-photo-btn" (click)="open(content, 'create')">compartir fotos</button>
       <button *ngIf="isHomePage" class="upload-photo-btn">abrir receta para compartir fotos</button>
     </div>
   </div>
@@ -82,18 +90,34 @@
 	</div>
 	<div class="modal-body">
     <div class="row text-center mx-5">
-      <form id="modalForm">
+      <div *ngIf="showSpinner" class="d-flex justify-content-center my-5">
+        <div class="spinner-border" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+        <div>subiendo cambios, no te vayas de esta pagina</div>
+      </div>
+      <form *ngIf="!showSpinner" id="modalForm">
+        <div *ngIf="createType === 'edit'" class="currentImgs row">
+          <div *ngFor="let img of images[editImgIndex].imgDataArr" class="col-3 mr-1 form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" id="check-{{img.filename}}" value="{{ img.filename }}" name="deleteImgs">
+            <label class="form-check-label" for="check-{{img.filename}}">
+              <img src="{{img.url}}" alt="" style="height: auto;width: 100%;">
+            </label>
+          </div>
+        </div>
         <div class="col-12 my-4">
           <input class="form-control" type="file" name="form-imgs" id="form-file" multiple>
         </div>
         <div class="col-12 mb-4">
-          <textarea name="description" class="comentariosTxtArea" placeholder="descripcion" id="description" style="width: 100%;"></textarea>
+          <textarea *ngIf="createType === 'create'" name="description" class="comentariosTxtArea" placeholder="descripcion" id="description" style="width: 100%;"></textarea>
+          <textarea *ngIf="createType === 'edit'" name="description" class="comentariosTxtArea" placeholder="descripcion"  id="description" value="{{images[editImgIndex].description}}" style="width: 100%;"></textarea>
         </div>
       </form>
     </div>
 	</div>
 	<div class="modal-footer">
 		<button type="button" class="btn btn-red" (click)="clearImgData();modal.close('Save click')">Cancelar</button>
-		<button type="button" class="btn btn-green" (click)="uploadImg();modal.close('Save click')">Subir</button>
+		<button *ngIf="createType === 'create'" type="button" class="btn btn-green" (click)="uploadImg('create');">Subir</button>
+		<button *ngIf="createType === 'edit'" type="button" class="btn btn-green" (click)="uploadImg('edit');">Editar</button>
 	</div>
 </ng-template>

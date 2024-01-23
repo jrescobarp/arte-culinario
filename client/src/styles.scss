@@ -48,6 +48,12 @@
   color: rgba(206,60,81,1);
 }
 
+.diasbled-btn-red{
+  border: 1px solid rgba(206,60,81,.25);
+  background-color: gray;
+  color: rgba(206,60,81,.25);
+}
+
 .border-gold{
   border:1px solid #e8cb6d;
   border-radius: 10px;
@@ -91,4 +97,8 @@ body{
 
 .bg-white{
   background-color: white;
+}
+
+.halfWidth{
+  width: 50%;
 }

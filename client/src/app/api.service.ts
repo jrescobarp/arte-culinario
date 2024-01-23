@@ -77,7 +77,7 @@ export class ApiService {
   }
 
 
-
+  //Comment Handllers
   getComments(id: string): Observable<any>{
     return this.httpClient.get(`${this.url}/comments/${id}`);
   }
@@ -90,13 +90,13 @@ export class ApiService {
     return this.httpClient.put(`${this.url}/comments/${id}`, comment, { responseType: 'text' });
   }
 
+  //Image Handlers
   createImage(image: any): Observable<any> {
-    return this.httpClient.post(`${this.url}/image`, image, {
-      // headers: new HttpHeaders({
-      //  "Content-Type": "multipart/form-data"
-      // }),
-      responseType: 'text'
-    });
+    return this.httpClient.post(`${this.url}/image`, image, {responseType: 'text'});
+  }
+
+  editImage(id: string, image: any): Observable<any> {
+    return this.httpClient.put(`${this.url}/image/${id}`, image, {responseType: 'text'});
   }
 
   // deleteComment(id: string): Observable<string> {
