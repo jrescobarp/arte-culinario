@@ -8,10 +8,12 @@ import * as dotenv from 'dotenv';
 dotenv.config();
 
 const s3 = new S3Client({
-    accessKeyId: process.env.AWSAccessKeyId,
-    secretAccessKey: process.env.AWSSecretKey,
+    credentials:{
+      accessKeyId: process.env.AWSAccessKeyId,
+      secretAccessKey: process.env.AWSSecretKey
+    },
     region: 'us-west-1',
-});
+  });
 
 exports.get_comments = asyncHandler(async(req, res, next) => {
     // Comment.findById(req.params.id).populate('replies').then((comment) =>{
@@ -61,14 +63,17 @@ exports.edit_image = asyncHandler(async(req, res, next) => {
         console.error(err);
         }
     }else if(req.body.deleteImgs && typeof req.body.deleteImgs === 'string'){
-        let filename = req.body.deleteImgs.toString();
+        let filename = req.body.deleteImgs;
         const command = new DeleteObjectCommand({
             Bucket: 'aprendamos-a-cocinar', 
             Key:filename
         });
         try{
-            const deleteObjResponse = await s3.send(command);
-            console.log("RESPONSE" ,deleteObjResponse);
+            const deleteObjResponse = await s3.send(command, function(err, data) {
+                if (err) console.log(err, err.stack); // an error occurred
+                else     console.log(data);           // successful response
+              });
+            console.log(`Successfully deleted object from S3 bucket. Deleted object:`,);
         }catch(err){
             console.log("error", err);
         }
