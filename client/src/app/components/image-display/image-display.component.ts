@@ -19,6 +19,7 @@ export class ImageDisplayComponent implements OnInit{
   @Input() isHomePage: boolean;
   createType = "";
   deleteImgs: any[];
+  editableImgs: any[] = [];
   editImgIndex = -1;
   showSpinner = false;
   newImage : Image = {
@@ -43,15 +44,55 @@ export class ImageDisplayComponent implements OnInit{
   open(content:any, createType:string, editImgIndex: number = -1) {
     this.createType = createType;
     if(this.userInfo){
+      // if(createType === 'edit'){
+      //   this.editableImgs = this.images[editImgIndex].imgDataArr;
+      // }
       this.modalService.open(content, { size:'lg', centered: true, ariaLabelledBy: 'modal-basic-title' });
     }else{
       this._snackbar.open("inicia sesión o crea una cuenta para subir fotos", '', {duration: 2500, panelClass: ['aac-red']});
     }
     this.editImgIndex = editImgIndex;
+    // this.editableImgs = [];
+    if(this.editImgIndex >= 0){
+      this.editableImgs.push(...this.images[this.editImgIndex].imgDataArr);
+    }
 	}
 
   clearImgData(){
     this.newImage.description = "";
+    this.editableImgs = [];
+  }
+
+  checkFiles(event:Event){
+    let list = new DataTransfer;
+    this.editableImgs = [];
+    if(this.editImgIndex >= 0){
+      this.editableImgs.push(...this.images[this.editImgIndex].imgDataArr);
+    }
+    if(event.target && (event.target as HTMLInputElement).files?.length){
+      if(
+          (this.editImgIndex < 0 && (event.target as HTMLInputElement).files?.length! > 10) ||
+          (this.editImgIndex >= 0 && ((event.target as HTMLInputElement).files?.length! + this.images[this.editImgIndex].imgDataArr.length) > 10)
+      ){
+        let counter = 0;
+        if(this.editImgIndex >= 0){counter = this.images[this.editImgIndex].imgDataArr.length;}
+        Array.prototype.forEach.call((event.target as HTMLInputElement).files, function(file:any) {
+          if(counter < 10){
+            list.items.add(file);
+          }
+          counter++;
+        });
+        (event.target as HTMLInputElement).files = list.files;
+        this._snackbar.open("no podes subir mas de 10 fotos total en cada post.", '', {duration: 2500, panelClass: ['aac-red', 'mb-5']});
+      }
+    }
+
+    for( const file of (event.target as HTMLInputElement).files!){
+      this.editableImgs.push({
+        url: URL.createObjectURL(file),
+        name: file.name
+      });
+    }
   }
 
   uploadImg(uploadType:string){
@@ -62,6 +103,7 @@ export class ImageDisplayComponent implements OnInit{
     formData.append("username", this.userInfo.username);
     formData.append("user_id", this.userInfo._id!);
     formData.append("recipe_id", this.recipe_id);
+    formData.append("imgOrder", JSON.stringify(this.editableImgs));
 
     formData.getAll("deleteImgs").forEach(deleteImgId => {
       image.imgDataArr.forEach((img:any, index:any) => {
@@ -70,9 +112,6 @@ export class ImageDisplayComponent implements OnInit{
           }
       });
     });
-    // if(formData.getAll("deleteImgs").length === this.images[this.editImgIndex].imgDataArr.length){
-    //   console.log("UNAMEMKDMS: ",formData.getAll("form-imgs"));
-    // }
     if(uploadType === "create"){
       this.apiService.createImage(formData).subscribe((result: any) =>{
         location.reload();
@@ -83,6 +122,10 @@ export class ImageDisplayComponent implements OnInit{
         location.reload();
       });
     }
+  }
+
+  changeImgOrder(){
+
   }
 
   scroll(el: string) {

@@ -34,10 +34,7 @@ export class CommentsSectionComponent {
     private _snackbar: MatSnackBar
 ) { }
 
-  ngOnInit(): void {
-    console.log("PT: ", this.parentType);
-    console.log("CS: ", this.mainCommentSection);
-  }
+  ngOnInit(): void {}
 
   deleteCommentTxt(){
     this.comment.text = "";
