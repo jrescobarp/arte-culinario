@@ -71,26 +71,26 @@ export class ImageDisplayComponent implements OnInit{
     }
     if(event.target && (event.target as HTMLInputElement).files?.length){
       if(
-          (this.editImgIndex < 0 && (event.target as HTMLInputElement).files?.length! > 10) ||
-          (this.editImgIndex >= 0 && ((event.target as HTMLInputElement).files?.length! + this.images[this.editImgIndex].imgDataArr.length) > 10)
+          (this.editImgIndex < 0 && (event.target as HTMLInputElement).files?.length! > 5) ||
+          (this.editImgIndex >= 0 && ((event.target as HTMLInputElement).files?.length! + this.images[this.editImgIndex].imgDataArr.length) > 5)
       ){
         let counter = 0;
         if(this.editImgIndex >= 0){counter = this.images[this.editImgIndex].imgDataArr.length;}
         Array.prototype.forEach.call((event.target as HTMLInputElement).files, function(file:any) {
-          if(counter < 10){
+          if(counter < 5){
             list.items.add(file);
           }
           counter++;
         });
         (event.target as HTMLInputElement).files = list.files;
-        this._snackbar.open("no podes subir mas de 10 fotos total en cada post.", '', {duration: 2500, panelClass: ['aac-red', 'mb-5']});
+        this._snackbar.open("no podes subir mas de 5 fotos total en cada post.", '', {duration: 2500, panelClass: ['aac-red', 'mb-5']});
       }
     }
 
     for( const file of (event.target as HTMLInputElement).files!){
       this.editableImgs.push({
         url: URL.createObjectURL(file),
-        name: file.name
+        filename: file.name
       });
     }
   }
@@ -124,8 +124,18 @@ export class ImageDisplayComponent implements OnInit{
     }
   }
 
-  changeImgOrder(){
-
+  changeImgOrder(currentPosition:number, newPosition: string, arr:any[]){
+    let tempVal;
+    if(newPosition === 'mas'){
+      tempVal = arr[currentPosition+1];
+      arr[currentPosition+1] = arr[currentPosition];
+      arr[currentPosition] = tempVal;
+    }else{
+      tempVal = arr[currentPosition-1];
+      arr[currentPosition-1] = arr[currentPosition];
+      arr[currentPosition] = tempVal;
+    }
+    console.log("ORDER: ", this.editableImgs);
   }
 
   scroll(el: string) {

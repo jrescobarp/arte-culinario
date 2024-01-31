@@ -33,12 +33,12 @@ exports.create_image = asyncHandler(async(req, res, next) => {
 
 exports.edit_image = asyncHandler(async(req, res, next) => {
     req.body.imgDataArr = JSON.parse(req.body.imgDataArr);
+    req.body.imgOrder = JSON.parse(req.body.imgOrder);
     const image = new Image(req.body);
     const imgs = req.files.map(f => ({ url: f.location, filename: f.key }));
     image.imgDataArr.push(...imgs);
 
     // delete images from s3
-
     if (req.body.deleteImgs && typeof req.body.deleteImgs != 'string') {
         let delObjArr = [];
         for (let filename of req.body.deleteImgs) {
@@ -79,8 +79,21 @@ exports.edit_image = asyncHandler(async(req, res, next) => {
         }
     }
 
+    // Edit Img order
+    let correctImgArr = [];
+    req.body.imgOrder.forEach((element, index) => {
+        image.imgDataArr.forEach((e, i) => {
+            if(e.filename.includes(element.filename)){
+                correctImgArr.push(e);
+            }
+        });
+    });
+    if(correctImgArr.length === image.imgDataArr.length){
+        // make sure no images were deleted due to utf encoding
+        image.imgDataArr = correctImgArr;
+    }
+
     // update mongo
-    
     const response = Image.findByIdAndUpdate(req.params.id, {description: image.description, upvotes: image.upvotes, imgDataArr: image.imgDataArr}).then((res) => {
     }).catch((err) => {
         console.log("ERROR: ", err);

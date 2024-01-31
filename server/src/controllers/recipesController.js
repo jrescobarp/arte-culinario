@@ -21,8 +21,6 @@ exports.get_one_recipes = asyncHandler(async(req, res, next) => {
             }
         })
         .then((recipe) =>{
-        console.log("RECIPE: ",recipe.images.comments);
-        console.log("RECIPECommeents: ",recipe.comments);
         res.status(200).send(recipe);
     });
 });

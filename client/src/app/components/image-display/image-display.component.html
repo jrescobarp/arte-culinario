@@ -113,19 +113,15 @@
             <img src="{{img.url}}" alt="" style="height: 15em;width: auto;">
             <div class="row" style="position: absolute;bottom: 0px;width: 100%;left: .75em;background-color: red;text-align: center;">
               <div class="col-6">
-                <input *ngIf="img.filename" class="form-check-input" type="checkbox" id="check-{{img.filename}}" value="{{ img.filename }}" name="deleteImgs">
-                <label *ngIf="img.filename" class="form-check-label" for="check-{{img.filename}}">
-                  Borrar Foto
+                <input *ngIf="img._id" class="form-check-input" type="checkbox" id="check-{{img.filename}}" value="{{ img.filename }}" name="deleteImgs">
+                <label *ngIf="img._id" class="form-check-label" for="check-{{img.filename}}">
+                  <i class="fa-solid fa-trash-can"></i>
                 </label>
               </div>
               <div class="col-6">
-                mover: <select matNativeControl required>
-                  <option value="{{i+1}}">{{i+1}}</option>
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
-                  <option value="4">4</option>
-                </select>
+                <button *ngIf="i != 0" class="btn-green" (click)="changeImgOrder(i, 'menos', editableImgs)"> <i class="fa-solid fa-arrow-left"></i> </button>
+                <div class="text-center" style="border: 1px solid red;background-color: white;display: inline-flex;padding: .1em;">{{i+1}} / {{editableImgs.length}}</div>
+                <button *ngIf="(i+1) < editableImgs.length" class="btn-green" (click)="changeImgOrder(i, 'mas', editableImgs)"> <i class="fa-solid fa-arrow-right"></i> </button>
               </div>
             </div>
           </div>
