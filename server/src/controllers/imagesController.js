@@ -23,9 +23,25 @@ exports.get_comments = asyncHandler(async(req, res, next) => {
 
 exports.create_image = asyncHandler(async(req, res, next) => {
     const image = new Image(req.body);
+    req.body.imgOrder = JSON.parse(req.body.imgOrder);
     const imgs = req.files.map(f => ({ url: f.location, filename: f.key }));
     image.imgDataArr.push(...imgs);
     image.upvotes = 0;
+
+     // Edit Img order
+     let correctImgArr = [];
+     req.body.imgOrder.forEach((element, index) => {
+         image.imgDataArr.forEach((e, i) => {
+             if(e.filename.includes(element.filename)){
+                 correctImgArr.push(e);
+             }
+         });
+     });
+     if(correctImgArr.length === image.imgDataArr.length){
+         // make sure no images were deleted due to utf encoding
+         image.imgDataArr = correctImgArr;
+     }
+
     await image.save();
     const response = await Recipe.findByIdAndUpdate(req.body.recipe_id, {$push:{images:image._id}});
     res.status(200).send(response);
