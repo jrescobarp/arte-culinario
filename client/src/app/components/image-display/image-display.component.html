@@ -40,12 +40,6 @@
                 </div>
               </button>
             </div>
-            <!-- <div class="col-6">
-              <button *ngIf="userInfo && image.user_id === userInfo._id" (click)="open(content, 'edit', i)" class="btn-sm btn-red" style="border-radius: 5px;"
-                matTooltip="editar post" [matTooltipPosition]="'above'">
-                <i class="fa-regular fa-pen-to-square"></i>
-              </button>
-            </div> -->
             <div class="col-12 commentSection">
               <app-comments-section
                 [comments_arr]="image.comments"
@@ -69,16 +63,16 @@
             </div>
           </div>
       </div>
+      </div>
     </div>
   </div>
-
   <!-- No Imgs -->
-  <div *ngIf="!images.length" class="text-center noImgDiv my-4">
-    <div class="mt-4 mb-2"><i class="fa-solid fa-kitchen-set fa-2xl"></i></div>
+  <div *ngIf="!images.length" class="text-center noImgDiv my-4" [ngClass]="isHomePage ? 'homePgNoImgDivStyling' : ''">
+    <div class="mt-4 mb-2" [ngClass]="isHomePage ? 'homePgNoImgIconStyling' : ''"><i class="fa-solid fa-kitchen-set fa-2xl"></i></div>
     <div class="pt-3 blackFont">No hay imagenes para esta receta.</div>
     <div>
-      <button *ngIf="!isHomePage" class="upload-photo-btn" (click)="open(content, 'create')">compartir fotos</button>
-      <button *ngIf="isHomePage" class="upload-photo-btn">abrir receta para compartir fotos</button>
+      <button *ngIf="!isHomePage" class="btn btn-green" (click)="open(content, 'create')">compartir fotos</button>
+      <button *ngIf="isHomePage" class="btn btn-green">abrir receta para compartir fotos</button>
     </div>
   </div>
 </div>
@@ -98,16 +92,6 @@
         <div>subiendo cambios, no te vayas de esta pagina</div>
       </div>
       <form *ngIf="!showSpinner" id="modalForm">
-        <!-- <div *ngIf="createType === 'edit'" class="currentImgs row">
-          <div class="col-12 tl">Fotos: </div>
-          <div *ngFor="let img of images[editImgIndex].imgDataArr" class="col-3 mr-1 form-check form-check-inline">
-            <img src="{{img.url}}" alt="" style="height: auto;width: 100%;">
-            <input class="form-check-input" type="checkbox" id="check-{{img.filename}}" value="{{ img.filename }}" name="deleteImgs">
-            <label class="form-check-label" for="check-{{img.filename}}">
-              Borrar Foto
-            </label>
-          </div>
-        </div> -->
         <div style="width: 100%;white-space: nowrap;overflow-x: scroll;">
           <div *ngFor="let img of editableImgs;index as i" style="display: inline-flex;position: relative;margin-right: 2em;">
             <img src="{{img.url}}" alt="" style="height: 15em;width: auto;">

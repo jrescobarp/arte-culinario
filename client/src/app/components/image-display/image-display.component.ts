@@ -39,6 +39,7 @@ export class ImageDisplayComponent implements OnInit{
 
   ngOnInit(): void {
     this.showSpinner = false;
+    console.log("IMGLENGTH:", this.images.length);
   }
 
   open(content:any, createType:string, editImgIndex: number = -1) {
