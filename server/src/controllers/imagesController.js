@@ -34,12 +34,13 @@ exports.create_image = asyncHandler(async(req, res, next) => {
 exports.edit_image = asyncHandler(async(req, res, next) => {
     req.body.imgDataArr = JSON.parse(req.body.imgDataArr);
     req.body.imgOrder = JSON.parse(req.body.imgOrder);
+    req.body.deleteImgs = JSON.parse(req.body.deleteImgs);
     const image = new Image(req.body);
     const imgs = req.files.map(f => ({ url: f.location, filename: f.key }));
     image.imgDataArr.push(...imgs);
 
     // delete images from s3
-    if (req.body.deleteImgs && typeof req.body.deleteImgs != 'string') {
+    if (req.body.deleteImgs.length) {
         let delObjArr = [];
         for (let filename of req.body.deleteImgs) {
             delObjArr.push({Key: filename});
@@ -50,7 +51,7 @@ exports.edit_image = asyncHandler(async(req, res, next) => {
               Objects: delObjArr,
             },
         });
-        console.log("FNs: ", delObjArr);
+        // console.log("FNs: ", delObjArr);
     
         try {
         // await s3.send(command);
@@ -58,24 +59,9 @@ exports.edit_image = asyncHandler(async(req, res, next) => {
             if (err) console.log(err, err.stack); // an error occurred
             else     console.log(data);           // successful response
           });
-        console.log(`Successfully deleted objects from S3 bucket. Deleted objects:`,);
+        console.log(`Successfully deleted objects from S3 bucket. Deleted objects:`);
         } catch (err) {
         console.error(err);
-        }
-    }else if(req.body.deleteImgs && typeof req.body.deleteImgs === 'string'){
-        let filename = req.body.deleteImgs;
-        const command = new DeleteObjectCommand({
-            Bucket: 'aprendamos-a-cocinar', 
-            Key:filename
-        });
-        try{
-            const deleteObjResponse = await s3.send(command, function(err, data) {
-                if (err) console.log(err, err.stack); // an error occurred
-                else     console.log(data);           // successful response
-              });
-            console.log(`Successfully deleted object from S3 bucket. Deleted object:`,);
-        }catch(err){
-            console.log("error", err);
         }
     }
 

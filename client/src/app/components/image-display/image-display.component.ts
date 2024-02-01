@@ -18,7 +18,7 @@ export class ImageDisplayComponent implements OnInit{
   @Input() isMobile: boolean;
   @Input() isHomePage: boolean;
   createType = "";
-  deleteImgs: any[];
+  deleteImgs: any[] = [];
   editableImgs: any[] = [];
   editImgIndex = -1;
   showSpinner = false;
@@ -44,15 +44,11 @@ export class ImageDisplayComponent implements OnInit{
   open(content:any, createType:string, editImgIndex: number = -1) {
     this.createType = createType;
     if(this.userInfo){
-      // if(createType === 'edit'){
-      //   this.editableImgs = this.images[editImgIndex].imgDataArr;
-      // }
       this.modalService.open(content, { size:'lg', centered: true, ariaLabelledBy: 'modal-basic-title' });
     }else{
       this._snackbar.open("inicia sesión o crea una cuenta para subir fotos", '', {duration: 2500, panelClass: ['aac-red']});
     }
     this.editImgIndex = editImgIndex;
-    // this.editableImgs = [];
     if(this.editImgIndex >= 0){
       this.editableImgs.push(...this.images[this.editImgIndex].imgDataArr);
     }
@@ -61,21 +57,22 @@ export class ImageDisplayComponent implements OnInit{
   clearImgData(){
     this.newImage.description = "";
     this.editableImgs = [];
+    this.deleteImgs = [];
   }
 
   checkFiles(event:Event){
     let list = new DataTransfer;
-    this.editableImgs = [];
-    if(this.editImgIndex >= 0){
+    if(this.editImgIndex >= 0 && !this.deleteImgs.length){
+      this.editableImgs = [];
       this.editableImgs.push(...this.images[this.editImgIndex].imgDataArr);
     }
     if(event.target && (event.target as HTMLInputElement).files?.length){
       if(
           (this.editImgIndex < 0 && (event.target as HTMLInputElement).files?.length! > 5) ||
-          (this.editImgIndex >= 0 && ((event.target as HTMLInputElement).files?.length! + this.images[this.editImgIndex].imgDataArr.length) > 5)
+          (this.editImgIndex >= 0 && ((event.target as HTMLInputElement).files?.length! + this.editableImgs.length) > 5)
       ){
         let counter = 0;
-        if(this.editImgIndex >= 0){counter = this.images[this.editImgIndex].imgDataArr.length;}
+        if(this.editImgIndex >= 0){counter = this.editableImgs.length;}
         Array.prototype.forEach.call((event.target as HTMLInputElement).files, function(file:any) {
           if(counter < 5){
             list.items.add(file);
@@ -104,8 +101,9 @@ export class ImageDisplayComponent implements OnInit{
     formData.append("user_id", this.userInfo._id!);
     formData.append("recipe_id", this.recipe_id);
     formData.append("imgOrder", JSON.stringify(this.editableImgs));
+    formData.append("deleteImgs", JSON.stringify(this.deleteImgs));
 
-    formData.getAll("deleteImgs").forEach(deleteImgId => {
+    this.deleteImgs.forEach(deleteImgId => {
       image.imgDataArr.forEach((img:any, index:any) => {
           if(deleteImgId === img.filename){
             image.imgDataArr.splice(index, 1);
@@ -135,7 +133,30 @@ export class ImageDisplayComponent implements OnInit{
       arr[currentPosition-1] = arr[currentPosition];
       arr[currentPosition] = tempVal;
     }
-    console.log("ORDER: ", this.editableImgs);
+  }
+
+  imgDeleteMenuDisplay(show:boolean, id:string){
+    if(show){
+      document.getElementById('imgDeleteDiv-'+id)!.style.display = 'block';
+    }else{
+      document.getElementById('imgDeleteDiv-'+id)!.style.display = 'none';
+    }
+  }
+
+  hideImg(index:number, deletefromFileList: boolean, deleteImgFileName = '', event:Event){
+    this.editableImgs.splice(index, 1);
+    if(deleteImgFileName && !deletefromFileList){
+      this.deleteImgs.push(deleteImgFileName);
+    }else{
+      let inputValue = (document.getElementById('form-file') as HTMLInputElement).files;
+      let list = new DataTransfer;
+      Array.prototype.forEach.call(inputValue, function(file:any) {
+        if(file.name != deleteImgFileName){
+          list.items.add(file);
+        }
+      });
+      (document.getElementById('form-file') as HTMLInputElement).files = list.files;
+    }
   }
 
   scroll(el: string) {
