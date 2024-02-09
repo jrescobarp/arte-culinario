@@ -102,3 +102,40 @@ exports.edit_image = asyncHandler(async(req, res, next) => {
     });
     res.status(200).send(response);
 });
+
+
+exports.delete_image = asyncHandler(async(req, res, next) => {
+    req.body.deleteImgs = JSON.parse(req.body.deleteImgs);
+
+    // delete images from s3
+    if (req.body.deleteImgs.length) {
+        let delObjArr = [];
+        for (let filename of req.body.deleteImgs) {
+            delObjArr.push({Key: filename});
+        }
+        const command = new DeleteObjectsCommand({
+            Bucket: 'aprendamos-a-cocinar',
+            Delete: {
+              Objects: delObjArr,
+            },
+        });
+    
+        try {
+        // await s3.send(command);
+        await s3.send(command, function(err, data) {
+            if (err) console.log(err, err.stack); // an error occurred
+            else     console.log(data);           // successful response
+          });
+        console.log(`Successfully deleted objects from S3 bucket. Deleted objects:`);
+        } catch (err) {
+        console.error(err);
+        }
+    }
+
+    // update mongo
+    const response = Image.findByIdAndDelete(req.params.id).then((res) => {
+    }).catch((err) => {
+        console.log("ERROR: ", err);
+    });
+    res.status(200).send(response);
+});

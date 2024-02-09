@@ -39,19 +39,21 @@ export class ImageDisplayComponent implements OnInit{
 
   ngOnInit(): void {
     this.showSpinner = false;
-    console.log("IMGLENGTH:", this.images.length);
   }
 
   open(content:any, createType:string, editImgIndex: number = -1) {
-    this.createType = createType;
     if(this.userInfo){
-      this.modalService.open(content, { size:'lg', centered: true, ariaLabelledBy: 'modal-basic-title' });
+      this.createType = createType;
+      this.editImgIndex = editImgIndex;
+      if(this.editImgIndex >= 0){
+        this.editableImgs.push(...this.images[this.editImgIndex].imgDataArr);
+      }
+      this.modalService.open(content, { size:'lg', centered: true, ariaLabelledBy: 'modal-basic-title' })
+      .result.then((result) => {}, (reason) => {
+        this.clearImgData();
+      });
     }else{
       this._snackbar.open("inicia sesión o crea una cuenta para subir fotos", '', {duration: 2500, panelClass: ['aac-red']});
-    }
-    this.editImgIndex = editImgIndex;
-    if(this.editImgIndex >= 0){
-      this.editableImgs.push(...this.images[this.editImgIndex].imgDataArr);
     }
 	}
 
@@ -59,6 +61,8 @@ export class ImageDisplayComponent implements OnInit{
     this.newImage.description = "";
     this.editableImgs = [];
     this.deleteImgs = [];
+    document.getElementById('deleteImgModalBody')!.style.display = 'none';
+    document.getElementById('standardImgOptionsModalBody')!.style.display = 'block';
   }
 
   checkFiles(event:Event){
@@ -120,7 +124,23 @@ export class ImageDisplayComponent implements OnInit{
       this.apiService.editImage(this.images[this.editImgIndex]._id,formData).subscribe((result: any) =>{
         location.reload();
       });
+    }else if(uploadType === "delete"){
+      this.apiService.deleteImage(this.images[this.editImgIndex]._id,formData).subscribe((result: any) =>{
+        location.reload();
+      });
     }
+  }
+
+  deleteImgPost(){
+    this.images[this.editImgIndex].imgDataArr.forEach((img:any) => {
+      this.deleteImgs.push(img.filename);
+    });
+    this.uploadImg('delete');
+  }
+
+  showDeleteImgModalBody(){
+    document.getElementById('deleteImgModalBody')!.style.display = 'block';
+    document.getElementById('standardImgOptionsModalBody')!.style.display = 'none';
   }
 
   changeImgOrder(currentPosition:number, newPosition: string, arr:any[]){

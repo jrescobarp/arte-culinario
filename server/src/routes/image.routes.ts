@@ -35,5 +35,6 @@ imageRouter.post('/', isLoggedIn, upload.array('form-imgs'), imageController.cre
 // imageRouter.put("/:id",imageController.edit_image);
 // imageRouter.put("/:id", imageController.edit_image);
 imageRouter.put("/:id", isLoggedIn, upload.array('form-imgs'),imageController.edit_image);
+imageRouter.delete("/:id", isLoggedIn, upload.array('form-imgs'),imageController.delete_image);
 
 module.exports = imageRouter;

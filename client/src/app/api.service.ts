@@ -99,6 +99,13 @@ export class ApiService {
     return this.httpClient.put(`${this.url}/image/${id}`, image, {responseType: 'text'});
   }
 
+  deleteImage(id: string, image: any): Observable<any> {
+    const httpOptions = {
+      body: image
+    };
+    return this.httpClient.delete(`${this.url}/image/${id}`, httpOptions);
+  }
+
   // deleteComment(id: string): Observable<string> {
   //   return this.httpClient.delete(`${this.url}/comments/${id}`, { responseType: 'text' });
   // }

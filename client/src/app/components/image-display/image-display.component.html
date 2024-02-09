@@ -84,7 +84,7 @@
 		<button type="button" class="btn-close" aria-label="Close" (click)="clearImgData();modal.dismiss('Cross click')"></button>
 	</div>
 	<div class="modal-body">
-    <div class="row text-center mx-5">
+    <div class="row text-center mx-5" id="standardImgOptionsModalBody">
       <div *ngIf="showSpinner" class="d-flex justify-content-center my-5">
         <div class="spinner-border" role="status">
           <span class="sr-only">Loading...</span>
@@ -139,10 +139,26 @@
         </div>
       </form>
     </div>
+    <div id="deleteImgModalBody" style="display: none;">
+      <div>Estas seguro que queres borrar tu post?</div>
+      <div>
+        <button type="button" class="btn btn-green ml-3" (click)="deleteImgPost();">Si</button>
+        <button type="button" class="btn btn-red ml-3" (click)="clearImgData();modal.close('Save click')">Cancelar</button>
+      </div>
+    </div>
 	</div>
 	<div class="modal-footer">
-		<button type="button" class="btn btn-red" (click)="clearImgData();modal.close('Save click')">Cancelar</button>
+    <ng-container *ngIf="createType === 'create'">
+  		<button type="button" class="btn btn-red" (click)="clearImgData();modal.close('Save click')">Cancelar</button>
+      <button *ngIf="createType === 'create'" type="button" class="btn btn-green" (click)="uploadImg('create');">Subir</button>
+    </ng-container>
+    <ng-container *ngIf="createType === 'edit'">
+      <button type="button" class="btn btn-red" (click)="showDeleteImgModalBody();">Borrar Post</button>
+      <button type="button" class="btn btn-green" (click)="uploadImg('edit');">Editar</button>
+    </ng-container>
+		<!-- <button type="button" class="btn btn-red" (click)="clearImgData();modal.close('Save click')">Cancelar</button>
+		<button type="button" class="btn btn-red" (click)="clearImgData();modal.close('Save click')">Borrar Post</button>
 		<button *ngIf="createType === 'create'" type="button" class="btn btn-green" (click)="uploadImg('create');">Subir</button>
-		<button *ngIf="createType === 'edit'" type="button" class="btn btn-green" (click)="uploadImg('edit');">Editar</button>
+		<button *ngIf="createType === 'edit'" type="button" class="btn btn-green" (click)="uploadImg('edit');">Editar</button> -->
 	</div>
 </ng-template>
