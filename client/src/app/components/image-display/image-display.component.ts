@@ -31,6 +31,7 @@ export class ImageDisplayComponent implements OnInit{
     upvotes: 0,
     comments: []
   }
+
   constructor(
     private modalService: NgbModal,
     private apiService: ApiService,

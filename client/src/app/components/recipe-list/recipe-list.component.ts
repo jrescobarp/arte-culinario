@@ -68,17 +68,5 @@ export class RecipeListComponent implements OnInit{
     });
   }
 
-  public log(data: any, pre: any = false) {
-    let prefix = data;
-    if (pre) {
-        data = pre;
-    } else {
-        prefix = 'log';
-    }
-    if (typeof data === 'object' && data !== null) {
-        data = JSON.parse(JSON.stringify(data));
-    }
-    console.log(prefix + ':', data);
-}
 
 }

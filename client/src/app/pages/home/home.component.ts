@@ -14,20 +14,21 @@ export class HomeComponent implements OnInit {
   recipes$: Observable<Recipe[]> = new Observable();
   user$: Observable<User[]> = new Observable();
   isMobile = false;
-  featuredMeals: any[]= [];
+  featuredMeals: any[] = [];
 
  constructor(private apiService: ApiService, private _snackbar: MatSnackBar) { }
 
-  ngOnInit(): void {
+  async ngOnInit() {
     this.fetchRecipes();
     this.fetchUser();
     if(window.innerWidth <= 1000){
       this.isMobile = true;
     };
-    if(!localStorage.getItem("appsArr")){
-      this.createLocalStorageArrays();
-    }
-    this.createFeaturedMealArray();
+    // if(!localStorage.getItem("appsArr")){
+    //   this.createLocalStorageArrays();
+    // }
+    // this.createFeaturedMealArray();
+    this.createLocalStorageArrays();
   }
 
   private fetchRecipes(): void {
@@ -43,6 +44,7 @@ export class HomeComponent implements OnInit {
     let entreeArr : any[]= [];
     let dessertArr: any[]= [];
     this.recipes$.subscribe((recipe:any) => {
+      console.log("RECIPEIPEIPEIEIPEI: ", recipe);
       recipe.forEach((r:any) => {
         if(r.type[0] === "entremeses y bocas"){
           appsArr.push({
@@ -50,43 +52,38 @@ export class HomeComponent implements OnInit {
             featuredCount : 0
           });
         }
-        // if(r.type[0] === "plato fuerte"){
-        //   entreeArr.push({
-        //     id: r._id,
-        //     featuredCount : 0
-        //   });
-        // }
-        // if(r.type[0] === "postre"){
-        //   dessertArr.push({
-        //     id: r._id,
-        //     featuredCount : 0
-        //   });
-        // }
       });
       localStorage.setItem("appsArr", JSON.stringify(appsArr));
-      // localStorage.setItem("entreeArr", JSON.stringify(entreeArr));
-      // localStorage.setItem("dessertArr", JSON.stringify(dessertArr));
     });
     this.createFeaturedMealArray();
   }
 
   async createFeaturedMealArray(){
-    let featuredMealSetTime = Number(localStorage.getItem("featuredMealSetTime"));
-    // 86400000ms = 24hrs
-    // if(featuredMealSetTime && (Date.now() > Number(featuredMealSetTime + 86400000))){
-    if(featuredMealSetTime && (Date.now() > Number(featuredMealSetTime + 20000))){
-      let appetizers = JSON.parse(localStorage.getItem("appsArr") || "[]");
-      // let entrees = JSON.parse(localStorage.getItem("entreeArr") || "[]");
-      // let desserts = JSON.parse(localStorage.getItem("dessertArr") || "[]");
-      this.apiService.getRecipe(this.findLowestFeaturedCount(appetizers,"appsArr")).subscribe((recipe:any) =>{
-      this.featuredMeals.push(recipe);
-        localStorage.setItem("featuredMealArr",JSON.stringify(this.featuredMeals));
-      });
 
-      localStorage.setItem("featuredMealSetTime",Date.now().toString());
-    }else{
-      this.featuredMeals = JSON.parse(localStorage.getItem("featuredMealArr") || "[]");
-    }
+    this.apiService.getRecipe("646d64dc7cf61a3d4d0df229").subscribe((recipe:any) =>{
+      this.featuredMeals.push(recipe);
+      localStorage.setItem("featuredMealArr",JSON.stringify(this.featuredMeals));
+    });
+
+    // let featuredMealSetTime = Number(localStorage.getItem("featuredMealSetTime"));
+    // // 86400000ms = 24hrs
+    // // if(featuredMealSetTime && (Date.now() > Number(featuredMealSetTime + 86400000))){
+    // if(featuredMealSetTime && (Date.now() > Number(featuredMealSetTime + 20000))){
+    //   let appetizers = JSON.parse(localStorage.getItem("appsArr") || "[]");
+    //   // let entrees = JSON.parse(localStorage.getItem("entreeArr") || "[]");
+    //   // let desserts = JSON.parse(localStorage.getItem("dessertArr") || "[]");
+
+    //   // this.apiService.getRecipe(this.findLowestFeaturedCount(appetizers,"appsArr")).subscribe((recipe:any) =>{
+    //   this.apiService.getRecipe("646d64dc7cf61a3d4d0df229").subscribe((recipe:any) =>{
+
+    //     this.featuredMeals.push(recipe);
+    //     localStorage.setItem("featuredMealArr",JSON.stringify(this.featuredMeals));
+    //   });
+
+    //   localStorage.setItem("featuredMealSetTime",Date.now().toString());
+    // }else{
+    //   this.featuredMeals = JSON.parse(localStorage.getItem("featuredMealArr") || "[]");
+    // }
   }
 
   findLowestFeaturedCount(arr:any, type:string){

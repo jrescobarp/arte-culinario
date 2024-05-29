@@ -7,26 +7,29 @@
       <div class="subTxt redFont">recetas de Vilma G. de Escobar</div>
     </div>
 
-    <div *ngFor="let recipe of featuredRecipe" class="carousel-item container" (click)="viewRecipe(recipe._id)">
-      <div class="row">
+    <div *ngFor="let recipe of featuredMeals; index as i" class="carousel-item container" (click)="viewRecipe(recipe._id)">
+      <div class="row" matTooltip="click para ver receta" [matTooltipPosition]="'above'">
 
         <div class="titleDiv col-12" [ngClass]="isMobile ? 'text-center' : ''">
           <div class="titleTxt blackFont"><h1>{{recipe.name.toLowerCase()}}</h1></div>
-          <div class="clickeHereTxt redFont">
-            <div class="mx-2">view recipe </div>
+          <!-- <div class="clickeHereTxt redFont">
+            <div class="mx-2">click to view recipe </div>
             <div><i class="fa-solid fa-chevron-right"></i></div>
-          </div>
+          </div> -->
         </div>
 
-        <div [ngClass]="isMobile ? 'col-12' : 'col-6'">
+        <!-- <div [ngClass]="isMobile ? 'col-12' : 'col-6'">
           <app-image-display
           [images]="recipe.images"
           [isMobile]="isMobile"
           [isHomePage]="isHomePage"
           ></app-image-display>
+        </div> -->
+        <div class="blackFont" [ngClass]="isMobile ? 'col-12' : 'col-7'">
+          <img class="recipeImg" src="{{recipe.images[randNumGenerator(recipe.images.length, i)].imgDataArr[0].url}}" alt="">
         </div>
 
-        <div class="blackFont" [ngClass]="isMobile ? 'col-12' : 'col-6'">
+        <div class="blackFont" [ngClass]="isMobile ? 'col-12' : 'col-5'">
           <div *ngIf="recipe.ingredients[0]" class="text-left mainTxt ingredientList">
             <h3>Ingredientes:</h3>
             <ul>
@@ -35,7 +38,18 @@
               </li>
             </ul>
           </div>
-          <div *ngIf="recipe.steps[0]" class="stepList" [ngClass]="recipe.ingredients[0] ? 'stepListTopBorder' : ''">
+        </div>
+
+        <div *ngIf="recipe.steps[0]"  class="blackFont col-12">
+          <!-- <div class="text-left mainTxt ingredientList">
+            <h3>Ingredientes:</h3>
+            <ul>
+              <li *ngFor="let ingredient of recipe.ingredients ; let i = index">
+                {{ingredient}}
+              </li>
+            </ul>
+          </div> -->
+          <div class="stepList" [ngClass]="recipe.ingredients[0] ? 'stepListTopBorder' : ''">
             <h3>Instrucciones:</h3>
             <ol>
               <li *ngFor="let step of recipe.steps ; let i = index">

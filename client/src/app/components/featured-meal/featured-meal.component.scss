@@ -60,10 +60,24 @@ li{
   text-align: left;
 }
 
+.recipeImg{
+  width: 100%;
+  height: auto;
+  padding: 1.5em;
+  padding-top: 0em;
+}
+
 .ingredientList, .stepList{
   text-align: left;
-  max-height: 10.5em;
   overflow: auto;
+}
+
+.ingredientList{
+  max-height: 18em;
+}
+
+.stepList{
+  max-height: 10.5em;
 }
 
 .stepListTopBorder{

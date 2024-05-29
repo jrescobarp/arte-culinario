@@ -1,9 +1,9 @@
 <div class="recipeImgDiv">
+  <!-- Img Display in recipe display page -->
   <div *ngIf="images.length" class="showImgsDiv container">
     <!-- img carousel -->
     <div *ngFor="let image of images;index as i">
       <div class="row" id="{{'div-' + image._id}}">
-
         <div [ngClass]="isMobile ? 'col-12' : 'col-9'">
           <div id="carouselExampleControls-{{image._id}}" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-inner">
@@ -66,6 +66,14 @@
       </div>
     </div>
   </div>
+
+  <!-- Img Display in home page -->
+  <!-- <div *ngIf="images.length && isHomePage" class="container">
+    <div class="homePgImgDiv">
+      <img class="homePgImg" src="{{homePgImgUrl}}" alt="">
+    </div>
+  </div> -->
+
   <!-- No Imgs -->
   <div *ngIf="!images.length" class="text-center noImgDiv my-4" [ngClass]="isHomePage ? 'homePgNoImgDivStyling' : ''">
     <div class="mt-4 mb-2" [ngClass]="isHomePage ? 'homePgNoImgIconStyling' : ''"><i class="fa-solid fa-kitchen-set fa-2xl"></i></div>
