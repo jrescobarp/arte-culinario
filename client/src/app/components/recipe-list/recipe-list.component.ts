@@ -19,17 +19,25 @@ export class RecipeListComponent implements OnInit{
   favoritesList: any[] = [];
   userInfo: User;
 
-  ngOnInit(): void {
-    this.checkUser();
+  async ngOnInit(){
+    await this.checkUser();
     this.createOptionsList();
   }
 
   checkUser(){
-    this.user.subscribe((userInfo:any) => {
-      if(userInfo){
-        this.userInfo = userInfo;
-      }
+    return new Promise((resolve, reject) => {
+      this.user.subscribe((userInfo:any) => {
+        if(userInfo){
+          this.userInfo = userInfo;
+        }
+      });
+      resolve(true);
     });
+    // this.user.subscribe((userInfo:any) => {
+    //   if(userInfo){
+    //     this.userInfo = userInfo;
+    //   }
+    // });
   }
 
   async createOptionsList(){

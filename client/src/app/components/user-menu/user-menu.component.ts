@@ -2,6 +2,7 @@ import { Component, Output, EventEmitter, Input } from '@angular/core';
 import { User } from "../../models"
 import { ApiService  } from '../../api.service'
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ModalDismissReasons, NgbDatepickerModule, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-user-menu',
@@ -16,7 +17,10 @@ export class UserMenuComponent {
   loggedIn = false;
   userInfo: User;
 
-  constructor(private apiService: ApiService, private _snackbar: MatSnackBar) {}
+  constructor(
+    private modalService: NgbModal,
+    private apiService: ApiService,
+    private _snackbar: MatSnackBar) {}
 
   ngOnInit(): void {
     if(this.user){
@@ -41,6 +45,15 @@ export class UserMenuComponent {
     this.logInChange.emit($event);
     setTimeout(function(){ location.reload(); }, 1500);
   }
+
+  openModal(content:any) {
+    this.modalService.open(content, { size:'lg', centered: true, ariaLabelledBy: 'modal-basic-title' });
+    // .result.then((result) => {}, (reason) => {
+    //   this.clearImgData();
+    // });
+    console.log("USERUSERUSER: ");
+    console.log(this.userInfo);
+	}
 
   logout(){
     this.apiService.logout().subscribe(result =>{

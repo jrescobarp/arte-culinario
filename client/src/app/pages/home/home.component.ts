@@ -35,7 +35,7 @@ export class HomeComponent implements OnInit {
     this.recipes$ = this.apiService.getRecipes();
   }
 
-  fetchUser(): void {
+  fetchUser(){
     this.user$ = this.apiService.isLoggedIn();
   }
 
@@ -44,7 +44,7 @@ export class HomeComponent implements OnInit {
     let entreeArr : any[]= [];
     let dessertArr: any[]= [];
     this.recipes$.subscribe((recipe:any) => {
-      console.log("RECIPEIPEIPEIEIPEI: ", recipe);
+      // console.log("RECIPEIPEIPEIEIPEI: ", recipe);
       recipe.forEach((r:any) => {
         if(r.type[0] === "entremeses y bocas"){
           appsArr.push({

@@ -19,9 +19,9 @@ export class FeaturedMealComponent implements OnInit {
   ngOnInit(): void {
       // let randNum = Math.floor((Math.random() * recipe.images.length));
       this.featuredMeals = JSON.parse(localStorage.getItem("featuredMealArr")!);
-      console.log("LSRECIPE: ", JSON.parse(localStorage.getItem("appsArr")!));
+      // console.log("LSRECIPE: ", JSON.parse(localStorage.getItem("appsArr")!));
       // this.pickRandPic();
-      console.log("LSRECIPE22: ", this.randNumArr);
+      // console.log("LSRECIPE22: ", this.randNumArr);
   }
 
   randNumGenerator(num:number, index:number){
