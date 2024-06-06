@@ -28,7 +28,7 @@ export class ImageDisplayComponent implements OnInit{
     recipe_id:"",
     description:"",
     username: "",
-    upvotes: 0,
+    upvotes: [],
     comments: []
   }
 

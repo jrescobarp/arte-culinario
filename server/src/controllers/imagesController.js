@@ -26,7 +26,7 @@ exports.create_image = asyncHandler(async(req, res, next) => {
     req.body.imgOrder = JSON.parse(req.body.imgOrder);
     const imgs = req.files.map(f => ({ url: f.location, filename: f.key }));
     image.imgDataArr.push(...imgs);
-    image.upvotes = 0;
+    image.upvotes = [];
 
      // Edit Img order
      let correctImgArr = [];
@@ -103,6 +103,14 @@ exports.edit_image = asyncHandler(async(req, res, next) => {
     res.status(200).send(response);
 });
 
+exports.upvote = asyncHandler(async(req, res, next) => {
+    const image = new Image(req.body);
+    const response = Image.findByIdAndUpdate(req.params.id, {upvotes: image.upvotes}).then((res) => {
+    }).catch((err) => {
+        console.log("ERROR: ", err);
+    });
+    res.status(200).send(response);
+});
 
 exports.delete_image = asyncHandler(async(req, res, next) => {
     req.body.deleteImgs = JSON.parse(req.body.deleteImgs);

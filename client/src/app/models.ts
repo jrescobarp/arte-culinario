@@ -53,7 +53,7 @@ export interface Image {
   recipe_id:string;
   description:string;
   username: string;
-  upvotes: number;
+  upvotes: string[];
   // report: string;
   comments: Comment[];
 }

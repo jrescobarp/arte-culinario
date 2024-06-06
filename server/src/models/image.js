@@ -30,7 +30,8 @@ const ImageSchema = new Schema({
             required: true
         },
         upvotes: {
-            type: Number,
+            type: [Schema.Types.ObjectId],
+            ref: 'User'
         },
         // report: string,
         comments: {

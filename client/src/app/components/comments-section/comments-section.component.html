@@ -21,46 +21,23 @@
 
 <ng-container *ngIf="comments_arr.length">
   <div *ngFor="let comment of parentObject.comments; index as i" class="row mx-1 my-3 pt-3" style="background-color: white;">
-    <!-- <div class="col-12">
-      <strong style="text-transform: capitalize;">
-        <img class="chefUserIcon" src="../../../assets/chefUser.png" alt=""> chef {{comment.username}}
-      </strong>
-      <div style="display: inline;margin-left: .75em;font-size: .75em;color: gray;">( {{comment.date_created | date}} )</div>
-    </div> -->
     <div class="col-12 mt-1 mb-2 commentTxt">{{comment.text}}</div>
     <div class="col-6 pb-2" style="margin-left: .5em;">
-      <!-- UpvoteBTn -->
-      <button *ngIf="comment.upvotes && userInfo && !comment.upvotes.includes(userInfo._id)" class="upvoteBtn" matTooltip="like" [matTooltipPosition]="'above'" (click)="upvote(comment)">
-        <img class="upvoteIcon" src="../../../assets/avocadoNormal.png" alt="">
-        <div style="display: inline-flex;color: rgba(181,216,0,255);margin-left: .75em;font-size: 1em;">
-          ( <span style="color: rgba(153,90,1,255);">{{comment.upvotes.length ? comment.upvotes.length : '0'}}</span> )
-        </div>
-      </button>
-
-      <button *ngIf="comment.upvotes && userInfo && comment.upvotes.includes(userInfo._id)" class="upvoteBtn" matTooltip="like" [matTooltipPosition]="'above'" (click)="removeUpvote(comment)">
-        <img class="upvoteIcon" src="../../../assets/happyAvocado.png" alt="">
-        <div style="display: inline-flex;color: rgba(181,216,0,255);margin-left: .75em;font-size: 1em;">
-          ( <span style="color: rgba(153,90,1,255);">{{comment.upvotes.length ? comment.upvotes.length : '0'}}</span> )
-        </div>
-      </button>
-
-      <button *ngIf="!userInfo" class="upvoteBtn" matTooltip="inicia sesion para darle like" [matTooltipPosition]="'above'" (click)="loginToUpvote()">
-        <img class="upvoteIcon" src="../../../assets/avocadoNormal.png" alt="">
-        <div style="display: inline-flex;color: rgba(181,216,0,255);margin-left: .75em;font-size: 1em;">
-          ( <span style="color: rgba(153,90,1,255);">{{comment.upvotes.length ? comment.upvotes.length : '0'}}</span> )
-        </div>
-      </button>
+      <app-upvote-btn
+        [mainComponent]="comment"
+        [userId]="userInfo._id!"
+        [componentType] = "'comment'"
+      ></app-upvote-btn>
     </div>
 
     <div class="col pb-2" style="text-align: right;">
       <strong style="text-transform: capitalize;">
-         <!-- - <img class="chefUserIcon" src="../../../assets/chefUser.png" alt=""> chef {{comment.username}} -->
          - chef {{comment.username}}
       </strong>
       <div style="display: inline;margin-left: .75em;font-size: .75em;color: gray;">( {{comment.date_created | date}} )</div>
     </div>
 
-    <div class="col-12 mb-1" style="padding-left:1em;border-top: .1px solid gray;">
+    <div class="col-12 mb-1" style="padding-left:1em;border-top: .1px solid gray;padding-top: .25em;">
       <div style="display: inline-flex"><button class="filterBtn" *ngIf="comment.replies.length" (click)="viewReplies(comment._id, comment, i)"><i class="fa-solid fa-chevron-down fa-xs" ></i> {{comment.replies.length}} respuesta{{comment.replies.length > 1 ? 's' : ''}}</button></div>
       <div class="noRepliesTxt" *ngIf="!comment.replies.length" style="display: inline-flex">0 respuesta{{comment.replies.length != 1 ? 's' : ''}}</div>
       <div style="display: inline-flex"><button class="filterBtn btn-green" (click)="showReplyInput(comment._id, 'block')" style="font-size: 1em;">responder</button></div>
@@ -73,26 +50,11 @@
         <div class="col-12 pb-2" style="text-transform: capitalize;border-left: .1px solid gray;border-bottom: .1px solid gray;border-right: .1px solid gray;">
           <div class="row">
             <div class="col-6">
-              <button *ngIf="reply.upvotes && userInfo && !reply.upvotes.includes(userInfo._id)" class="upvoteBtn" matTooltip="like" [matTooltipPosition]="'above'" (click)="upvote(reply)">
-                <img class="upvoteIcon" src="../../../assets/avocadoNormal.png" alt="">
-                <div style="display: inline-flex;color: rgba(181,216,0,255);font-size: 1em;">
-                  ( <span style="color: rgba(153,90,1,255);">{{reply.upvotes.length ? reply.upvotes.length : '0'}}</span> )
-                </div>
-              </button>
-
-              <button *ngIf="reply.upvotes && userInfo && reply.upvotes.includes(userInfo._id)" class="upvoteBtn" matTooltip="like" [matTooltipPosition]="'above'" (click)="removeUpvote(reply)">
-                <img class="upvoteIcon" src="../../../assets/happyAvocado.png" alt="">
-                <div style="display: inline-flex;color: rgba(181,216,0,255);font-size: 1em;">
-                  ( <span style="color: rgba(153,90,1,255);">{{reply.upvotes.length ? reply.upvotes.length : '0'}}</span> )
-                </div>
-              </button>
-
-              <button *ngIf="!userInfo" class="upvoteBtn" matTooltip="inicia sesion para darle like" [matTooltipPosition]="'above'" (click)="loginToUpvote()">
-                <img class="upvoteIcon" src="../../../assets/avocadoNormal.png" alt="">
-                <div style="display: inline-flex;color: rgba(181,216,0,255);font-size: 1em;">
-                  ( <span style="color: rgba(153,90,1,255);">{{reply?.upvotes?.length ? reply.upvotes.length : '0'}}</span> )
-                </div>
-              </button>
+              <app-upvote-btn
+                [mainComponent]="reply"
+                [userId]="userInfo._id!"
+                [componentType] = "'comment'"
+              ></app-upvote-btn>
             </div>
             <div class="col-6" style="text-align: right;">
               <div style="display: inline-flex;margin-left: .75em;"><strong> - chef {{reply.username}}</strong></div>

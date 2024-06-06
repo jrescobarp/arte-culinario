@@ -99,6 +99,10 @@ export class ApiService {
     return this.httpClient.put(`${this.url}/image/${id}`, image, {responseType: 'text'});
   }
 
+  upvoteImg(id:string, image:any): Observable<any> {
+    return this.httpClient.put(`${this.url}/image/upvotes/${id}`, image, {responseType: 'text'});
+  }
+
   deleteImage(id: string, image: any): Observable<any> {
     const httpOptions = {
       body: image

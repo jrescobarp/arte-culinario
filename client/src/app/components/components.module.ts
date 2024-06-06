@@ -18,6 +18,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { FooterComponent } from './footer/footer.component';
 import { CommentsSectionComponent } from './comments-section/comments-section.component';
 import { ImageDisplayComponent } from './image-display/image-display.component';
+import { UpvoteBtnComponent } from './upvote-btn/upvote-btn.component';
 
 
 
@@ -30,7 +31,8 @@ import { ImageDisplayComponent } from './image-display/image-display.component';
     NavbarComponent,
     FooterComponent,
     CommentsSectionComponent,
-    ImageDisplayComponent
+    ImageDisplayComponent,
+    UpvoteBtnComponent
   ],
   imports: [
     CommonModule,
@@ -52,7 +54,8 @@ import { ImageDisplayComponent } from './image-display/image-display.component';
     NavbarComponent,
     FooterComponent,
     CommentsSectionComponent,
-    ImageDisplayComponent
+    ImageDisplayComponent,
+    UpvoteBtnComponent
   ]
 })
 export class ComponentsModule { }

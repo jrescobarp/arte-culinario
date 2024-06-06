@@ -33,12 +33,17 @@
               {{image.description}}
             </div>
             <div class="col-12">
-              <button class="upvoteBtn" matTooltip="like" [matTooltipPosition]="'above'">
+              <!-- <button class="upvoteBtn" matTooltip="like" [matTooltipPosition]="'above'">
                 <img class="upvoteIcon" src="../../../assets/avocadoNormal.png" alt="">
                 <div style="display: inline-flex;color: rgba(181,216,0,255);margin-left: .5em;font-size: 1em;">
                   ( <span style="color: rgba(153,90,1,255);">4</span> )
                 </div>
-              </button>
+              </button> -->
+              <app-upvote-btn
+                [mainComponent]="image"
+                [userId]="userInfo._id!"
+                [componentType] = "'image'"
+              ></app-upvote-btn>
             </div>
             <div class="col-12 commentSection">
               <app-comments-section
