@@ -32,7 +32,7 @@
 }
 
 .filterBtn{
-  margin-left: 1em;
+  margin-left: .75em;
   background-color: transparent;
   border: none;
   min-height: 1.2em;
@@ -42,9 +42,18 @@
   margin-left: .75em;
 }
 
+.commentReplyChevron{
+  color: #ce3c51;
+}
+
 .filterBtn:hover{
-  background-color: rgb(93, 129, 2, .25);
+  background-color: rgb(93, 129, 2, .5);
   border-radius: 15px;
+  color:white;
+}
+
+.filterBtn:hover .commentReplyChevron{
+  color: white;
 }
 
 .upvoteBtn{

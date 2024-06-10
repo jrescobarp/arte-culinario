@@ -48,7 +48,9 @@
     </div>
 
     <div class="col-12 mb-1" style="padding-left:1em;border-top: .1px solid gray;padding-top: .25em;">
-      <div style="display: inline-flex"><button class="filterBtn" *ngIf="comment.replies.length" (click)="viewReplies(comment._id, comment, i)">{{comment.replies.length}} respuesta{{comment.replies.length > 1 ? 's' : ''}} <i class="fa-solid fa-chevron-down fa-xs" style="color: #ce3c51;"></i></button></div>
+      <div *ngIf="comment.replies.length" style="display: inline-flex">
+        <button id="showRepliesBtnChevronDown-{{comment._id}}" class="filterBtn" (click)="viewReplies(comment._id, comment, i)">{{comment.replies.length}} respuesta{{comment.replies.length > 1 ? 's' : ''}} <i class="fa-solid fa-chevron-down fa-xs commentReplyChevron" id="{{comment._id + '-' + i}}-comment-replies-chevron"></i></button>
+      </div>
       <div class="noRepliesTxt" *ngIf="!comment.replies.length" style="display: inline-flex">0 respuesta{{comment.replies.length != 1 ? 's' : ''}}</div>
       <div style="display: inline-flex"><button class="filterBtn btn-green" (click)="showReplyInput(comment._id, 'block')" style="font-size: 1em;">responder</button></div>
     </div>

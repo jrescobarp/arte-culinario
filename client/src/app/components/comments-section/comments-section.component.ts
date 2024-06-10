@@ -75,8 +75,17 @@ export class CommentsSectionComponent {
   }
 
   viewReplies(id:string, comment: any, index: number){
-    document.getElementById(id + "-" + index + "-comment-replies")!.style.display='';
-
+    let el = document.getElementById(id + "-" + index + "-comment-replies");
+    let chevron = document.getElementById(id + "-" + index + "-comment-replies-chevron");
+    if(el!.style.display === "none"){
+      el!.style.display = '';
+      chevron!.classList.remove('fa-chevron-down');
+      chevron!.classList.add('fa-chevron-up');
+    }else{
+      el!.style.display = 'none';
+      chevron!.classList.remove('fa-chevron-up');
+      chevron!.classList.add('fa-chevron-down');
+    }
   }
 
   filtrarComentariosUpvotes(path:string, type:string){
@@ -119,26 +128,5 @@ export class CommentsSectionComponent {
         return 0;
       });
     }
-
-
-
-    // this.parentObject.comments.sort((a:any, b:any) => {
-    //   // new to old
-    //   if (a.date_created > b.date_created) {return -1;}
-    //   if (a.date_created < b.date_created) {return 1;}
-    //   return 0;
-    // });
-    // this.parentObject.comments.sort((a:any, b:any) => {
-    //   // old to new
-    //   if (a.date_created < b.date_created) {return -1;}
-    //   if (a.date_created > b.date_created) {return 1;}
-    //   return 0;
-    // });
-    // this.parentObject.comments.sort((a:any, b:any) => {
-    //   // new to old
-    //   if (a.upvotes.length > b.upvotes.length) {return -1;}
-    //   if (a.upvotes.length < b.upvotes.length) {return 1;}
-    //   return 0;
-    // });
   }
 }
