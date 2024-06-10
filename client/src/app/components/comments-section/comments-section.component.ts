@@ -2,6 +2,7 @@ import { Component, Input, Output, OnInit } from '@angular/core';
 import { ApiService } from '../../api.service';
 import { Comment, User } from '../../models'
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-comments-section',
@@ -78,22 +79,66 @@ export class CommentsSectionComponent {
 
   }
 
-  upvote(comment:Comment){
-    if(this.userInfo && this.userInfo._id){
-      comment.upvotes.push(this.userInfo._id);
-      this.apiService.updateComment(comment._id!, comment).subscribe((result:any) =>{
-        // console.log("RESULT: ", result);
+  filtrarComentariosUpvotes(path:string, type:string){
+    console.log("TYPE: ", type);
+    console.log("TYPE: ", path);
+
+    if(type === 'desc'){
+      this.parentObject.comments.sort((a:any, b:any) => {
+        // new to old
+        if (a[path].length > b[path].length) {return -1;}
+        if (a[path].length < b[path].length) {return 1;}
+        return 0;
       });
     }else{
-      this._snackbar.open("inicia sesión o crea una cuenta para poder votar en comentarios", '', {duration: 2500, panelClass: ['aac-red']});
+      this.parentObject.comments.sort((a:any, b:any) => {
+        // new to old
+        if (a[path].length < b[path].length) {return -1;}
+        if (a[path].length > b[path].length) {return 1;}
+        return 0;
+      });
     }
   }
 
-  removeUpvote(comment:Comment){
-    console.log("REOMOVMREMKE");
-  }
+  filtrarComentariosDate(path:string, type:string){
+    console.log("TYPE: ", type);
+    console.log("TYPE: ", path);
 
-  loginToUpvote(){
-    this._snackbar.open("inicia sesión o crea una cuenta para poder votar en comentarios", '', {duration: 2500, panelClass: ['aac-red']});
+    if(type === 'desc'){
+      this.parentObject.comments.sort((a:any, b:any) => {
+        // new to old
+        if (a[path] > b[path]) {return -1;}
+        if (a[path] < b[path]) {return 1;}
+        return 0;
+      });
+    }else{
+      this.parentObject.comments.sort((a:any, b:any) => {
+        // new to old
+        if (a[path] < b[path]) {return -1;}
+        if (a[path] > b[path]) {return 1;}
+        return 0;
+      });
+    }
+
+
+
+    // this.parentObject.comments.sort((a:any, b:any) => {
+    //   // new to old
+    //   if (a.date_created > b.date_created) {return -1;}
+    //   if (a.date_created < b.date_created) {return 1;}
+    //   return 0;
+    // });
+    // this.parentObject.comments.sort((a:any, b:any) => {
+    //   // old to new
+    //   if (a.date_created < b.date_created) {return -1;}
+    //   if (a.date_created > b.date_created) {return 1;}
+    //   return 0;
+    // });
+    // this.parentObject.comments.sort((a:any, b:any) => {
+    //   // new to old
+    //   if (a.upvotes.length > b.upvotes.length) {return -1;}
+    //   if (a.upvotes.length < b.upvotes.length) {return 1;}
+    //   return 0;
+    // });
   }
 }

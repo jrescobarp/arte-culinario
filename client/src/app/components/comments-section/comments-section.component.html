@@ -1,6 +1,16 @@
 <div class="comentariosTitle mb-2">
   <div style="display: inline-flex;" [ngClass]="mainCommentSection ? 'lgTitleTxt' : 'smTitleTxt'">{{comments_arr.length}} Comentario{{comments_arr.length === 1 ?  '' : 's'}}</div>
-  <button class="filterBtn" *ngIf="comments_arr.length" matTooltip="ordernar comentarios" [matTooltipPosition]="'above'"><i class="fa-solid fa-filter fa-xs"></i> ordenar </button>
+  <div *ngIf="comments_arr.length" ngbDropdown class="d-inline-block" matTooltip="ordernar comentarios" [matTooltipPosition]="'above'">
+    <button type="button" class="filterBtn" id="dropdownBasic1" ngbDropdownToggle>
+      <i class="fa-solid fa-filter fa-xs"></i>
+    </button>
+    <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+      <button ngbDropdownItem (click)="filtrarComentariosUpvotes('upvotes', 'desc')">mas likes</button>
+      <button ngbDropdownItem (click)="filtrarComentariosUpvotes('upvotes', 'asc')">menos likes</button>
+      <button ngbDropdownItem (click)="filtrarComentariosDate('date_created','desc')">nuevos comentarios primero</button>
+      <button ngbDropdownItem (click)="filtrarComentariosDate('date_created','asc')">viejos comentarios primero</button>
+    </div>
+  </div>
 </div>
 
 <div class="mb-3">
@@ -16,7 +26,7 @@
 
 <div *ngIf="!comments_arr.length" class="text-center">
   <i class="fa-solid fa-comment-slash"></i><br>
-  No hay comentarios para esta receta
+  No hay comentarios
 </div>
 
 <ng-container *ngIf="comments_arr.length">
@@ -38,7 +48,7 @@
     </div>
 
     <div class="col-12 mb-1" style="padding-left:1em;border-top: .1px solid gray;padding-top: .25em;">
-      <div style="display: inline-flex"><button class="filterBtn" *ngIf="comment.replies.length" (click)="viewReplies(comment._id, comment, i)"><i class="fa-solid fa-chevron-down fa-xs" ></i> {{comment.replies.length}} respuesta{{comment.replies.length > 1 ? 's' : ''}}</button></div>
+      <div style="display: inline-flex"><button class="filterBtn" *ngIf="comment.replies.length" (click)="viewReplies(comment._id, comment, i)">{{comment.replies.length}} respuesta{{comment.replies.length > 1 ? 's' : ''}} <i class="fa-solid fa-chevron-down fa-xs" style="color: #ce3c51;"></i></button></div>
       <div class="noRepliesTxt" *ngIf="!comment.replies.length" style="display: inline-flex">0 respuesta{{comment.replies.length != 1 ? 's' : ''}}</div>
       <div style="display: inline-flex"><button class="filterBtn btn-green" (click)="showReplyInput(comment._id, 'block')" style="font-size: 1em;">responder</button></div>
     </div>
