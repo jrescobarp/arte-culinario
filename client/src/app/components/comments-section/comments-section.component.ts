@@ -89,9 +89,6 @@ export class CommentsSectionComponent {
   }
 
   filtrarComentariosUpvotes(path:string, type:string){
-    console.log("TYPE: ", type);
-    console.log("TYPE: ", path);
-
     if(type === 'desc'){
       this.parentObject.comments.sort((a:any, b:any) => {
         // new to old
@@ -110,9 +107,6 @@ export class CommentsSectionComponent {
   }
 
   filtrarComentariosDate(path:string, type:string){
-    console.log("TYPE: ", type);
-    console.log("TYPE: ", path);
-
     if(type === 'desc'){
       this.parentObject.comments.sort((a:any, b:any) => {
         // new to old

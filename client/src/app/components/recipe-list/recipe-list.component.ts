@@ -17,7 +17,10 @@ export class RecipeListComponent implements OnInit{
   };
   categoryList: any[] = [];
   favoritesList: any[] = [];
+  allRecipes: any[] = [];
+  searchResultRecipes: any[] = [];
   userInfo: User;
+  searchInputTxt = "";
 
   async ngOnInit(){
     await this.checkUser();
@@ -43,6 +46,7 @@ export class RecipeListComponent implements OnInit{
   async createOptionsList(){
     this.recipes.subscribe((recipe:any) => {
       recipe.forEach((r:any) => {
+        this.allRecipes.push(r);
         r.type.forEach((e:any) => {
           if(this.categoryList.length){
             let found = false;
@@ -76,5 +80,26 @@ export class RecipeListComponent implements OnInit{
     });
   }
 
+  showHideSearchResults(displayTxt:string){
+    document.getElementById("first")!.style.display = displayTxt;
+  }
+
+  onKeyUpSearch(event:any){
+    console.log("EVENT: ");
+    console.log(event);
+    console.log(event.target.value);
+    this.searchInputTxt = event.target.value;
+    this.searchResultRecipes = [];
+    if(this.searchInputTxt){
+      this.allRecipes.forEach((recipe:any) => {
+        if(recipe.name.includes(this.searchInputTxt.toUpperCase())){
+          console.log("RECIPEP: ");
+          console.log(recipe.name);
+          this.searchResultRecipes.push(recipe);
+        }
+        // searchResultRecipes
+      });
+    }
+  }
 
 }
