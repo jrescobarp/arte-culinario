@@ -26,24 +26,18 @@
 
         <div class="imgActionsDiv" [ngClass]="isMobile ? 'col-12' : 'col-3'">
           <div class="row mt-2">
-            <div class="col-12 usernameTxt">
-              chef {{image.username}}
-            </div>
-            <div class="col-12 descripcionDiv my-3 p-2">
+            <div class="col-12 py-2 mb-4" [ngClass]="isMobile ? 'col-12 descripcionDivMobile' : 'col-3 descripcionDiv'">
               {{image.description}}
             </div>
-            <div class="col-12">
-              <!-- <button class="upvoteBtn" matTooltip="like" [matTooltipPosition]="'above'">
-                <img class="upvoteIcon" src="../../../assets/avocadoNormal.png" alt="">
-                <div style="display: inline-flex;color: rgba(181,216,0,255);margin-left: .5em;font-size: 1em;">
-                  ( <span style="color: rgba(153,90,1,255);">4</span> )
-                </div>
-              </button> -->
+            <div class="col-6">
               <app-upvote-btn
                 [mainComponent]="image"
                 [userId]="(userInfo && userInfo._id) ? userInfo._id! : ''"
                 [componentType] = "'image'"
               ></app-upvote-btn>
+            </div>
+            <div class="col-6 usernameTxt">
+              - chef {{image.username}}
             </div>
             <div class="col-12 commentSection">
               <app-comments-section
