@@ -5,6 +5,7 @@ import { ApiService } from '../../api.service'
 import { BehaviorSubject, Observable } from 'rxjs';
 import { User } from '../../models'
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 
 @Component({
@@ -32,12 +33,14 @@ export class ViewRecipeComponent {
   user$: Observable<User[]> = new Observable();
   userInfo : User;
   isFavorite = false;
+  connectedRecipe: any;
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private apiService: ApiService,
-    private _snackbar: MatSnackBar
+    private _snackbar: MatSnackBar,
+    private modalService: NgbModal,
   ) { }
 
   ngOnInit() {
@@ -60,6 +63,9 @@ export class ViewRecipeComponent {
       this.recipe.next(recipe);
       if(this.userInfo){
         this.checkFavorites();
+      }
+      if(recipe.connected_recipes.length){
+        this.connectedRecipe = recipe.connected_recipes;
       }
       console.log("RECIPEEE:", recipe);
     });
@@ -120,4 +126,13 @@ export class ViewRecipeComponent {
       this._snackbar.open(this.recipe.value.name + " ha sido borrado de tu lista de favoritos", '', {duration: 2500, panelClass: ['aac-red']});
     });
   }
+
+  open(content:any, createType:string, editImgIndex: number = -1) {
+    if(this.userInfo){
+      this.modalService.open(content, { size:'lg', centered: true, ariaLabelledBy: 'modal-basic-title' })
+      .result.then((result) => {}, (reason) => {});
+    }else{
+      this._snackbar.open("inicia sesión o crea una cuenta para subir fotos", '', {duration: 2500, panelClass: ['aac-red']});
+    }
+	}
 }

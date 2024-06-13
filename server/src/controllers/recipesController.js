@@ -20,6 +20,9 @@ exports.get_one_recipes = asyncHandler(async(req, res, next) => {
                 populate: 'replies'
             }
         })
+        .populate({
+            path: 'connected_recipes',
+        })
         .then((recipe) =>{
         res.status(200).send(recipe);
     });

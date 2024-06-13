@@ -49,6 +49,23 @@
   // text-decoration-color: rgba(206,60,81,1);
 }
 
+.connectedRecipeBtn{
+  padding-left: 0px;
+  background-color: transparent;
+  border: none;
+  min-height: 1.2em;
+}
+
+.connectedRecipeBtn:hover{
+  background-color: rgb(93, 129, 2, .5);
+  border-radius: 15px;
+  color:white;
+}
+
+.connectedRecipeBtn:hover .commentReplyChevron{
+  color: white;
+}
+
 // .mainImgCarousel{
 //   margin-top: 7.5em;
 // }
