@@ -93,7 +93,7 @@ export class ViewRecipeComponent {
 
   checkFavorites(){
     this.userInfo.recipes.forEach(element => {
-      if(element === this.recipe.value._id){
+      if(element._id === this.recipe.value._id){
         this.isFavorite = true;
       }
     });
@@ -102,7 +102,7 @@ export class ViewRecipeComponent {
   addRecipeToFavorites(){
     this.checkFavorites();
     if(!this.isFavorite){
-      this.userInfo.recipes.push(this.recipe.value._id!);
+      this.userInfo.recipes.push(this.recipe.value!);
       this.apiService.updateUser(this.userInfo._id!, this.userInfo).subscribe((userInfo:any)=>{
         // alert(this.recipe.value.name + " ha sido agregada a tu lista de favoritos");
         this._snackbar.open(this.recipe.value.name + " ha sido agregada a tu lista de favoritos", '', {duration: 2500, panelClass: ['aac-green']});
@@ -116,7 +116,7 @@ export class ViewRecipeComponent {
 
   removeRecipeFromFavorites(){
     this.userInfo.recipes.forEach((element, index) => {
-      if(element === this.recipe.value._id){
+      if(element._id === this.recipe.value._id){
         this.userInfo.recipes.splice(index, 1);
       }
     });

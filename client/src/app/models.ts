@@ -23,7 +23,8 @@ export interface User {
   password: string;
   comments: Comment[];
   images: Image[];
-  recipes: string[];
+  recipes: Recipe[];
+  recipe_history: Recipe[];
   tssci: boolean;
 }
 

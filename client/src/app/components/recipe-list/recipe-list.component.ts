@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { lastValueFrom } from 'rxjs';
+import { ApiService } from '../../api.service'
 import { User } from '../../models'
 
 @Component({
@@ -19,8 +20,13 @@ export class RecipeListComponent implements OnInit{
   favoritesList: any[] = [];
   allRecipes: any[] = [];
   searchResultRecipes: any[] = [];
+  recipeHistory: any[] = [];
   userInfo: User;
   searchInputTxt = "";
+
+  constructor(
+    private apiService: ApiService
+  ) { }
 
   async ngOnInit(){
     await this.checkUser();
@@ -85,20 +91,39 @@ export class RecipeListComponent implements OnInit{
   }
 
   onKeyUpSearch(event:any){
-    console.log("EVENT: ");
-    console.log(event);
-    console.log(event.target.value);
     this.searchInputTxt = event.target.value;
     this.searchResultRecipes = [];
     if(this.searchInputTxt){
       this.allRecipes.forEach((recipe:any) => {
         if(recipe.name.includes(this.searchInputTxt.toUpperCase())){
-          console.log("RECIPEP: ");
-          console.log(recipe.name);
           this.searchResultRecipes.push(recipe);
         }
-        // searchResultRecipes
       });
+    }
+  }
+
+  recipeRedirect(recipe : any){
+    if(this.userInfo){
+      this.recipeHistory = localStorage.getItem("recipeHistory") ? JSON.parse(localStorage.getItem("recipeHistory")!) : [];
+      const foundDuplicateIndex = this.recipeHistory.findIndex(e => e._id === recipe._id);
+      if (foundDuplicateIndex > -1) {
+        this.recipeHistory.splice(foundDuplicateIndex, 1);
+      }
+      if(this.recipeHistory.length === 30){
+        this.recipeHistory.splice(0, 1);
+      }
+      this.recipeHistory.push(recipe);
+      this.userInfo.recipe_history = this.recipeHistory;
+      localStorage.setItem("recipeHistory", JSON.stringify(this.recipeHistory));
+      console.log("recipeHistory");
+      console.log(localStorage.getItem("recipeHistory"));
+      console.log(this.userInfo);
+      this.apiService.updateUser(this.userInfo._id!, this.userInfo).subscribe((user) => {
+        console.log("USER");
+      });
+      // window.location.href = "/recipe/" + recipe._id;
+    }else{
+      window.location.href = "/recipe/" + recipe._id;
     }
   }
 

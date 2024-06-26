@@ -3,8 +3,13 @@ const asyncHandler = require("express-async-handler");
 
 
 exports.get_user_info = asyncHandler(async( req, res, next) => { 
-    // console.log("REQUSER",req.user);
-    res.send(req.user);
+    if(req.user){
+        User.findById(req.user._id).populate({path:'recipe_history'}).populate({path:'recipes'}).then((returnUser) => {
+            res.status(200).send(returnUser);
+        });
+    }else{
+        res.status(200);
+    }
 });
 
 exports.register_user = asyncHandler(async(req, res, next) => {
@@ -21,9 +26,9 @@ exports.register_user = asyncHandler(async(req, res, next) => {
 
 
 exports.login = asyncHandler(async(req, res, next) => {
-    const { email, username, first_name, last_name } = req.user;
-    const user = new User({ email,username, first_name, last_name });
-    res.send(user);
+    User.findById(req.user._id).populate({path:'recipe_history'}).populate({path:'recipes'}).then((returnUser) => {
+        res.status(200).send(returnUser);
+    });
 });
 
 
@@ -35,6 +40,8 @@ exports.logout = asyncHandler(async (req, res, next) => {
 });
 
 exports.update_user = asyncHandler(async (req, res, next) => {
+    console.log("UPDATEUSER: ");
+    console.log(req.body);
     const updatedUser = await User.findOneAndUpdate({_id: req.body._id}, req.body);
     res.send(updatedUser);
 });

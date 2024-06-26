@@ -34,6 +34,9 @@ export class UserMenuComponent {
       if(userInfo){
         this.loggedIn =true;
         this.userInfo = userInfo;
+        localStorage.setItem("recipeHistory", JSON.stringify(this.userInfo.recipe_history));
+        console.log("USERUSERUSER: ");
+        console.log(this.userInfo);
       }
     });
   }
@@ -43,14 +46,11 @@ export class UserMenuComponent {
     this.userInfo = JSON.parse($event);
     this._snackbar.open("aprendamos a cocinar!", '', {duration: 2000, panelClass: ['aac-green']});
     this.logInChange.emit($event);
-    setTimeout(function(){ location.reload(); }, 1500);
+    setTimeout(function(){ location.reload(); }, 1200);
   }
 
   openModal(content:any) {
     this.modalService.open(content, { size:'lg', centered: true, ariaLabelledBy: 'modal-basic-title' });
-    // .result.then((result) => {}, (reason) => {
-    //   this.clearImgData();
-    // });
     console.log("USERUSERUSER: ");
     console.log(this.userInfo);
 	}
@@ -59,8 +59,11 @@ export class UserMenuComponent {
     this.apiService.logout().subscribe(result =>{
       this.userInfo = result;
       this.loggedIn = false;
+      localStorage.setItem("recipeHistory", '[]');
       this._snackbar.open("sesión ha sido cerrada", '', {duration: 2500, panelClass: ['aac-red']});
-      setTimeout(function(){ location.reload(); }, 1500);
+      console.log("HISTORY:");
+      console.log(localStorage.getItem("recipeHistory"));
+      setTimeout(function(){ location.reload(); }, 1200);
     });
   }
 

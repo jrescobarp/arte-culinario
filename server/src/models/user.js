@@ -28,7 +28,11 @@ const UserSchema = new Schema({
     },
     recipes: {
         type: [Schema.Types.ObjectId],
-        ref: 'recipe'
+        ref: 'Recipe'
+    },
+    recipe_history: {
+        type: [Schema.Types.ObjectId],
+        ref: 'Recipe'
     },
     tssci: {
         type: Boolean,

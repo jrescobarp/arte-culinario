@@ -18,11 +18,12 @@
             <ng-template>
               <div *ngIf="searchResultRecipes.length" class="row">
                 <div class="categoryBtnOptionDiv text-center my-3" *ngFor="let recipe of searchResultRecipes" [ngClass]="isMobile ? 'col-12' : 'col-4'">
-                  <a class="p-3 categoryBtnOptionTxt" href="/recipe/{{recipe._id}}">{{ recipe.name.toLowerCase() }}</a>
+                  <!-- <a class="p-3 categoryBtnOptionTxt" href="/recipe/{{recipe._id}}">{{ recipe.name.toLowerCase() }}</a> -->
+                  <a class="p-3 categoryBtnOptionTxt" (click)="recipeRedirect(recipe)">{{ recipe.name.toLowerCase() }}</a>
                 </div>
               </div>
               <div *ngIf="!searchResultRecipes.length">
-                <div class="row">
+                <div class="text-center">
                   No hay resultados...
                 </div>
               </div>
@@ -40,7 +41,8 @@
             <ng-template>
               <div class="row">
                 <div class="categoryBtnOptionDiv text-center my-3" *ngFor="let recipe of favoritesList" [ngClass]="isMobile ? 'col-12' : 'col-4'">
-                  <a class="p-3 categoryBtnOptionTxt" href="/recipe/{{recipe._id}}">{{ recipe.name.toLowerCase() }}</a>
+                  <!-- <a class="p-3 categoryBtnOptionTxt" href="/recipe/{{recipe._id}}">{{ recipe.name.toLowerCase() }}</a> -->
+                  <a class="p-3 categoryBtnOptionTxt" (click)="recipeRedirect(recipe)">{{ recipe.name.toLowerCase() }}</a>
                 </div>
               </div>
             </ng-template>
@@ -58,7 +60,8 @@
               <!-- Content for the first item <div *ngIf="isMobile">sdnkjsnjkdvnds</div> -->
               <div class="row">
                 <div class="categoryBtnOptionDiv text-center my-3" *ngFor="let option of category.recipes" [ngClass]="isMobile ? 'col-12' : 'col-4'">
-                  <a class="p-3 categoryBtnOptionTxt" href="/recipe/{{option._id}}">{{ option.name.toLowerCase() }}</a>
+                  <!-- <a class="p-3 categoryBtnOptionTxt" href="/recipe/{{option._id}}">{{ option.name.toLowerCase() }}</a> -->
+                  <a class="p-3 categoryBtnOptionTxt" (click)="recipeRedirect(option)">{{ option.name.toLowerCase() }}</a>
                 </div>
               </div>
             </ng-template>

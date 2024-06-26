@@ -64,6 +64,10 @@ h2{
   float: right;
 }
 
+a:hover{
+  cursor: pointer;
+}
+
 @media (max-width: 820px) {
 
   .mainContainer{

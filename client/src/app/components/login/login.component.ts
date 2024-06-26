@@ -17,7 +17,8 @@ export class LoginComponent {
     tssci: false,
     comments: [],
     images: [],
-    recipes: []
+    recipes: [],
+    recipe_history: []
   };
 
   @Input() loginType!: string;
