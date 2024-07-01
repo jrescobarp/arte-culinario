@@ -115,13 +115,8 @@ export class RecipeListComponent implements OnInit{
       this.recipeHistory.push(recipe);
       this.userInfo.recipe_history = this.recipeHistory;
       localStorage.setItem("recipeHistory", JSON.stringify(this.recipeHistory));
-      console.log("recipeHistory");
-      console.log(localStorage.getItem("recipeHistory"));
-      console.log(this.userInfo);
-      this.apiService.updateUser(this.userInfo._id!, this.userInfo).subscribe((user) => {
-        console.log("USER");
-      });
-      // window.location.href = "/recipe/" + recipe._id;
+      this.apiService.updateUser(this.userInfo._id!, this.userInfo).subscribe((user) => {});
+      window.location.href = "/recipe/" + recipe._id;
     }else{
       window.location.href = "/recipe/" + recipe._id;
     }

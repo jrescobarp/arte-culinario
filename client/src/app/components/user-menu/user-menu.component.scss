@@ -48,3 +48,22 @@
 .userIcon{
   text-align: center;
 }
+
+.categoryBtnTxt{
+  text-transform: capitalize;
+}
+
+.categoryBtnOptionTxt{
+  // background-color: white;
+  border-style: none;
+  text-decoration: none;
+  color: black;
+  text-transform: capitalize;
+}
+
+.categoryBtnOptionTxt:hover{
+  text-decoration: underline;
+  text-decoration-color: #5d8102;
+  border-right:none;
+  cursor: pointer;
+}

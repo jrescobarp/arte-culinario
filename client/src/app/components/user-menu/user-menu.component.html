@@ -39,8 +39,8 @@
           <div ngbAccordionBody>
             <ng-template>
               <div class="row">
-                <div class="categoryBtnOptionDiv text-center my-3">
-                  <a class="p-3 categoryBtnOptionTxt" href="/">Aprendamos a Cocinar!</a>
+                <div class="categoryBtnOptionDiv text-center my-3" *ngFor="let option of recipe_history" [ngClass]="isMobile ? 'col-12' : 'col-4'">
+                  <a class="p-3 categoryBtnOptionTxt" (click)="recipeRedirect(option)">{{ option.name.toLowerCase() }}</a>
                 </div>
               </div>
             </ng-template>

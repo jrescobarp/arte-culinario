@@ -1,5 +1,5 @@
 import { Component, Output, EventEmitter, Input } from '@angular/core';
-import { User } from "../../models"
+import { User, Recipe } from "../../models"
 import { ApiService  } from '../../api.service'
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ModalDismissReasons, NgbDatepickerModule, NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -13,9 +13,11 @@ export class UserMenuComponent {
 
   @Input() user: any;
   @Input() dropdownDisplay: boolean = false;
+  @Input() isMobile!: boolean;
   @Output() logInChange: EventEmitter<any> = new EventEmitter<any>();
   loggedIn = false;
   userInfo: User;
+  recipe_history: Recipe[] = [];
 
   constructor(
     private modalService: NgbModal,
@@ -35,6 +37,7 @@ export class UserMenuComponent {
         this.loggedIn =true;
         this.userInfo = userInfo;
         localStorage.setItem("recipeHistory", JSON.stringify(this.userInfo.recipe_history));
+        this.recipe_history = this.userInfo.recipe_history;
         console.log("USERUSERUSER: ");
         console.log(this.userInfo);
       }
@@ -51,8 +54,6 @@ export class UserMenuComponent {
 
   openModal(content:any) {
     this.modalService.open(content, { size:'lg', centered: true, ariaLabelledBy: 'modal-basic-title' });
-    console.log("USERUSERUSER: ");
-    console.log(this.userInfo);
 	}
 
   logout(){
@@ -65,6 +66,26 @@ export class UserMenuComponent {
       console.log(localStorage.getItem("recipeHistory"));
       setTimeout(function(){ location.reload(); }, 1200);
     });
+  }
+
+  recipeRedirect(recipe : any){
+    if(this.userInfo){
+      this.recipe_history = localStorage.getItem("recipeHistory") ? JSON.parse(localStorage.getItem("recipeHistory")!) : [];
+      const foundDuplicateIndex = this.recipe_history.findIndex(e => e._id === recipe._id);
+      if (foundDuplicateIndex > -1) {
+        this.recipe_history.splice(foundDuplicateIndex, 1);
+      }
+      if(this.recipe_history.length === 30){
+        this.recipe_history.splice(0, 1);
+      }
+      this.recipe_history.push(recipe);
+      this.userInfo.recipe_history = this.recipe_history;
+      localStorage.setItem("recipeHistory", JSON.stringify(this.recipe_history));
+      this.apiService.updateUser(this.userInfo._id!, this.userInfo).subscribe((user) => {});
+      window.location.href = "/recipe/" + recipe._id;
+    }else{
+      window.location.href = "/recipe/" + recipe._id;
+    }
   }
 
 }
