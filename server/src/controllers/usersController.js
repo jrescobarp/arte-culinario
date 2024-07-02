@@ -40,8 +40,6 @@ exports.logout = asyncHandler(async (req, res, next) => {
 });
 
 exports.update_user = asyncHandler(async (req, res, next) => {
-    console.log("UPDATEUSER: ");
-    console.log(req.body);
     const updatedUser = await User.findOneAndUpdate({_id: req.body._id}, req.body);
     res.send(updatedUser);
 });

@@ -57,13 +57,11 @@ export class ViewRecipeComponent {
     this.user$.subscribe((userInfo:any) => {
       if(userInfo){
         this.userInfo = userInfo;
+        this.checkFavorites();
       }
     });
     this.apiService.getRecipe(id !).subscribe((recipe) => {
       this.recipe.next(recipe);
-      if(this.userInfo){
-        this.checkFavorites();
-      }
       if(recipe.connected_recipes.length){
         this.connectedRecipe = recipe.connected_recipes;
       }
@@ -92,6 +90,7 @@ export class ViewRecipeComponent {
   }
 
   checkFavorites(){
+    console.log("ChechFav");
     this.userInfo.recipes.forEach(element => {
       if(element._id === this.recipe.value._id){
         this.isFavorite = true;
