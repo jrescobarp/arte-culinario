@@ -11,7 +11,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  recipes$: Observable<Recipe[]> = new Observable();
+  // recipes$: Observable<Recipe[]> = new Observable();
+  recipes$: any = [];
   user$: Observable<User[]> = new Observable();
   isMobile = false;
   featuredMeals: any[] = [];
@@ -19,7 +20,7 @@ export class HomeComponent implements OnInit {
  constructor(private apiService: ApiService, private _snackbar: MatSnackBar) { }
 
   async ngOnInit() {
-    this.fetchRecipes();
+    this.recipes$ = await this.apiService.getRecipes();
     this.fetchUser();
     if(window.innerWidth <= 1000){
       this.isMobile = true;
@@ -28,11 +29,8 @@ export class HomeComponent implements OnInit {
     //   this.createLocalStorageArrays();
     // }
     // this.createFeaturedMealArray();
-    this.createLocalStorageArrays();
-  }
 
-  private fetchRecipes(): void {
-    this.recipes$ = this.apiService.getRecipes();
+    this.createLocalStorageArrays();
   }
 
   fetchUser(){
@@ -43,17 +41,15 @@ export class HomeComponent implements OnInit {
     let appsArr : any[]= [];
     let entreeArr : any[]= [];
     let dessertArr: any[]= [];
-    this.recipes$.subscribe((recipe:any) => {
-      // console.log("RECIPEIPEIPEIEIPEI: ", recipe);
-      recipe.forEach((r:any) => {
-        if(r.type[0] === "entremeses y bocas"){
-          appsArr.push({
-            id: r._id,
-            featuredCount : 0
-          });
-        }
-      });
-      localStorage.setItem("appsArr", JSON.stringify(appsArr));
+    console.log("RECIPEIPEIPEIEIPEI: ", this.recipes$);
+    this.recipes$.forEach((r:any) => {
+      if(r.type[0] === "entremeses y bocas"){
+        appsArr.push({
+          id: r._id,
+          featuredCount : 0
+        });
+      }
+    localStorage.setItem("appsArr", JSON.stringify(appsArr));
     });
     this.createFeaturedMealArray();
   }

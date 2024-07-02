@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ElementRef } from '@angular/core';
 import { lastValueFrom } from 'rxjs';
 import { ApiService } from '../../api.service'
 import { User } from '../../models'
@@ -30,60 +30,53 @@ export class RecipeListComponent implements OnInit{
 
   async ngOnInit(){
     await this.checkUser();
+  }
+
+  ngOnChanges(){
     this.createOptionsList();
   }
 
   checkUser(){
-    return new Promise((resolve, reject) => {
+    return new Promise<void>((resolve, reject) => {
       this.user.subscribe((userInfo:any) => {
         if(userInfo){
           this.userInfo = userInfo;
+          this.userInfo.recipes.forEach(element => {
+            this.favoritesList.push(element);
+          });
         }
+        console.log("FAVES:");
+        console.log(this.favoritesList);
       });
-      resolve(true);
+      resolve();
     });
-    // this.user.subscribe((userInfo:any) => {
-    //   if(userInfo){
-    //     this.userInfo = userInfo;
-    //   }
-    // });
   }
 
   async createOptionsList(){
-    this.recipes.subscribe((recipe:any) => {
-      recipe.forEach((r:any) => {
-        this.allRecipes.push(r);
-        r.type.forEach((e:any) => {
+      this.recipes.forEach((r:any) => {
+        // this.allRecipes.push(r);
+        r.type.forEach((type:any) => {
           if(this.categoryList.length){
-            let found = false;
-            this.categoryList.forEach((orgRec:any) => {
-              if(orgRec.name === e){
-                orgRec.recipes.push(r);
-                found = true;
-              }
-            });
+            let found = this.categoryList.find(e => e.name === type);
+            if(found){
+              found.recipes.push(r);
+            }
             if(!found){
               this.categoryList.push({
-                name: e,
+                name: type,
                 recipes: [r]
               });
             }
           }else{
             this.categoryList.push({
-              name: e,
+              name: type,
               recipes: [r]
             });
           }
         });
-        if(this.userInfo){
-          this.userInfo.recipes.forEach(element => {
-            if(element === r._id){
-              this.favoritesList.push(r);
-            }
-          });
-        }
-    });
-    });
+      });
+      console.log("FOUND:");
+      console.log(this.categoryList);
   }
 
   showHideSearchResults(displayTxt:string){
@@ -94,7 +87,7 @@ export class RecipeListComponent implements OnInit{
     this.searchInputTxt = event.target.value;
     this.searchResultRecipes = [];
     if(this.searchInputTxt){
-      this.allRecipes.forEach((recipe:any) => {
+      this.recipes.forEach((recipe:any) => {
         if(recipe.name.includes(this.searchInputTxt.toUpperCase())){
           this.searchResultRecipes.push(recipe);
         }

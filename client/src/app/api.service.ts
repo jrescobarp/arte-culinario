@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, Subject, tap } from 'rxjs';
+import { Observable, Subject, tap, lastValueFrom } from 'rxjs';
 import { Recipe, Comment, User, Image } from './models';
 import { HttpHeaders } from '@angular/common/http';
 
@@ -10,23 +10,35 @@ import { HttpHeaders } from '@angular/common/http';
 })
 export class ApiService {
   private url = 'http://localhost:4200/api';
-  private recipes$: Subject<Recipe[]> = new Subject();
+  // private recipes$: Subject<Recipe[]> = new Subject();
+  private recipes$: any = [];
   private user$: Subject<User> = new Subject();
   private comments$: Subject<Comment[]> = new Subject();
 
   constructor(private httpClient: HttpClient) { }
 
   private refreshRecipes() {
-    this.httpClient.get<Recipe[]>(`${this.url}/recipes`)
-      .subscribe(recipes => {
-        this.recipes$.next(recipes);
-      });
+    return this.httpClient.get(`${this.url}/recipes`);
+    // return new Promise<void>((resolve, reject) => {
+    //   this.httpClient.get<Recipe[]>(`${this.url}/recipes`)
+    //     .subscribe(recipes => {
+    //       console.log("INTERNALREC: ");
+    //       console.log(recipes);
+    //       this.recipes$ = recipes;
+    //       resolve();
+    //       // this.recipes$.next(recipes);
+    //     });
+    // });
   }
 
   //Recipe handlers
-  getRecipes(): Subject<Recipe[]> {
-    this.refreshRecipes();
-    return this.recipes$;
+  async getRecipes() {
+    // await this.refreshRecipes().then(function(name) {
+    //   console.log("3453435354343:");
+    //   console.log(name)
+    // });
+    // this.recipes$ = this.refreshRecipes();
+    return await lastValueFrom(this.httpClient.get(`${this.url}/recipes`));
   }
 
   getRecipe(id: string) {
