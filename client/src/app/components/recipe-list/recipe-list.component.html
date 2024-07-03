@@ -38,16 +38,16 @@
         </h2>
         <div ngbAccordionCollapse>
           <div ngbAccordionBody>
-            <ng-template *ngIf="userInfo;else noUser">
-              <div *ngIf="favoritesList.length;else noFavorites" class="row">
+            <ng-container *ngIf="userInfo;else noUser">
+              <div *ngIf="favoritesList;else noFavorites" class="row">
                 <div class="categoryBtnOptionDiv text-center my-3" *ngFor="let recipe of favoritesList" [ngClass]="isMobile ? 'col-12' : 'col-4'">
-                  <a class="p-3 categoryBtnOptionTxt" (click)="recipeRedirect(recipe)">{{ recipe.name.toLowerCase() }}</a>
+                  <a class="p-3 categoryBtnOptionTxt " (click)="recipeRedirect(recipe)">{{ recipe.name.toLowerCase() }}</a>
                 </div>
               </div>
               <ng-template #noFavorites>
                 <div>No encontramos recetas favoritas.</div>
               </ng-template>
-            </ng-template>
+            </ng-container>
             <ng-template #noUser>
               <div>Crea una cuenta o inicia una sesion para accesar tus recetas favoritas.</div>
             </ng-template>

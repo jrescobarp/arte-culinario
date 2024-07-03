@@ -30,8 +30,8 @@ export class ViewRecipeComponent {
     images:[]
   });
   isMobile = false;
-  user$: Observable<User[]> = new Observable();
-  userInfo : User;
+  user$: any;
+  userInfo : any;
   isFavorite = false;
   connectedRecipe: any;
 
@@ -43,7 +43,7 @@ export class ViewRecipeComponent {
     private modalService: NgbModal,
   ) { }
 
-  ngOnInit() {
+  async ngOnInit() {
     if(window.innerWidth <= 1000){
       this.isMobile = true;
     };
@@ -53,18 +53,14 @@ export class ViewRecipeComponent {
       alert('No id provided');
     }
 
-    this.user$ = this.apiService.isLoggedIn();
-    this.user$.subscribe((userInfo:any) => {
-      if(userInfo){
-        this.userInfo = userInfo;
-        this.checkFavorites();
-      }
-    });
+    this.userInfo = await this.apiService.isLoggedIn();
+
     this.apiService.getRecipe(id !).subscribe((recipe) => {
       this.recipe.next(recipe);
       if(recipe.connected_recipes.length){
         this.connectedRecipe = recipe.connected_recipes;
       }
+      this.checkFavorites();
       console.log("RECIPEEE:", recipe);
     });
   }
@@ -90,8 +86,7 @@ export class ViewRecipeComponent {
   }
 
   checkFavorites(){
-    console.log("ChechFav");
-    this.userInfo.recipes.forEach(element => {
+    this.userInfo.recipes.forEach((element:any) => {
       if(element._id === this.recipe.value._id){
         this.isFavorite = true;
       }
@@ -103,25 +98,22 @@ export class ViewRecipeComponent {
     if(!this.isFavorite){
       this.userInfo.recipes.push(this.recipe.value!);
       this.apiService.updateUser(this.userInfo._id!, this.userInfo).subscribe((userInfo:any)=>{
-        // alert(this.recipe.value.name + " ha sido agregada a tu lista de favoritos");
         this._snackbar.open(this.recipe.value.name + " ha sido agregada a tu lista de favoritos", '', {duration: 2500, panelClass: ['aac-green']});
         this.isFavorite = true;
       });
     }else{
-      // alert("Ya esta la receta en tu lista de favoritos");
       this._snackbar.open("Ya esta la receta en tu lista de favoritos", '', {duration: 2500, panelClass: ['aac-red']});
     }
   }
 
   removeRecipeFromFavorites(){
-    this.userInfo.recipes.forEach((element, index) => {
+    this.userInfo.recipes.forEach((element:any, index:any) => {
       if(element._id === this.recipe.value._id){
         this.userInfo.recipes.splice(index, 1);
       }
     });
     this.apiService.updateUser(this.userInfo._id!, this.userInfo).subscribe((userInfo:any)=>{
       this.isFavorite = false;
-      // alert(this.recipe.value.name + " ha sido borrado de tu lista de favoritos");
       this._snackbar.open(this.recipe.value.name + " ha sido borrado de tu lista de favoritos", '', {duration: 2500, panelClass: ['aac-red']});
     });
   }

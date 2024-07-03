@@ -13,15 +13,16 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class HomeComponent implements OnInit {
   // recipes$: Observable<Recipe[]> = new Observable();
   recipes$: any = [];
-  user$: Observable<User[]> = new Observable();
+  user$: any;
   isMobile = false;
   featuredMeals: any[] = [];
 
  constructor(private apiService: ApiService, private _snackbar: MatSnackBar) { }
 
   async ngOnInit() {
+    // this.fetchUser();
+    this.user$ = await this.apiService.isLoggedIn();
     this.recipes$ = await this.apiService.getRecipes();
-    this.fetchUser();
     if(window.innerWidth <= 1000){
       this.isMobile = true;
     };
@@ -33,15 +34,10 @@ export class HomeComponent implements OnInit {
     this.createLocalStorageArrays();
   }
 
-  fetchUser(){
-    this.user$ = this.apiService.isLoggedIn();
-  }
-
   createLocalStorageArrays(){
     let appsArr : any[]= [];
     let entreeArr : any[]= [];
     let dessertArr: any[]= [];
-    console.log("RECIPEIPEIPEIEIPEI: ", this.recipes$);
     this.recipes$.forEach((r:any) => {
       if(r.type[0] === "entremeses y bocas"){
         appsArr.push({

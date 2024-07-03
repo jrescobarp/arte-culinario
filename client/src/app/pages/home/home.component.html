@@ -13,7 +13,6 @@
     </div>
     <div class="loginDiv" [ngClass]="isMobile ? 'hide' : 'col-4'">
       <app-user-menu
-      (logInChange)="fetchUser()"
       [user]="user$"
       [isMobile]="isMobile"
       [dropdownDisplay]="false"

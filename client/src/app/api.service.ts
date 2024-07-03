@@ -12,7 +12,7 @@ export class ApiService {
   private url = 'http://localhost:4200/api';
   // private recipes$: Subject<Recipe[]> = new Subject();
   private recipes$: any = [];
-  private user$: Subject<User> = new Subject();
+  private user$: any;
   private comments$: Subject<Comment[]> = new Subject();
 
   constructor(private httpClient: HttpClient) { }
@@ -67,9 +67,10 @@ export class ApiService {
       });
   }
 
-  isLoggedIn():Observable<any>{
-    this.refreshUser();
-    return this.user$;
+  async isLoggedIn(){
+    // this.refreshUser();
+    // return this.user$;
+    return await lastValueFrom(this.httpClient.get(`${this.url}/user`));
   }
 
   registerUser(user:User): Observable<any>{

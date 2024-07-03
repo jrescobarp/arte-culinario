@@ -14,9 +14,9 @@ export class UserMenuComponent {
   @Input() user: any;
   @Input() dropdownDisplay: boolean = false;
   @Input() isMobile!: boolean;
-  @Output() logInChange: EventEmitter<any> = new EventEmitter<any>();
+  // @Output() logInChange: EventEmitter<any> = new EventEmitter<any>();
   loggedIn = false;
-  userInfo: User;
+  userInfo: any;
   recipe_history: Recipe[] = [];
 
   constructor(
@@ -30,26 +30,32 @@ export class UserMenuComponent {
     }
   }
 
-
-  updateUserInfo(){
-    this.user.subscribe((userInfo:any) => {
-      if(userInfo){
-        this.loggedIn =true;
-        this.userInfo = userInfo;
-        localStorage.setItem("recipeHistory", JSON.stringify(this.userInfo.recipe_history));
-        this.recipe_history = this.userInfo.recipe_history;
-        console.log("USERUSERUSER: ");
-        console.log(this.userInfo);
-      }
-    });
+  ngOnChanges(){
+    if(this.user){
+      this.updateUserInfo();
+    }
   }
 
-  updateloginStatus($event:any){
+
+  updateUserInfo(){
+    if(this.user){
+      this.userInfo = this.user;
+      this.loggedIn =true;
+      // this.userInfo = userInfo;
+      localStorage.setItem("recipeHistory", JSON.stringify(this.userInfo.recipe_history));
+      this.recipe_history = this.userInfo.recipe_history;
+      console.log("USERUSERUSER: ");
+      console.log(this.userInfo);
+    }
+  }
+
+  async updateloginStatus($event:any){
     this.loggedIn = !this.loggedIn;
     this.userInfo = JSON.parse($event);
     this._snackbar.open("aprendamos a cocinar!", '', {duration: 2000, panelClass: ['aac-green']});
-    this.logInChange.emit($event);
-    setTimeout(function(){ location.reload(); }, 1200);
+    // this.logInChange.emit($event);
+    this.userInfo = await this.apiService.isLoggedIn();
+    // setTimeout(function(){ location.reload(); }, 1200);
   }
 
   openModal(content:any) {

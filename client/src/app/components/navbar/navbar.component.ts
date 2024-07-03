@@ -16,6 +16,13 @@ export class NavbarComponent implements OnInit {
     if(window.innerWidth <= 1000){
       this.isMobile = true;
     };
+    console.log("navbarUser");
+    console.log(this.user);
+  }
+
+  ngOnChanges(){
+    console.log("navbarUserChange");
+    console.log(this.user);
   }
 
   hover(imgName:string) {

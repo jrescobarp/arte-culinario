@@ -8,7 +8,7 @@ import { User } from '../../models'
   templateUrl: './recipe-list.component.html',
   styleUrls: ['./recipe-list.component.scss']
 })
-export class RecipeListComponent implements OnInit{
+export class RecipeListComponent{
   @Input() isMobile!: boolean;
   @Input() recipes: any;
   @Input() user: any;
@@ -28,28 +28,17 @@ export class RecipeListComponent implements OnInit{
     private apiService: ApiService
   ) { }
 
-  async ngOnInit(){
-    await this.checkUser();
-  }
-
-  ngOnChanges(){
-    this.createOptionsList();
-  }
-
-  checkUser(){
-    return new Promise<void>((resolve, reject) => {
-      this.user.subscribe((userInfo:any) => {
-        if(userInfo){
-          this.userInfo = userInfo;
-          this.userInfo.recipes.forEach(element => {
-            this.favoritesList.push(element);
-          });
-        }
-        console.log("FAVES:");
-        console.log(this.favoritesList);
-      });
-      resolve();
-    });
+  async ngOnChanges(){
+    // await this.checkUser();
+    if(!this.userInfo){
+      this.userInfo = this.user;
+      console.log("FAVEREC323232: ");
+      this.userInfo ? this.favoritesList = this.userInfo.recipes : '';
+      console.log(this.favoritesList);
+    }
+    if(!this.categoryList.length){
+      this.createOptionsList();
+    }
   }
 
   async createOptionsList(){
