@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit,Output,EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-navbar',
@@ -10,24 +10,23 @@ export class NavbarComponent implements OnInit {
   @Input() path: string;
   @Input() user: any;
   @Input() showProfileDropdown: boolean = false;
+  @Output() logInChange = new EventEmitter<any>();
+
   isMobile = false;
 
   ngOnInit(): void {
     if(window.innerWidth <= 1000){
       this.isMobile = true;
     };
-    console.log("navbarUser");
-    console.log(this.user);
-  }
-
-  ngOnChanges(){
-    console.log("navbarUserChange");
-    console.log(this.user);
   }
 
   hover(imgName:string) {
     var el = document.getElementById("navUserIcon");
     el!.setAttribute('src', '../../../assets/'+imgName);
+  }
+
+  userChange($event:any){
+    this.logInChange.emit($event);
   }
 
 }

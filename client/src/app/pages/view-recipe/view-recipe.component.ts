@@ -52,17 +52,22 @@ export class ViewRecipeComponent {
     if (!id) {
       alert('No id provided');
     }
-
-    this.userInfo = await this.apiService.isLoggedIn();
+    // console.log("getuser");
+    // this.userInfo = await this.apiService.isLoggedIn();
+    // console.log("gotuser");
 
     this.apiService.getRecipe(id !).subscribe((recipe) => {
       this.recipe.next(recipe);
       if(recipe.connected_recipes.length){
         this.connectedRecipe = recipe.connected_recipes;
       }
-      this.checkFavorites();
+      // this.checkFavorites();
       console.log("RECIPEEE:", recipe);
     });
+
+    this.userInfo = await this.apiService.isLoggedIn();
+    this.checkFavorites();
+
   }
 
   copyToClipboard(type:string){
@@ -126,4 +131,9 @@ export class ViewRecipeComponent {
       this._snackbar.open("inicia sesión o crea una cuenta para subir fotos", '', {duration: 2500, panelClass: ['aac-red']});
     }
 	}
+
+  recheckFavorites($event:any){
+    this.userInfo = JSON.parse($event);
+    this.checkFavorites();
+  }
 }

@@ -10,34 +10,14 @@ import { HttpHeaders } from '@angular/common/http';
 })
 export class ApiService {
   private url = 'http://localhost:4200/api';
-  // private recipes$: Subject<Recipe[]> = new Subject();
   private recipes$: any = [];
   private user$: any;
   private comments$: Subject<Comment[]> = new Subject();
 
   constructor(private httpClient: HttpClient) { }
 
-  private refreshRecipes() {
-    return this.httpClient.get(`${this.url}/recipes`);
-    // return new Promise<void>((resolve, reject) => {
-    //   this.httpClient.get<Recipe[]>(`${this.url}/recipes`)
-    //     .subscribe(recipes => {
-    //       console.log("INTERNALREC: ");
-    //       console.log(recipes);
-    //       this.recipes$ = recipes;
-    //       resolve();
-    //       // this.recipes$.next(recipes);
-    //     });
-    // });
-  }
-
   //Recipe handlers
   async getRecipes() {
-    // await this.refreshRecipes().then(function(name) {
-    //   console.log("3453435354343:");
-    //   console.log(name)
-    // });
-    // this.recipes$ = this.refreshRecipes();
     return await lastValueFrom(this.httpClient.get(`${this.url}/recipes`));
   }
 
@@ -57,19 +37,8 @@ export class ApiService {
     return this.httpClient.delete(`${this.url}/recipes/${id}`, { responseType: 'text' });
   }
 
-
-
   //User handlers
-  private refreshUser() {
-    this.httpClient.get<User>(`${this.url}/user`)
-      .subscribe(user => {
-        this.user$.next(user);
-      });
-  }
-
   async isLoggedIn(){
-    // this.refreshUser();
-    // return this.user$;
     return await lastValueFrom(this.httpClient.get(`${this.url}/user`));
   }
 
@@ -88,7 +57,6 @@ export class ApiService {
   updateUser(id: string, user: User): Observable<any> {
     return this.httpClient.put(`${this.url}/user/${id}`, user, { responseType: 'text' });
   }
-
 
   //Comment Handllers
   getComments(id: string): Observable<any>{
@@ -122,64 +90,4 @@ export class ApiService {
     };
     return this.httpClient.delete(`${this.url}/image/${id}`, httpOptions);
   }
-
-  // deleteComment(id: string): Observable<string> {
-  //   return this.httpClient.delete(`${this.url}/comments/${id}`, { responseType: 'text' });
-  // }
-
-  // private refreshUsers() {
-  //   this.httpClient.get<User[]>(`${this.url}/user`)
-  //     .subscribe(user => {
-  //       this.user$.next(user);
-  //     });
-  // }
-
-  // getUsers(): Subject<User[]> {
-  //   this.refreshUsers();
-  //   return this.user$;
-  // }
-
-  // getUser(id: string): Observable<User> {
-  //   return this.httpClient.get<User>(`${this.url}/user/${id}`);
-  // }
-
-  // createUser(user: User): Observable<string> {
-  //   return this.httpClient.post(`${this.url}/user`, user, { responseType: 'text' });
-  // }
-
-  // updateUser(id: string, user: User): Observable<string> {
-  //   return this.httpClient.put(`${this.url}/user/${id}`, user, { responseType: 'text' });
-  // }
-
-  // deleteUser(id: string): Observable<string> {
-  //   return this.httpClient.delete(`${this.url}/user/${id}`, { responseType: 'text' });
-  // }
-
-  // private refreshImages() {
-  //   this.httpClient.get<Image[]>(`${this.url}/images`)
-  //     .subscribe(images => {
-  //       this.images$.next(images);
-  //     });
-  // }
-
-  // getImages(): Subject<Image[]> {
-  //   this.refreshImages();
-  //   return this.images$;
-  // }
-
-  // getImage(id: string): Observable<Image> {
-  //   return this.httpClient.get<Image>(`${this.url}/images/${id}`);
-  // }
-
-  // createImage(image: Image): Observable<string> {
-  //   return this.httpClient.post(`${this.url}/images`, image, { responseType: 'text' });
-  // }
-
-  // updateImage(id: string, image: Image): Observable<string> {
-  //   return this.httpClient.put(`${this.url}/images/${id}`, image, { responseType: 'text' });
-  // }
-
-  // deleteImage(id: string): Observable<string> {
-  //   return this.httpClient.delete(`${this.url}/images/${id}`, { responseType: 'text' });
-  // }
 }

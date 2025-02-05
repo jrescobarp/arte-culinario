@@ -14,7 +14,7 @@ export class UserMenuComponent {
   @Input() user: any;
   @Input() dropdownDisplay: boolean = false;
   @Input() isMobile!: boolean;
-  // @Output() logInChange: EventEmitter<any> = new EventEmitter<any>();
+  @Output() logInChange = new EventEmitter<any>();
   loggedIn = false;
   userInfo: any;
   recipe_history: Recipe[] = [];
@@ -53,9 +53,11 @@ export class UserMenuComponent {
     this.loggedIn = !this.loggedIn;
     this.userInfo = JSON.parse($event);
     this._snackbar.open("aprendamos a cocinar!", '', {duration: 2000, panelClass: ['aac-green']});
-    // this.logInChange.emit($event);
-    this.userInfo = await this.apiService.isLoggedIn();
-    // setTimeout(function(){ location.reload(); }, 1200);
+    this.logInChange.emit($event);
+    // console.log("logging in");
+    // this.userInfo = await this.apiService.isLoggedIn();
+    // console.log(this.userInfo);
+    // setTimeout(function(){ location.reload(); }, 100);
   }
 
   openModal(content:any) {
@@ -68,8 +70,6 @@ export class UserMenuComponent {
       this.loggedIn = false;
       localStorage.setItem("recipeHistory", '[]');
       this._snackbar.open("sesión ha sido cerrada", '', {duration: 2500, panelClass: ['aac-red']});
-      console.log("HISTORY:");
-      console.log(localStorage.getItem("recipeHistory"));
       setTimeout(function(){ location.reload(); }, 1200);
     });
   }

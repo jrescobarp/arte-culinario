@@ -21,8 +21,8 @@ export class HomeComponent implements OnInit {
 
   async ngOnInit() {
     // this.fetchUser();
-    this.user$ = await this.apiService.isLoggedIn();
     this.recipes$ = await this.apiService.getRecipes();
+    this.user$ = await this.apiService.isLoggedIn();
     if(window.innerWidth <= 1000){
       this.isMobile = true;
     };

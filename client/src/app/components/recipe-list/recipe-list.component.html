@@ -31,31 +31,25 @@
           </div>
         </div>
       </div>
+
       <!-- Favorites List -->
-      <div class="accordionItem" ngbAccordionItem>
+      <!-- <div class="accordionItem" ngbAccordionItem>
         <h2 ngbAccordionHeader>
           <button class="categoryBtnTxt" ngbAccordionButton>Favorite Recipes</button>
         </h2>
         <div ngbAccordionCollapse>
           <div ngbAccordionBody>
-            <ng-container *ngIf="userInfo;else noUser">
-              <div *ngIf="favoritesList;else noFavorites" class="row">
-                <div class="categoryBtnOptionDiv text-center my-3" *ngFor="let recipe of favoritesList" [ngClass]="isMobile ? 'col-12' : 'col-4'">
-                  <a class="p-3 categoryBtnOptionTxt " (click)="recipeRedirect(recipe)">{{ recipe.name.toLowerCase() }}</a>
-                </div>
+            <div *ngIf="userInfo && userInfo?.recipes?.length" class="row">
+              <div *ngFor="let recipe of userInfo.recipes" class="categoryBtnOptionDiv text-center my-3" [ngClass]="isMobile ? 'col-12' : 'col-4'">
+                <a class="p-3 categoryBtnOptionTxt " (click)="recipeRedirect(recipe)">{{ recipe.name.toLowerCase() }}</a>
               </div>
-              <ng-template #noFavorites>
-                <div>No encontramos recetas favoritas.</div>
-              </ng-template>
-            </ng-container>
-            <ng-template #noUser>
-              <div>Crea una cuenta o inicia una sesion para accesar tus recetas favoritas.</div>
-            </ng-template>
+            </div>
           </div>
         </div>
-      </div>
+      </div> -->
+
       <!-- All Recipes -->
-      <div class="accordionItem" *ngFor="let category of categoryList" ngbAccordionItem>
+      <div class="accordionItem" *ngFor="let category of chapters" ngbAccordionItem>
         <h2 ngbAccordionHeader>
           <button class="categoryBtnTxt" ngbAccordionButton>{{category.name}}</button>
         </h2>
@@ -73,5 +67,23 @@
           </div>
         </div>
       </div>
+
+      <!-- All Categories -->
+      <!-- <div class="accordionItem" *ngFor="let category of categoryList" ngbAccordionItem>
+        <h2 ngbAccordionHeader>
+          <button class="categoryBtnTxt" ngbAccordionButton>{{category.name}}</button>
+        </h2>
+        <div ngbAccordionCollapse>
+          <div ngbAccordionBody>
+            <ng-template>
+              <div class="row">
+                <div class="categoryBtnOptionDiv text-center my-3" *ngFor="let option of category.recipes" [ngClass]="isMobile ? 'col-12' : 'col-4'">
+                  <a class="p-3 categoryBtnOptionTxt" (click)="recipeRedirect(option)">{{ option.name.toLowerCase() }}</a>
+                </div>
+              </div>
+            </ng-template>
+          </div>
+        </div>
+      </div> -->
     </div>
   </div>

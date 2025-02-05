@@ -16,9 +16,14 @@ export class RecipeListComponent{
     name : "",
     recipes: []
   };
-  categoryList: any[] = [];
+  chapters: any[] = [
+    {"name":"entremeses y bocas","recipes":[]},{"name":"caldos y sopas","recipes":[]},{"name":"huevos","recipes":[]},{"name":"pescados y mariscos","recipes":[]},{"name":"salsas","recipes":[]},{"name":"arroces","recipes":[]},{"name":"platos ligeros","recipes":[]},
+    {"name":"pastas","recipes":[]},{"name":"verduras y hortalizas","recipes":[]},{"name":"ensaladas","recipes":[]},{"name":"aves","recipes":[]},{"name":"pavos","recipes":[]},{"name":"carne de cerdo","recipes":[]},{"name":"carne de res","recipes":[]},{"name":"dulces caseros","recipes":[]},
+    {"name":"pasteles","recipes":[]},{"name":"postres livianos","recipes":[]},{"name":"cakes","recipes":[]},{"name":"comida tipica","recipes":[]},{"name":"dulces","recipes":[]},{"name":"refrescos, batidos y cocteles","recipes":[]}];
+    categoryList: any[] = [];
   favoritesList: any[] = [];
   allRecipes: any[] = [];
+  allTypes: string[] = [];
   searchResultRecipes: any[] = [];
   recipeHistory: any[] = [];
   userInfo: User;
@@ -29,43 +34,45 @@ export class RecipeListComponent{
   ) { }
 
   async ngOnChanges(){
-    // await this.checkUser();
-    if(!this.userInfo){
-      this.userInfo = this.user;
-      console.log("FAVEREC323232: ");
-      this.userInfo ? this.favoritesList = this.userInfo.recipes : '';
-      console.log(this.favoritesList);
-    }
-    if(!this.categoryList.length){
+    this.userInfo = this.user;
+    // if(!this.categoryList.length){
       this.createOptionsList();
-    }
+    // }
   }
 
   async createOptionsList(){
       this.recipes.forEach((r:any) => {
         // this.allRecipes.push(r);
-        r.type.forEach((type:any) => {
+        for(let i = 1; i < r.type.length;i++){
+        // r.type.forEach((type:any) => {
           if(this.categoryList.length){
-            let found = this.categoryList.find(e => e.name === type);
+            let found = this.categoryList.find(e => e.name === r.type[i]);
             if(found){
               found.recipes.push(r);
             }
             if(!found){
               this.categoryList.push({
-                name: type,
+                name: r.type[i],
                 recipes: [r]
               });
+              this.allTypes.push(r.type[i]);
             }
           }else{
             this.categoryList.push({
-              name: type,
+              name: r.type[i],
               recipes: [r]
             });
+            this.allTypes.push(r.type[i]);
           }
-        });
+        }
+
+        let foundChapter = this.chapters.find(e => e.name === r.type[0]);
+        if(foundChapter){
+          foundChapter.recipes.push(r);
+        }
+
       });
-      console.log("FOUND:");
-      console.log(this.categoryList);
+      console.log(`allTypes: ${this.allTypes}`);
   }
 
   showHideSearchResults(displayTxt:string){
