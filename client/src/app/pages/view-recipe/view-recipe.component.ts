@@ -5,7 +5,6 @@ import { ApiService } from '../../api.service'
 import { BehaviorSubject, Observable } from 'rxjs';
 import { User } from '../../models'
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 
 @Component({
@@ -13,7 +12,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
   templateUrl: './view-recipe.component.html',
   styleUrls: ['./view-recipe.component.scss']
 })
-export class ViewRecipeComponent {
+export class ViewRecipeComponent{
   recipe: BehaviorSubject<Recipe> = new BehaviorSubject<Recipe>({
     _id: '',
     name:'',
@@ -34,13 +33,13 @@ export class ViewRecipeComponent {
   userInfo : any;
   isFavorite = false;
   connectedRecipe: any;
+  recipeDescription: any;
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private apiService: ApiService,
     private _snackbar: MatSnackBar,
-    private modalService: NgbModal,
   ) { }
 
   async ngOnInit() {
@@ -52,15 +51,50 @@ export class ViewRecipeComponent {
     if (!id) {
       alert('No id provided');
     }
-    // console.log("getuser");
-    // this.userInfo = await this.apiService.isLoggedIn();
-    // console.log("gotuser");
 
     this.apiService.getRecipe(id !).subscribe((recipe) => {
       this.recipe.next(recipe);
+      const descriptionDiv = document.getElementById("descriptionDiv");
+      let descTxt = recipe.description;
+
+      // connected_recipes logic
       if(recipe.connected_recipes.length){
         this.connectedRecipe = recipe.connected_recipes;
+          this.connectedRecipe.forEach((r:any, index:number) => {
+            let linkTxt = '<a class="" href="/recipe/' + this.connectedRecipe[index]._id + '" target="_blank">' + this.connectedRecipe[index].name.toLowerCase() + '</a>';
+            descTxt = descTxt.replaceAll(this.connectedRecipe[index].name.toLowerCase(),linkTxt);
+            recipe.ingredients = recipe.ingredients.map((str:string) => str.replace(new RegExp(this.connectedRecipe[index].name.toLowerCase(), 'gi'), linkTxt));
+            recipe.steps = recipe.steps.map((str:string) => str.replace(new RegExp(this.connectedRecipe[index].name.toLowerCase(), 'gi'), linkTxt));
+          });
       }
+      this.createLI(recipe.ingredients,"ingredientList");
+      this.createLI(recipe.steps,"stepsList");
+
+      // description logic
+      if(recipe.description.length){
+        descriptionDiv!.setAttribute('style', 'display:block');
+        descriptionDiv!.setAttribute('style', 'margin:.3em');
+        let noteFound = descTxt.toLowerCase().search("nota:");
+        let startIndex =0;
+        let allNotes: string[] = [];
+
+        if(noteFound >=0 && noteFound != 0){
+          descriptionDiv!.innerHTML += descTxt.slice(0,noteFound);
+          allNotes = descTxt.slice(noteFound).toLocaleLowerCase().split('nota:').filter(section => section.trim() !== '');
+        }else if(noteFound >=0){
+          allNotes = descTxt.toLocaleLowerCase().split('nota:').filter(section => section.trim() !== '');
+        }else if(noteFound < 0){
+          descriptionDiv!.innerHTML += descTxt;
+        }
+
+        for(let i =startIndex;i < allNotes.length;i++){
+          const newNote = document.createElement("div");
+          newNote.setAttribute('style', 'margin-top:1em');
+          newNote.innerHTML = "Nota: "+ allNotes[i];
+          descriptionDiv!.appendChild(newNote);
+        }
+      }
+
       // this.checkFavorites();
       console.log("RECIPEEE:", recipe);
     });
@@ -69,6 +103,8 @@ export class ViewRecipeComponent {
     this.checkFavorites();
 
   }
+
+  // check for : in ingredients and steps (dont add number or dot to those steps/ingredients)
 
   copyToClipboard(type:string){
     let copyTxt = "";
@@ -123,17 +159,18 @@ export class ViewRecipeComponent {
     });
   }
 
-  open(content:any, createType:string, editImgIndex: number = -1) {
-    if(this.userInfo){
-      this.modalService.open(content, { size:'lg', centered: true, ariaLabelledBy: 'modal-basic-title' })
-      .result.then((result) => {}, (reason) => {});
-    }else{
-      this._snackbar.open("inicia sesión o crea una cuenta para subir fotos", '', {duration: 2500, panelClass: ['aac-red']});
-    }
-	}
-
   recheckFavorites($event:any){
     this.userInfo = JSON.parse($event);
     this.checkFavorites();
   }
+
+  createLI(values:any,listId:string){
+    let list = document.getElementById(listId);
+    values.forEach((element:any) => {
+      const newLi = document.createElement("li");
+      newLi.innerHTML = element;
+      list!.appendChild(newLi);
+    });
+  }
+
 }

@@ -33,33 +33,36 @@
       ></app-image-display>
     </div>
 
+    <div id="descriptionDiv" class="descriptionDiv bg-white col-12" style="display: none;">
+      <div class="mt-2" style="font-size: 1em;"><strong>Descripcion:</strong></div>
+      <div id="descriptionSpanDiv" class="my-2 mx-2" style="font-size: .9em;"></div>
+    </div>
+
     <div class="ingrDiv bg-white" [ngClass]="isMobile ? 'col-12' : 'col-5'">
       <div class="row">
-        <div class="col-8 mt-2" style="font-size: 1em;">Ingredientes:</div>
+        <div class="col-8 mt-2" style="font-size: 1em;"><strong>Ingredientes:</strong></div>
         <div class="col-4" style="text-align: right;">
           <button class="btn btn-sm btn-green" matTooltip="copiar texto" [matTooltipPosition]="'above'" (click)="copyToClipboard('ingredients')"><i class="fa-regular fa-clipboard"></i></button>
         </div>
       </div>
-      <ul>
-        <li *ngFor="let ingredient of recipe.value.ingredients ; let i = index" style="font-size: .8em;">
-          <!-- {{ingredient}} -->
-          <button class="connectedRecipeBtn btn-red" *ngIf="i === 0 && recipe.value.connected_recipes.length" (click)="open(content, 'create')">{{ingredient}}</button>
-          <span *ngIf="i != 0 || !recipe.value.connected_recipes.length">{{ingredient}}</span>
-        </li>
+      <ul id="ingredientList">
+        <!-- <li *ngFor="let ingredient of recipe.value.ingredients ; let i = index" style="font-size: .8em;">
+          {{ingredient}}
+        </li> -->
       </ul>
     </div>
 
     <div class="stepsDiv bg-white" [ngClass]="isMobile ? 'col-12 mt-3' : 'col-7'">
       <div class="row mt-2">
-        <div class="col-8" style="font-size: 1em;">Instrucciones:</div>
+        <div class="col-8" style="font-size: 1em;"><strong>Instrucciones:</strong></div>
         <div class="col-4" style="text-align: right;">
           <button class="btn btn-sm mt-0 btn-green" matTooltip="copiar texto" [matTooltipPosition]="'above'" (click)="copyToClipboard('steps')"><i class="fa-regular fa-clipboard"></i></button>
         </div>
       </div>
-      <ol>
-        <li *ngFor="let step of recipe.value.steps ; let i = index" style="font-size: .8em;">
+      <ol id="stepsList">
+        <!-- <li *ngFor="let step of recipe.value.steps ; let i = index" style="font-size: .8em;">
           {{step}}
-        </li>
+        </li> -->
       </ol>
     </div>
 
@@ -80,10 +83,10 @@
 
 
 <!-- Connected Recipe Modal -->
-<ng-template #content let-modal>
+<!-- <ng-template #content let-modal>
 	<div class="modal-header">
-		<h4 class="modal-title" id="modal-basic-title" style="text-transform: capitalize;">{{connectedRecipe[0].name.toLowerCase()}}</h4>
-		<button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+		<h4 class="modal-title" id="modal-basic-title" style="text-transform: capitalize;">{{connectedRecipe[crIndex].name.toLowerCase()}}</h4>
+		<button type="button" class="btn-close" aria-label="Close" (click)="closeModal(modal)"></button>
 	</div>
 	<div class="modal-body row">
     <div class="ingrDiv bg-white" [ngClass]="isMobile ? 'col-12' : 'col-5'" style="border: none">
@@ -94,10 +97,9 @@
         </div>
       </div>
       <ul>
-        <li *ngFor="let ingredient of connectedRecipe[0].ingredients ; let i = index" style="font-size: .8em;">
-          <!-- {{ingredient}} -->
-          <button *ngIf="i === 0 && connectedRecipe[0].connected_recipes.length" (click)="open(content, 'create')">{{ingredient}}</button>
-          <span *ngIf="i != 0 || !connectedRecipe[0].connected_recipes.length">{{ingredient}}</span>
+        <li *ngFor="let ingredient of connectedRecipe[crIndex].ingredients ; let i = index" style="font-size: .8em;">
+          <button *ngIf="i === 0 && connectedRecipe[crIndex].connected_recipes.length" (click)="open(0)">{{ingredient}}</button>
+          <span *ngIf="i != 0 || !connectedRecipe[crIndex].connected_recipes.length">{{ingredient}}</span>
         </li>
       </ul>
     </div>
@@ -110,13 +112,13 @@
         </div>
       </div>
       <ol>
-        <li *ngFor="let step of connectedRecipe[0].steps ; let i = index" style="font-size: .8em;">
+        <li *ngFor="let step of connectedRecipe[crIndex].steps ; let i = index" style="font-size: .8em;">
           {{step}}
         </li>
       </ol>
     </div>
 	</div>
 	<div class="modal-footer">
-    <a class="btn btn-red" href="/recipe/{{connectedRecipe[0]._id}}" target="_blank" matTooltip="abrir receta en otro tab" [matTooltipPosition]="'above'">ver receta <i class="fa-solid fa-arrow-right-long"></i></a>
+    <a class="btn btn-red" href="/recipe/{{connectedRecipe[crIndex]._id}}" target="_blank" matTooltip="abrir receta en otro tab" [matTooltipPosition]="'above'">ver receta <i class="fa-solid fa-arrow-right-long"></i></a>
 	</div>
-</ng-template>
+</ng-template> -->
