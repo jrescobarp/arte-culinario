@@ -8,7 +8,6 @@ import { Component, Input, OnInit,Output,EventEmitter } from '@angular/core';
 export class NavbarComponent implements OnInit {
   @Input() recName: string;
   @Input() path: string;
-  @Input() user: any;
   @Input() showProfileDropdown: boolean = false;
   @Output() logInChange = new EventEmitter<any>();
 

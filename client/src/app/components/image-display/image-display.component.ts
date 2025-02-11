@@ -14,7 +14,6 @@ export class ImageDisplayComponent implements OnInit{
   @Input() images: any[];
   @Input() recipe_name: string;
   @Input() recipe_id: string;
-  @Input() userInfo: User;
   @Input() isMobile: boolean;
   @Input() isHomePage: boolean;
   createType = "";
@@ -22,6 +21,7 @@ export class ImageDisplayComponent implements OnInit{
   editableImgs: any[] = [];
   editImgIndex = -1;
   showSpinner = false;
+  userInfo : any;
   newImage : Image = {
     imgDataArr: [],
     user_id:"",
@@ -40,6 +40,7 @@ export class ImageDisplayComponent implements OnInit{
 
   ngOnInit(): void {
     this.showSpinner = false;
+    this.userInfo = this.apiService.getUser();
   }
 
   open(content:any, createType:string, editImgIndex: number = -1) {

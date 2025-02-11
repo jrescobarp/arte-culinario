@@ -11,7 +11,7 @@ import { ModalDismissReasons, NgbDatepickerModule, NgbModal } from '@ng-bootstra
 })
 export class UserMenuComponent {
 
-  @Input() user: any;
+  // @Input() user: any;
   @Input() dropdownDisplay: boolean = false;
   @Input() isMobile!: boolean;
   @Output() logInChange = new EventEmitter<any>();
@@ -25,28 +25,27 @@ export class UserMenuComponent {
     private _snackbar: MatSnackBar) {}
 
   ngOnInit(): void {
-    if(this.user){
+    if(this.apiService.getUser()){
+      this.userInfo = this.apiService.getUser();
       this.updateUserInfo();
     }
   }
 
   ngOnChanges(){
-    if(this.user){
+    if(this.apiService.getUser()){
+      this.userInfo = this.apiService.getUser();
       this.updateUserInfo();
     }
   }
 
 
   updateUserInfo(){
-    if(this.user){
-      this.userInfo = this.user;
-      this.loggedIn =true;
-      // this.userInfo = userInfo;
-      localStorage.setItem("recipeHistory", JSON.stringify(this.userInfo.recipe_history));
-      this.recipe_history = this.userInfo.recipe_history;
-      console.log("USERUSERUSER: ");
-      console.log(this.userInfo);
-    }
+    this.loggedIn =true;
+    // this.userInfo = userInfo;
+    localStorage.setItem("recipeHistory", JSON.stringify(this.userInfo.recipe_history));
+    this.recipe_history = this.userInfo.recipe_history;
+    console.log("USERUSERUSER: ");
+    console.log(this.userInfo);
   }
 
   async updateloginStatus($event:any){
@@ -54,10 +53,6 @@ export class UserMenuComponent {
     this.userInfo = JSON.parse($event);
     this._snackbar.open("aprendamos a cocinar!", '', {duration: 2000, panelClass: ['aac-green']});
     this.logInChange.emit($event);
-    // console.log("logging in");
-    // this.userInfo = await this.apiService.isLoggedIn();
-    // console.log(this.userInfo);
-    // setTimeout(function(){ location.reload(); }, 100);
   }
 
   openModal(content:any) {

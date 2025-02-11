@@ -13,7 +13,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class HomeComponent implements OnInit {
   // recipes$: Observable<Recipe[]> = new Observable();
   recipes$: any = [];
-  user$: any;
   isMobile = false;
   featuredMeals: any[] = [];
 
@@ -22,8 +21,6 @@ export class HomeComponent implements OnInit {
   async ngOnInit() {
     // this.fetchUser();
     this.recipes$ = await this.apiService.getRecipes();
-    // this.user$ = await this.apiService.isLoggedIn();
-    this.user$ = this.apiService.getUser();
     if(window.innerWidth <= 1000){
       this.isMobile = true;
     };

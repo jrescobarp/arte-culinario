@@ -1,5 +1,4 @@
 <app-navbar
-[user]="user$"
 ></app-navbar>
 
 <div class="mainContainer container" style="position: relative;">
@@ -13,7 +12,6 @@
     </div>
     <div class="loginDiv" [ngClass]="isMobile ? 'hide' : 'col-4'">
       <app-user-menu
-      [user]="user$"
       [isMobile]="isMobile"
       [dropdownDisplay]="false"
       ></app-user-menu>
@@ -21,7 +19,6 @@
     <div class="col-12">
       <app-recipe-list
         [isMobile]="isMobile"
-        [user]="user$"
         [recipes]="recipes$"
       ></app-recipe-list>
     </div>

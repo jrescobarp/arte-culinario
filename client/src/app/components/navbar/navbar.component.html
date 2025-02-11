@@ -10,7 +10,6 @@
     <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown" style="min-width: 15em;"
     (mouseover)="hover('redChef.png');" (mouseout)="hover('whiteChef.png');">
       <app-user-menu
-      [user]="user"
       [dropdownDisplay]="true"
       [isMobile]="isMobile"
       (logInChange)="userChange($event)"

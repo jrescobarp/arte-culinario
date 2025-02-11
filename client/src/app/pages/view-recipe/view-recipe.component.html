@@ -1,5 +1,4 @@
 <app-navbar
-[user]="userInfo"
 [showProfileDropdown]="true"
 (logInChange)="recheckFavorites($event)"
 ></app-navbar>
@@ -29,7 +28,6 @@
           [recipe_id]="recipe.value._id!"
           [recipe_name]="recipe.value.name"
           [isHomePage]="false"
-          [userInfo]="userInfo"
       ></app-image-display>
     </div>
 
@@ -69,7 +67,6 @@
     <div class="col-12 my-3 px-0">
       <app-comments-section
         [comments_arr]="recipe.value.comments"
-        [userInfo]="userInfo"
         [parentObject]="recipe.value"
         [parentType] = "'recipe'"
         [mainCommentSection]="true"

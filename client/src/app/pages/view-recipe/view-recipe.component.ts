@@ -29,7 +29,6 @@ export class ViewRecipeComponent{
     images:[]
   });
   isMobile = false;
-  user$: any;
   userInfo : any;
   isFavorite = false;
   connectedRecipe: any;
@@ -51,6 +50,8 @@ export class ViewRecipeComponent{
     if (!id) {
       alert('No id provided');
     }
+
+    this.userInfo = this.apiService.getUser();
 
     this.apiService.getRecipe(id !).subscribe((recipe) => {
       this.recipe.next(recipe);
@@ -94,15 +95,11 @@ export class ViewRecipeComponent{
           descriptionDiv!.appendChild(newNote);
         }
       }
-
-      // this.checkFavorites();
+      if(this.userInfo){
+        this.checkFavorites();
+      }
       console.log("RECIPEEE:", recipe);
     });
-
-    // this.userInfo = await this.apiService.isLoggedIn();
-    this.userInfo = await this.apiService.getUser();
-    this.checkFavorites();
-
   }
 
   // check for : in ingredients and steps (dont add number or dot to those steps/ingredients)

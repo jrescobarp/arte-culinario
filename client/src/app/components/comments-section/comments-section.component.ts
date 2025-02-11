@@ -12,12 +12,12 @@ import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 export class CommentsSectionComponent {
   @Input() comments_arr: any[];
   @Input() isMobile!: boolean;
-  @Input() userInfo: User;
   @Input() parentObject: any;
   @Input() parentType: any;
   @Input() mainCommentSection: boolean;
   showBtns = false;
   replyTxt = "";
+  userInfo : any;
   comment : Comment = {
     user_id: "",
     username: "",
@@ -35,7 +35,9 @@ export class CommentsSectionComponent {
     private _snackbar: MatSnackBar
 ) { }
 
-  ngOnInit(): void {}
+  ngOnInit(){
+    this.userInfo = this.apiService.getUser();
+  }
 
   deleteCommentTxt(){
     this.comment.text = "";

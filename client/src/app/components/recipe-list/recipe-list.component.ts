@@ -11,7 +11,6 @@ import { User } from '../../models'
 export class RecipeListComponent{
   @Input() isMobile!: boolean;
   @Input() recipes: any;
-  @Input() user: any;
   categoryObj = {
     name : "",
     recipes: []
@@ -34,7 +33,7 @@ export class RecipeListComponent{
   ) { }
 
   async ngOnChanges(){
-    this.userInfo = this.user;
+    this.userInfo = this.apiService.getUser();
     // if(!this.categoryList.length){
       this.createOptionsList();
     // }
