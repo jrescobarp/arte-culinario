@@ -14,7 +14,12 @@ export class FeaturedMealComponent implements OnInit {
   recipeImg = [];
   featuredMeals : any;
   randNumArr: number [] = [];
- constructor(private apiService: ApiService) { }
+  userInfo: any;
+ constructor(private apiService: ApiService) {
+  this.userInfo = this.apiService.getUser();
+  console.log("User fromFeaturedMeal");
+  console.log(`${JSON.stringify(this.userInfo)}`);
+ }
 
   ngOnInit(): void {
       // let randNum = Math.floor((Math.random() * recipe.images.length));

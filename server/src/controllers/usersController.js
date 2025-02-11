@@ -6,10 +6,13 @@ exports.get_user_info = asyncHandler(async( req, res, next) => {
     if(req.user){
         User.findById(req.user._id).populate({path:'recipe_history'}).populate({path:'recipes'}).then((returnUser) => {
             res.status(200).send(returnUser);
-        });
-    }else{
-        res.status(200);
-    }
+        }).catch((err) => {
+            res.status(500).json({ error: 'Error fetching user data', details: err });
+          });
+      } else {
+        // If not authenticated, return null or an empty object with status 200
+        res.status(200).send(null); // Explicitly send `null` to indicate no user logged in
+      }
 });
 
 exports.register_user = asyncHandler(async(req, res, next) => {

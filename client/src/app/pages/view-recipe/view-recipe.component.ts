@@ -61,7 +61,7 @@ export class ViewRecipeComponent{
       if(recipe.connected_recipes.length){
         this.connectedRecipe = recipe.connected_recipes;
           this.connectedRecipe.forEach((r:any, index:number) => {
-            let linkTxt = '<a class="" href="/recipe/' + this.connectedRecipe[index]._id + '" target="_blank">' + this.connectedRecipe[index].name.toLowerCase() + '</a>';
+            let linkTxt = '<a class="connectedRecipeLink" href="/recipe/' + this.connectedRecipe[index]._id + '" target="_blank" style="color: rgba(206,60,81,1) !important;">' + this.connectedRecipe[index].name.toLowerCase() + '</a>';
             descTxt = descTxt.replaceAll(this.connectedRecipe[index].name.toLowerCase(),linkTxt);
             recipe.ingredients = recipe.ingredients.map((str:string) => str.replace(new RegExp(this.connectedRecipe[index].name.toLowerCase(), 'gi'), linkTxt));
             recipe.steps = recipe.steps.map((str:string) => str.replace(new RegExp(this.connectedRecipe[index].name.toLowerCase(), 'gi'), linkTxt));
@@ -99,7 +99,8 @@ export class ViewRecipeComponent{
       console.log("RECIPEEE:", recipe);
     });
 
-    this.userInfo = await this.apiService.isLoggedIn();
+    // this.userInfo = await this.apiService.isLoggedIn();
+    this.userInfo = await this.apiService.getUser();
     this.checkFavorites();
 
   }

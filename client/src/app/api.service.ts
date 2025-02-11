@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, Subject, tap, lastValueFrom } from 'rxjs';
+import { Observable, Subject, tap, lastValueFrom,catchError, of } from 'rxjs';
 import { Recipe, Comment, User, Image } from './models';
 import { HttpHeaders } from '@angular/common/http';
 
@@ -38,8 +38,34 @@ export class ApiService {
   }
 
   //User handlers
-  async isLoggedIn(){
-    return await lastValueFrom(this.httpClient.get(`${this.url}/user`));
+  async isLoggedIn(): Promise<void> {
+    console.log("FUCK CHATGPT")
+    try {
+      const userResponse = await lastValueFrom(
+        this.httpClient.get(`${this.url}/user`).pipe(
+          catchError((error) => {
+            console.error('Error loading user:', error);
+            return of(null); // Return `null` on error to allow the app to continue
+          })
+        )
+      );
+
+      // If the user data is received, set it
+      if (userResponse) {
+        this.user$ = userResponse;
+      } else {
+        this.user$ = null; // No user data, so set user$ to null
+      }
+    } catch (error) {
+      console.error('Error during API request:', error);
+      this.user$ = null; // Set user$ to null if the request fails
+    }
+  }
+
+  getUser(){
+    console.log("getUSER");
+    console.log(`${this.user$}`);
+    return this.user$;
   }
 
   registerUser(user:User): Observable<any>{

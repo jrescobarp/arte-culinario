@@ -5,6 +5,21 @@
     <div class="carousel-item active container">
       <div class="mainHeader mt-4 blackFont">Aprendamos a Cocinar!</div>
       <div class="subTxt">recetas de Vilma G. de Escobar</div>
+      <div class="row initialSlideRecipeDiv">
+        <div class="col-12 initialSlideRecipeTitle">¿Que comeremos hoy?</div>
+        <a class="col-4" href="/recipe/67a10d5147f80c74224724b5" target="_blank">
+          <div><img class="initialCarouselRecipeDisaplyImg" src="../../../assets/spatula-pan.png" alt=""></div>
+          <div>{{featuredMeals[0].name}}</div>
+        </a>
+        <a class="col-4" href="/recipe/67a10d5147f80c74224724b5" target="_blank">
+          <div><img class="initialCarouselRecipeDisaplyImg" src="../../../assets/spatula-pan.png" alt=""></div>
+          <div>{{featuredMeals[0].name}}</div>
+        </a>
+        <a class="col-4" href="/recipe/67a10d5147f80c74224724b5" target="_blank">
+          <div><img class="initialCarouselRecipeDisaplyImg" src="../../../assets/spatula-pan.png" alt=""></div>
+          <div>{{featuredMeals[0].name}}</div>
+        </a>
+      </div>
     </div>
 
     <div *ngFor="let recipe of featuredMeals; index as i" class="carousel-item container" (click)="viewRecipe(recipe._id)">
