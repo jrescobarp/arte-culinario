@@ -39,7 +39,6 @@ export class ApiService {
 
   //User handlers
   async isLoggedIn(): Promise<void> {
-    console.log("FUCK CHATGPT")
     try {
       const userResponse = await lastValueFrom(
         this.httpClient.get(`${this.url}/user`).pipe(
@@ -63,8 +62,8 @@ export class ApiService {
   }
 
   getUser(){
-    console.log("getUSER");
-    console.log(`${this.user$}`);
+    // console.log("getUSER");
+    // console.log(`${this.user$}`);
     return this.user$;
   }
 

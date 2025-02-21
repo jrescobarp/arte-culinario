@@ -6,8 +6,9 @@
     <div [ngClass]="isMobile ? 'col-12' : 'col-8'">
       <app-featured-meal
       [isMobile]="isMobile"
-      [featuredRecipeArr]="featuredMeals"
+      [featuredRecipeArr]="recipes$"
       [isHomePage]="true"
+      [defaultFeaturedMealArr]="defaultFeaturedMealArr"
       ></app-featured-meal>
     </div>
     <div class="loginDiv" [ngClass]="isMobile ? 'hide' : 'col-4'">

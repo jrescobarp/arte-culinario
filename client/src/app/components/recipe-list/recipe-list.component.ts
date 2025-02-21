@@ -71,7 +71,7 @@ export class RecipeListComponent{
         }
 
       });
-      console.log(`allTypes: ${this.allTypes}`);
+      // console.log(`allTypes: ${this.allTypes}`);
   }
 
   showHideSearchResults(displayTxt:string){

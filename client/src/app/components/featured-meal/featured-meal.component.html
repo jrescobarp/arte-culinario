@@ -3,21 +3,13 @@
     <div class="carousel-inner">
 
     <div class="carousel-item active container">
-      <div class="mainHeader mt-4 blackFont">Aprendamos a Cocinar!</div>
+      <div class="mainHeader mt-4 blackFont">¡Aprendamos a Cocinar!</div>
       <div class="subTxt">recetas de Vilma G. de Escobar</div>
       <div class="row initialSlideRecipeDiv">
         <div class="col-12 initialSlideRecipeTitle">¿Que comeremos hoy?</div>
-        <a class="col-4" href="/recipe/67a10d5147f80c74224724b5" target="_blank">
+        <a *ngFor="let recipe of featuredMeals; index as i" class="col-4" href="/recipe/{{recipe._id}}" target="_blank">
           <div><img class="initialCarouselRecipeDisaplyImg" src="../../../assets/spatula-pan.png" alt=""></div>
-          <div>{{featuredMeals[0].name}}</div>
-        </a>
-        <a class="col-4" href="/recipe/67a10d5147f80c74224724b5" target="_blank">
-          <div><img class="initialCarouselRecipeDisaplyImg" src="../../../assets/spatula-pan.png" alt=""></div>
-          <div>{{featuredMeals[0].name}}</div>
-        </a>
-        <a class="col-4" href="/recipe/67a10d5147f80c74224724b5" target="_blank">
-          <div><img class="initialCarouselRecipeDisaplyImg" src="../../../assets/spatula-pan.png" alt=""></div>
-          <div>{{featuredMeals[0].name}}</div>
+          <div>{{recipe.name}}</div>
         </a>
       </div>
     </div>
@@ -27,21 +19,9 @@
 
         <div class="titleDiv col-12" [ngClass]="isMobile ? 'text-center' : ''">
           <div class="titleTxt blackFont"><h1>{{recipe.name.toLowerCase()}}</h1></div>
-          <!-- <div class="clickeHereTxt redFont">
-            <div class="mx-2">click to view recipe </div>
-            <div><i class="fa-solid fa-chevron-right"></i></div>
-          </div> -->
         </div>
-
-        <!-- <div [ngClass]="isMobile ? 'col-12' : 'col-6'">
-          <app-image-display
-          [images]="recipe.images"
-          [isMobile]="isMobile"
-          [isHomePage]="isHomePage"
-          ></app-image-display>
-        </div> -->
         <div class="blackFont" [ngClass]="isMobile ? 'col-12' : 'col-7'">
-          <img class="recipeImg" src="{{recipe.images[randNumGenerator(recipe.images.length, i)].imgDataArr[0].url}}" alt="">
+          <img class="recipeImg" src="{{recipe.images[randNumGenerator(recipe.images.length, i)]?.imgDataArr[0].url}}" alt="">
         </div>
 
         <div class="blackFont" [ngClass]="isMobile ? 'col-12' : 'col-5'">
@@ -56,14 +36,6 @@
         </div>
 
         <div *ngIf="recipe.steps[0]"  class="blackFont col-12">
-          <!-- <div class="text-left mainTxt ingredientList">
-            <h3>Ingredientes:</h3>
-            <ul>
-              <li *ngFor="let ingredient of recipe.ingredients ; let i = index">
-                {{ingredient}}
-              </li>
-            </ul>
-          </div> -->
           <div class="stepList" [ngClass]="recipe.ingredients[0] ? 'stepListTopBorder' : ''">
             <h3>Instrucciones:</h3>
             <ol>
