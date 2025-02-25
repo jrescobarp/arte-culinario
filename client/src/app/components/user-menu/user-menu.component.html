@@ -56,8 +56,8 @@
           <div ngbAccordionBody>
             <ng-template>
               <div class="row">
-                <div class="categoryBtnOptionDiv text-center my-3">
-                  <a class="p-3 categoryBtnOptionTxt" href="/">Like</a>
+                <div class="categoryBtnOptionDiv text-center my-3" *ngFor="let option of userInfo.recipes" [ngClass]="isMobile ? 'col-12' : 'col-4'">
+                  <a class="p-3 categoryBtnOptionTxt" (click)="recipeRedirect(option)">{{ option.name.toLowerCase() }}</a>
                 </div>
               </div>
             </ng-template>
@@ -65,7 +65,7 @@
         </div>
       </div>
 
-      <div class="accordionItem" ngbAccordionItem>
+      <!-- <div class="accordionItem" ngbAccordionItem>
         <h2 ngbAccordionHeader>
           <button class="categoryBtnTxt" ngbAccordionButton>mis imagenes</button>
         </h2>
@@ -97,7 +97,7 @@
             </ng-template>
           </div>
         </div>
-      </div>
+      </div> -->
 
     </div>
 	</div>

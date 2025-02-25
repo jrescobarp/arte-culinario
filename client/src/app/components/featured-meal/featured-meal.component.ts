@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, ChangeDetectorRef } from '@angular/core';
 import { ApiService } from '../../api.service';
-
+import { lastValueFrom} from 'rxjs';
 
 @Component({
   selector: 'app-featured-meal',
@@ -20,6 +20,7 @@ export class FeaturedMealComponent implements OnInit {
   randNumArr: number [] = [];
   userInfo: any;
   defaultMeals = false;
+  featuredMealSetTime = 0;
  constructor(private apiService: ApiService, private cdRef: ChangeDetectorRef) {
   this.userInfo = this.apiService.getUser();
  }
@@ -29,9 +30,16 @@ export class FeaturedMealComponent implements OnInit {
     this.appsArr = JSON.parse(localStorage.getItem("appsArr") || "[]");
     this.entreeArr = JSON.parse(localStorage.getItem("entreeArr") || "[]");
     this.dessertArr = JSON.parse(localStorage.getItem("dessertArr") || "[]");
+    this.featuredMealSetTime = Number(localStorage.getItem("featuredMealSetTime"));
 
     if (this.appsArr.length && this.entreeArr.length && this.dessertArr.length) {
-      this.createFeaturedMealArr();
+      if(!this.featuredMealSetTime || (Date.now() > Number(this.featuredMealSetTime + 86400000))){
+      // if(!this.featuredMealSetTime || (Date.now() > Number(this.featuredMealSetTime + 10000))){
+        this.createFeaturedMealArr();
+        localStorage.setItem("featuredMealSetTime",Date.now().toString());
+      }else{
+        this.featuredMeals = JSON.parse(localStorage.getItem("featuredMealArr") || "[]");
+      }
       console.log(`defaultFeaturedMealArrFMCOMP0ww2${this.defaultFeaturedMealArr}`);
     }else{
       this.defaultMeals = false;
@@ -54,7 +62,7 @@ export class FeaturedMealComponent implements OnInit {
     window.location.href = `/recipe/${id}`;
   }
 
-  createFeaturedMealArr(){
+  async createFeaturedMealArr(){
     if (this.appsArr.length === 0 || this.entreeArr.length === 0 || this.dessertArr.length === 0) {
       console.error('One or more arrays are empty, cannot create featured meal.');
       this.defaultMeals = false;
@@ -67,13 +75,38 @@ export class FeaturedMealComponent implements OnInit {
     }
     this.featuredMeals = [];
 
+    // get date time
+    // truncate date after T
+    // get timestamp of date
+    // use truncated string%arr length to set a deterministic recipe
+
     let appArrNum = (Math.round(Math.random() * 100))%this.appsArr.length;
-    this.featuredMeals.push(this.appsArr[appArrNum]);
+    // this.featuredMeals.push(this.appsArr[appArrNum]);
+    let appetizer = await lastValueFrom(this.apiService.getRecipe(this.appsArr[appArrNum]._id));
+    this.featuredMeals.push(appetizer);
 
     let entreeArrNum = (Math.round(Math.random() * 100))%this.entreeArr.length;
-    this.featuredMeals.push(this.entreeArr[entreeArrNum]);
+    let entree = await lastValueFrom(this.apiService.getRecipe(this.entreeArr[entreeArrNum]._id));
+    this.featuredMeals.push(entree);
+    // this.featuredMeals.push(this.entreeArr[entreeArrNum]);
+    // this.apiService.getRecipe(this.entreeArr[entreeArrNum]._id).subscribe((recipe) => {
+    //   this.featuredMeals.push(recipe);
+    // });
 
     let dessertArrNum = (Math.round(Math.random() * 100))%this.dessertArr.length;
-    this.featuredMeals.push(this.dessertArr[dessertArrNum]);
+    let dessert = await lastValueFrom(this.apiService.getRecipe(this.dessertArr[dessertArrNum]._id));
+    this.featuredMeals.push(dessert);
+    // this.featuredMeals.push(this.dessertArr[dessertArrNum]);
+    // this.apiService.getRecipe(this.dessertArr[dessertArrNum]._id).subscribe((recipe) => {
+    //   this.featuredMeals.push(recipe);
+    // });
+
+    // this.featuredMeals.forEach((rec,i) => {
+    //   this.apiService.getRecipe().subscribe((recipe) => {
+    //     this.recipe.next(recipe);
+    //   });
+    // });
+
+    localStorage.setItem("featuredMealArr",JSON.stringify(this.featuredMeals));
   }
 }
