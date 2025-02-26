@@ -1,5 +1,5 @@
 <div class="comentariosTitle mb-2">
-  <div class="displayInline" [ngClass]="mainCommentSection ? 'lgTitleTxt' : 'smTitleTxt'">{{comments_arr.length}} Comentario{{comments_arr.length === 1 ?  '' : 's'}}</div>
+  <div class="displayInline" [ngClass]="mainCommentSection ? 'lgTitleTxt' : 'smTitleTxt'" style="color:rgba(206,60,81,1);">{{comments_arr.length}} Comentario{{comments_arr.length === 1 ?  '' : 's'}}</div>
   <div *ngIf="comments_arr.length" ngbDropdown class="d-inline-block" matTooltip="ordernar comentarios" [matTooltipPosition]="'above'">
     <button type="button" class="filterBtn" id="dropdownBasic1" ngbDropdownToggle>
       <i class="fa-solid fa-filter fa-xs"></i>

@@ -64,6 +64,16 @@
   border-radius: 10px;
 }
 
+.border-red-1px{
+  border: 1px solid rgba(206,60,81,1);
+  border-radius: 10px;
+}
+
+.border-red-2px{
+  border: 2px solid rgba(206,60,81,1);
+  border-radius: 10px;
+}
+
 .mat-mdc-snack-bar-container {
   &.aac-red {
     --mdc-snackbar-container-color: rgba(206,60,81,1);

@@ -11,6 +11,7 @@
 
 .mainHeader{
   font-size: 3.5em;
+  // color: rgba(206,60,81,1);
 }
 
 .subTxt{
@@ -27,6 +28,7 @@
   text-transform: capitalize;
   text-align: left;
   margin-left: 1.5em;
+  // color: rgba(206,60,81,1);
 }
 
 .clickeHereTxt{
@@ -67,6 +69,28 @@ li{
   padding-top: 0em;
 }
 
+.recipeImgInitialSlide{
+  height: 10em;
+  border-radius: 5px;
+  margin-bottom: .25em;
+}
+
+.initialCarouselAnchor{
+  text-decoration: none;
+  color: rgba(80,131,17,1);
+}
+
+.initialCarouselAnchor:hover{
+  background-color: rgba(80,131,17, .5);
+  border: 1px solid rgba(80,131,17,.5);
+  border-radius: 5px;
+  color: white;
+}
+
+.initialCarouselAnchor:hover .noImgTxt{
+  color: white;
+}
+
 .ingredientList, .stepList{
   text-align: left;
   overflow: auto;
@@ -99,6 +123,11 @@ li{
   padding-top: 2em;
 }
 
+.noImgDivInitialCarousel{
+  height: 10em;
+  padding-top: 1em;
+}
+
 .noImgIngredTitle{
   padding-left: 1.25em;
 }
@@ -112,14 +141,17 @@ li{
 }
 
 .initialSlideRecipeDiv{
-  margin-top: 2em;
+  margin-top: .5em;
   margin-bottom: 1em;
 }
 
 .initialSlideRecipeTitle{
   font-size: 1.75em;
   margin-bottom: .75em;
+  // color: rgba(206,60,81,1);
 }
+
+$carousel-control-color:red;
 
 .initialCarouselRecipeDisaplyImg{
   max-width: 7.5em;
