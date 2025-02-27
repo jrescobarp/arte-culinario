@@ -16,7 +16,7 @@
 <div class="mb-1">
   <div>
     <textarea name="comment_txt" class="comentariosTxtArea"
-    [(ngModel)]="comment.text" (click)="commentBtnToggle(true)" placeholder="recomendacion o comentario"></textarea>
+    [(ngModel)]="comment.text" (click)="commentBtnToggle(true)" placeholder="recomendación o comentario"></textarea>
   </div>
   <div *ngIf="showBtns" class="mb-4 tr">
     <button class="btn btn-red cancelBtn" [ngClass]="parentType === 'image' ? 'btn-sm' : ''" (click)="deleteCommentTxt();commentBtnToggle(false);" >Cancel</button>

@@ -98,7 +98,7 @@ export class ViewRecipeComponent{
       if(this.userInfo){
         this.checkFavorites();
       }
-      console.log("RECIPEEE:", recipe);
+      // console.log("RECIPEEE:", recipe);
     });
   }
 

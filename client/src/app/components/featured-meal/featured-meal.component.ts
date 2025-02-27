@@ -40,7 +40,6 @@ export class FeaturedMealComponent implements OnInit {
       }else{
         this.featuredMeals = JSON.parse(localStorage.getItem("featuredMealArr") || "[]");
       }
-      console.log(`defaultFeaturedMealArrFMCOMP0ww2${this.defaultFeaturedMealArr}`);
     }else{
       this.defaultMeals = false;
       this.featuredMeals = [

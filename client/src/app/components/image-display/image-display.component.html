@@ -75,7 +75,7 @@
   <!-- No Imgs -->
   <div *ngIf="!images.length" class="text-center noImgDiv my-4" [ngClass]="isHomePage ? 'homePgNoImgDivStyling' : ''">
     <div class="mt-4 mb-2" [ngClass]="isHomePage ? 'homePgNoImgIconStyling' : ''"><i class="fa-solid fa-kitchen-set fa-2xl"></i></div>
-    <div class="pt-3 blackFont">No hay imagenes para esta receta.</div>
+    <div class="pt-3 blackFont">No hay imágenes para esta receta.</div>
     <div>
       <button *ngIf="!isHomePage" class="btn btn-green" (click)="open(content, 'create')">compartir fotos</button>
       <button *ngIf="isHomePage" class="btn btn-green">abrir receta para compartir fotos</button>
@@ -140,8 +140,8 @@
           <input class="form-control" type="file" name="form-imgs" id="form-file" multiple accept="image/*" (change)="checkFiles($event)">
         </div>
         <div class="mb-4">
-          <textarea *ngIf="createType === 'create'" name="description" class="comentariosTxtArea" placeholder="descripcion" id="description" style="width: 100%;"></textarea>
-          <textarea *ngIf="createType === 'edit'" name="description" class="comentariosTxtArea" placeholder="descripcion"  id="description" value="{{images[editImgIndex].description}}" style="width: 100%;"></textarea>
+          <textarea *ngIf="createType === 'create'" name="description" class="comentariosTxtArea" placeholder="descripción" id="description" style="width: 100%;"></textarea>
+          <textarea *ngIf="createType === 'edit'" name="description" class="comentariosTxtArea" placeholder="descripción"  id="description" value="{{images[editImgIndex].description}}" style="width: 100%;"></textarea>
         </div>
       </form>
     </div>

@@ -44,8 +44,6 @@ export class UserMenuComponent {
     // this.userInfo = userInfo;
     localStorage.setItem("recipeHistory", JSON.stringify(this.userInfo.recipe_history));
     this.recipe_history = this.userInfo.recipe_history;
-    console.log("USERUSERUSER: ");
-    console.log(this.userInfo);
   }
 
   async updateloginStatus($event:any){
