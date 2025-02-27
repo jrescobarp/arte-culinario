@@ -1,12 +1,15 @@
-<div class="mainContainer border-red-1px">
+<div class="mainContainer border-red-1px" style="background-color: white;">
   <div id="carouselExample" class="carousel carousel-dark slide">
     <div class="carousel-inner">
 
-    <div class="carousel-item active container">
-      <div class="mainHeader blackFont" style="color:rgba(206,60,81,1)">¡Aprendamos a Cocinar!</div>
-      <div class="subTxt">recetas de Vilma G. de Escobar</div>
-      <div class="row initialSlideRecipeDiv">
+    <div class="carousel-item active container px-0">
+      <div class="pb-1">
+        <div class="mainHeader blackFont" style="color:rgba(206,60,81,1)">¡Aprendamos a Cocinar!</div>
+        <div class="subTxt">recetas de Vilma G. de Escobar</div>
         <div class="col-12 initialSlideRecipeTitle" style="color: rgba(80,131,17,1);">¿Qué comeremos hoy?</div>
+      </div>
+      <div class="border-red-1px" style="border-width:.5px;width: 90%;margin-left: 5%;"></div>
+      <div class="row initialSlideRecipeDiv">
         <a *ngFor="let recipe of featuredMeals; index as i" class="col mx-1 initialCarouselAnchor pt-2" href="/recipe/{{recipe._id}}" target="_blank">
 
           <div *ngIf="recipe.images.length" class="blackFont">
@@ -29,7 +32,7 @@
       <div class="row" matTooltip="click para ver receta" [matTooltipPosition]="'above'">
 
         <div class="titleDiv col-12" [ngClass]="isMobile ? 'text-center' : ''">
-          <div class="titleTxt" style="color:rgba(206,60,81,1)"><h1>{{recipe.name.toLowerCase()}}</h1></div>
+          <div class="titleTxt pt-2" style="color:rgba(206,60,81,1)"><h1>{{recipe.name.toLowerCase()}}</h1></div>
         </div>
         <div *ngIf="recipe.images.length" class="blackFont" [ngClass]="isMobile ? 'col-12' : 'col-7'">
           <img class="recipeImg" src="{{recipe.images[randNumGenerator(recipe.images.length, i)]?.imgDataArr[0].url}}" alt="">
