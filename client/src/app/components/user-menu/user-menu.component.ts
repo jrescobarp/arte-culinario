@@ -3,6 +3,7 @@ import { User, Recipe } from "../../models"
 import { ApiService  } from '../../api.service'
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ModalDismissReasons, NgbDatepickerModule, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-menu',
@@ -22,7 +23,8 @@ export class UserMenuComponent {
   constructor(
     private modalService: NgbModal,
     private apiService: ApiService,
-    private _snackbar: MatSnackBar) {}
+    private _snackbar: MatSnackBar,
+    private router:Router) {}
 
   ngOnInit(): void {
     if(this.apiService.getUser()){
@@ -81,9 +83,11 @@ export class UserMenuComponent {
       this.userInfo.recipe_history = this.recipe_history;
       localStorage.setItem("recipeHistory", JSON.stringify(this.recipe_history));
       this.apiService.updateUser(this.userInfo._id!, this.userInfo).subscribe((user) => {});
-      window.location.href = "/recipe/" + recipe._id;
+      this.modalService.dismissAll();
+      this.router.navigate(['/recipe', recipe._id]);
     }else{
-      window.location.href = "/recipe/" + recipe._id;
+      this.modalService.dismissAll();
+      this.router.navigate(['/recipe', recipe._id]);
     }
   }
 

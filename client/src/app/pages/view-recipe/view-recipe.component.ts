@@ -62,6 +62,7 @@ export class ViewRecipeComponent{
       if(recipe.connected_recipes.length){
         this.connectedRecipe = recipe.connected_recipes;
           this.connectedRecipe.forEach((r:any, index:number) => {
+            // [routerLink]=["/recipe","' + this.connectedRecipe[index]._id + '"]
             let linkTxt = '<a class="connectedRecipeLink" href="/recipe/' + this.connectedRecipe[index]._id + '" target="_blank" style="color: rgba(206,60,81,1) !important;">' + this.connectedRecipe[index].name.toLowerCase() + '</a>';
             descTxt = descTxt.replaceAll(this.connectedRecipe[index].name.toLowerCase(),linkTxt);
             recipe.ingredients = recipe.ingredients.map((str:string) => str.replace(new RegExp(this.connectedRecipe[index].name.toLowerCase(), 'gi'), linkTxt));

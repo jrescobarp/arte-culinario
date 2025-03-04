@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, ChangeDetectorRef } from '@angular/core';
 import { ApiService } from '../../api.service';
 import { lastValueFrom} from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-featured-meal',
@@ -21,7 +22,7 @@ export class FeaturedMealComponent implements OnInit {
   userInfo: any;
   defaultMeals = false;
   featuredMealSetTime = 0;
- constructor(private apiService: ApiService, private cdRef: ChangeDetectorRef) {
+ constructor(private apiService: ApiService, private cdRef: ChangeDetectorRef, private router:Router ) {
   this.userInfo = this.apiService.getUser();
  }
 
@@ -58,7 +59,7 @@ export class FeaturedMealComponent implements OnInit {
   }
 
   viewRecipe(id:string){
-    window.location.href = `/recipe/${id}`;
+    this.router.navigate(['/recipe', id]);
   }
 
   async createFeaturedMealArr(){

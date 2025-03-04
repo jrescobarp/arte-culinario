@@ -19,6 +19,8 @@ import { FooterComponent } from './footer/footer.component';
 import { CommentsSectionComponent } from './comments-section/comments-section.component';
 import { ImageDisplayComponent } from './image-display/image-display.component';
 import { UpvoteBtnComponent } from './upvote-btn/upvote-btn.component';
+import { RouterModule } from '@angular/router'; // Import RouterModule
+import { AppRoutingModule } from '../app-routing.module'; // Your routing module
 
 
 
@@ -44,7 +46,9 @@ import { UpvoteBtnComponent } from './upvote-btn/upvote-btn.component';
     NgbModule,
     ReactiveFormsModule,
     FormsModule,
-    MatTooltipModule
+    MatTooltipModule,
+    RouterModule,
+    AppRoutingModule
   ],
   exports:[
     RecipeListComponent,

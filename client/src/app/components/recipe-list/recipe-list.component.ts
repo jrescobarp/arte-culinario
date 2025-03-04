@@ -2,6 +2,7 @@ import { Component, OnInit, Input, ElementRef } from '@angular/core';
 import { lastValueFrom } from 'rxjs';
 import { ApiService } from '../../api.service'
 import { User } from '../../models'
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-recipe-list',
@@ -29,7 +30,8 @@ export class RecipeListComponent{
   searchInputTxt = "";
 
   constructor(
-    private apiService: ApiService
+    private apiService: ApiService,
+    private router:Router
   ) { }
 
   async ngOnChanges(){
@@ -104,9 +106,9 @@ export class RecipeListComponent{
       this.userInfo.recipe_history = this.recipeHistory;
       localStorage.setItem("recipeHistory", JSON.stringify(this.recipeHistory));
       this.apiService.updateUser(this.userInfo._id!, this.userInfo).subscribe((user) => {});
-      window.location.href = "/recipe/" + recipe._id;
+      this.router.navigate(['/recipe', recipe._id]);
     }else{
-      window.location.href = "/recipe/" + recipe._id;
+      this.router.navigate(['/recipe', recipe._id]);
     }
   }
 

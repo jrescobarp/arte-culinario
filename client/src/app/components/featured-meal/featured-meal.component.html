@@ -10,7 +10,7 @@
       </div>
       <div class="border-red-1px" style="border-width:.5px;width: 90%;margin-left: 5%;"></div>
       <div class="row initialSlideRecipeDiv">
-        <a *ngFor="let recipe of featuredMeals; index as i" class="col mx-1 initialCarouselAnchor pt-2" href="/recipe/{{recipe._id}}" target="_blank">
+        <a *ngFor="let recipe of featuredMeals; index as i" class="col mx-1 initialCarouselAnchor pt-2" [routerLink]="['/recipe', recipe._id]">
 
           <div *ngIf="recipe.images.length" class="blackFont">
             <img class="recipeImgInitialSlide" src="{{recipe.images[randNumGenerator(recipe.images.length, i)]?.imgDataArr[0].url}}" alt="">
