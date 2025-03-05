@@ -48,8 +48,18 @@ export class CommentsSectionComponent {
     }
   }
 
-  deleteCommentTxt(){
-    this.comment.text = "";
+  resetComment(){
+    this.comment = {
+      user_id: "",
+      username: "",
+      text: "",
+      upvotes: [],
+      date_created: 0,
+      replies: [],
+      parent_id: "",
+      parent_type: "",
+      update_arr: []
+    }
   }
 
   commentBtnToggle(setToggle:boolean){
@@ -60,19 +70,37 @@ export class CommentsSectionComponent {
     }
   }
 
-  submitComment(id:string, updateArr: [], parentType: string, reply = false){
+  submitComment(id:string, updateArr: [], parentType: string, reply = false,replyIndex = -1){
+    console.log(`submitting comment0`);
     this.comment.user_id = this.userInfo._id ? this.userInfo._id : '';
+    console.log(`submitting comment1`);
     this.comment.username = this.userInfo.username ? this.userInfo.username : '';
     this.comment.date_created = Date.now();
+    console.log(`submitting comment2`);
     this.comment.parent_id = id;
-    this.comment.update_arr = updateArr;
+    // this.comment.update_arr = updateArr;
+    this.comment.update_arr = JSON.parse(JSON.stringify(updateArr));
     this.comment.parent_type = parentType;
+    console.log(`submitting comment3`);
     if(reply){
-      this.comment.text = this.replyTxt
+      this.comment.text = this.replyTxt;
     }
 
+    console.log(`submitting comment4`);
     this.apiService.createComment(this.comment).subscribe((result: any) =>{
-      location.reload();
+    console.log(`submitting comment5`);
+      this.comment._id = JSON.parse(result)._id;
+      let dereferComment = { ...this.comment, replies: [] };
+      if(reply){
+        this.parentObject.comments[replyIndex].replies.push(dereferComment);
+        this.replyTxt = "";
+      }else{
+        this.parentObject.comments.push(dereferComment);
+      }
+      if(!this.comments_arr.length){
+        this.comments_arr.push(dereferComment);
+      }
+      this.resetComment();
     });
   }
 

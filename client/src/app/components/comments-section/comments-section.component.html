@@ -19,7 +19,7 @@
     [(ngModel)]="comment.text" (click)="commentBtnToggle(true)" placeholder="recomendación o comentario"></textarea>
   </div>
   <div *ngIf="showBtns" class="mb-4 tr">
-    <button class="btn btn-red cancelBtn" [ngClass]="parentType === 'image' ? 'btn-sm' : ''" (click)="deleteCommentTxt();commentBtnToggle(false);" >Cancel</button>
+    <button class="btn btn-red cancelBtn" [ngClass]="parentType === 'image' ? 'btn-sm' : ''" (click)="resetComment();commentBtnToggle(false);" >Cancel</button>
     <button class="btn btn-green"[ngClass]="parentType === 'image' ? 'btn-sm' : ''" (click)="submitComment(parentObject._id, parentObject.comments, parentType)">Submit</button>
   </div>
 </div>
@@ -81,7 +81,7 @@
       <textarea name="replyTxt" class="comentariosTxtArea replyTextarea" [(ngModel)]="replyTxt" placeholder="responder a {{comment.username}}" id="reply_comment_txt"></textarea>
       <div class="tr mr2">
         <button class="btn btn-red mr1" [ngClass]="parentType === 'image' ? 'btn-sm' : ''" (click)="replyTxt = '';showReplyInput(comment._id, 'none')">Cancel</button>
-        <button class="btn btn-green" [ngClass]="parentType === 'image' ? 'btn-sm' : ''" (click)="submitComment(comment._id, comment.replies, 'comment', true)">Submit</button>
+        <button class="btn btn-green" [ngClass]="parentType === 'image' ? 'btn-sm' : ''" (click)="submitComment(comment._id, comment.replies, 'comment', true, i)">Submit</button>
       </div>
     </div>
   </div>

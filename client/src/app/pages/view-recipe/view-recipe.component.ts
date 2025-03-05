@@ -99,7 +99,6 @@ export class ViewRecipeComponent{
         }
       }
       if(this.userInfo){
-        console.log("CF1");
         this.checkFavorites();
       }
       // console.log("RECIPEEE:", recipe);

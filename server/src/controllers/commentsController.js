@@ -13,7 +13,7 @@ exports.create_comment = asyncHandler(async(req, res, next) => {
     const { user_id, text, upvotes, replies, username, date_created } = req.body;
     const comment = new Comment({user_id, text, upvotes, replies, username, date_created});
     req.body.update_arr.push(comment._id);
-    await comment.save();
+    const newComment = await comment.save();
     let response;
     if(req.body.parent_type === 'recipe'){
         response = Recipe.findByIdAndUpdate(req.body.parent_id, {comments:req.body.update_arr}).then((res) => {
@@ -33,7 +33,7 @@ exports.create_comment = asyncHandler(async(req, res, next) => {
             //catch error
         });
     }
-    res.status(200).send(response);
+    res.status(200).send(newComment);
 });
 
 exports.edit_comment = asyncHandler(async(req, res, next) => {
