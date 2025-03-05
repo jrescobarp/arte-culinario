@@ -53,6 +53,7 @@ export class ImageDisplayComponent implements OnInit{
   }
 
   open(content:any, createType:string, editImgIndex: number = -1) {
+    this.showSpinner = false;
     if(this.userInfo){
       this.createType = createType;
       this.editImgIndex = editImgIndex;
@@ -128,16 +129,23 @@ export class ImageDisplayComponent implements OnInit{
     });
     if(uploadType === "create"){
       this.apiService.createImage(formData).subscribe((result: any) =>{
-        location.reload();
+        console.log(`createresponse: ${JSON.stringify(result)}`);
+        this.images.push(JSON.parse(result));
+        this.modalService.dismissAll();
       });
     }else if(uploadType === "edit"){
       formData.append('imgDataArr', JSON.stringify(image.imgDataArr));
       this.apiService.editImage(this.images[this.editImgIndex]._id,formData).subscribe((result: any) =>{
-        location.reload();
+        console.log(`editresponse: ${JSON.parse(result)}`);
+        this.images[this.editImgIndex] = JSON.parse(result);
+        this.modalService.dismissAll();
+        // location.reload();
       });
     }else if(uploadType === "delete"){
       this.apiService.deleteImage(this.images[this.editImgIndex]._id,formData).subscribe((result: any) =>{
-        location.reload();
+        console.log(`deleteresponse: ${JSON.stringify(result)}`);
+        this.images.splice(this.editImgIndex,1);
+        this.modalService.dismissAll();
       });
     }
   }

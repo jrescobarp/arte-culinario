@@ -77,7 +77,6 @@ export class UserMenuComponent {
       localStorage.setItem("recipeHistory", '[]');
       this._snackbar.open("sesión ha sido cerrada", '', {duration: 2500, panelClass: ['aac-red']});
       this.apiService.setUserInfo(null);
-      // setTimeout(function(){ location.reload(); }, 1200);
     });
   }
 

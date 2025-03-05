@@ -42,8 +42,8 @@ exports.create_image = asyncHandler(async(req, res, next) => {
          image.imgDataArr = correctImgArr;
      }
 
-    await image.save();
-    const response = await Recipe.findByIdAndUpdate(req.body.recipe_id, {$push:{images:image._id}});
+    const response = await image.save();
+    await Recipe.findByIdAndUpdate(req.body.recipe_id, {$push:{images:image._id}}, { new: true } );
     res.status(200).send(response);
 });
 
@@ -96,16 +96,17 @@ exports.edit_image = asyncHandler(async(req, res, next) => {
     }
 
     // update mongo
-    const response = Image.findByIdAndUpdate(req.params.id, {description: image.description, upvotes: image.upvotes, imgDataArr: image.imgDataArr}).then((res) => {
-    }).catch((err) => {
+    const response = await Image.findByIdAndUpdate(req.params.id, {description: image.description, upvotes: image.upvotes, imgDataArr: image.imgDataArr},{ new: true } )
+    .catch((err) => {
         console.log("ERROR: ", err);
     });
+    console.log(`editImg response: ${JSON.stringify(response)}`);
     res.status(200).send(response);
 });
 
 exports.upvote = asyncHandler(async(req, res, next) => {
     const image = new Image(req.body);
-    const response = Image.findByIdAndUpdate(req.params.id, {upvotes: image.upvotes}).then((res) => {
+    const response = await Image.findByIdAndUpdate(req.params.id, {upvotes: image.upvotes},{ new: true } ).then((res) => {
     }).catch((err) => {
         console.log("ERROR: ", err);
     });
@@ -141,7 +142,7 @@ exports.delete_image = asyncHandler(async(req, res, next) => {
     }
 
     // update mongo
-    const response = Image.findByIdAndDelete(req.params.id).then((res) => {
+    const response = await Image.findByIdAndDelete(req.params.id).then((res) => {
     }).catch((err) => {
         console.log("ERROR: ", err);
     });

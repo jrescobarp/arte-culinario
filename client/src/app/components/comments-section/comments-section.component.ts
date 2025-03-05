@@ -71,24 +71,18 @@ export class CommentsSectionComponent {
   }
 
   submitComment(id:string, updateArr: [], parentType: string, reply = false,replyIndex = -1){
-    console.log(`submitting comment0`);
     this.comment.user_id = this.userInfo._id ? this.userInfo._id : '';
-    console.log(`submitting comment1`);
     this.comment.username = this.userInfo.username ? this.userInfo.username : '';
     this.comment.date_created = Date.now();
-    console.log(`submitting comment2`);
     this.comment.parent_id = id;
     // this.comment.update_arr = updateArr;
     this.comment.update_arr = JSON.parse(JSON.stringify(updateArr));
     this.comment.parent_type = parentType;
-    console.log(`submitting comment3`);
     if(reply){
       this.comment.text = this.replyTxt;
     }
 
-    console.log(`submitting comment4`);
     this.apiService.createComment(this.comment).subscribe((result: any) =>{
-    console.log(`submitting comment5`);
       this.comment._id = JSON.parse(result)._id;
       let dereferComment = { ...this.comment, replies: [] };
       if(reply){

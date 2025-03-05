@@ -91,11 +91,12 @@
 	</div>
 	<div class="modal-body">
     <div class="row text-center mx-5" id="standardImgOptionsModalBody">
-      <div *ngIf="showSpinner" class="d-flex justify-content-center my-5">
-        <div class="spinner-border" role="status">
+      <div *ngIf="showSpinner" class="d-flex justify-content-center my-5 row">
+        <div class="spinner-border col-12" role="status">
           <span class="sr-only">Loading...</span>
         </div>
-        <div>subiendo cambios, no te vayas de esta pagina</div>
+        <br>
+        <div class="col-12 mt-2">subiendo cambios, no te vayas de esta pagina</div>
       </div>
       <form *ngIf="!showSpinner" id="modalForm">
         <div style="width: 100%;white-space: nowrap;overflow-x: scroll;">
@@ -154,11 +155,11 @@
     </div>
 	</div>
 	<div class="modal-footer">
-    <ng-container *ngIf="createType === 'create'">
+    <ng-container *ngIf="createType === 'create' && !showSpinner">
   		<button type="button" class="btn btn-red" (click)="clearImgData();modal.close('Save click')">Cancelar</button>
       <button *ngIf="createType === 'create'" type="button" class="btn btn-green" (click)="uploadImg('create');">Subir</button>
     </ng-container>
-    <ng-container *ngIf="createType === 'edit'">
+    <ng-container *ngIf="createType === 'edit' && !showSpinner">
       <button type="button" class="btn btn-red" (click)="showDeleteImgModalBody();">Borrar Post</button>
       <button type="button" class="btn btn-green" (click)="uploadImg('edit');">Editar</button>
     </ng-container>
