@@ -26,7 +26,7 @@ export class RecipeListComponent{
   allTypes: string[] = [];
   searchResultRecipes: any[] = [];
   recipeHistory: any[] = [];
-  userInfo: User;
+  userInfo: any;
   searchInputTxt = "";
 
   constructor(
@@ -34,8 +34,21 @@ export class RecipeListComponent{
     private router:Router
   ) { }
 
-  async ngOnChanges(){
+  async ngOnInit() {
     this.userInfo = this.apiService.getUser();
+    if(!this.userInfo){
+      this.apiService.getUserInfo().subscribe((user:any) => {
+        this.userInfo = user;  // Update local user info whenever it changes
+        if(!this.userInfo){
+          this.userInfo = null;
+        }
+        console.log('Updated user info in RecipeDisplay:', this.userInfo);
+      });
+    }
+  }
+
+  async ngOnChanges(){
+    // this.userInfo = this.apiService.getUser();
     // if(!this.categoryList.length){
       this.createOptionsList();
     // }

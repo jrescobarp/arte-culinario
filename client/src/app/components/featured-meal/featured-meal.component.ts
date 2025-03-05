@@ -22,11 +22,22 @@ export class FeaturedMealComponent implements OnInit {
   userInfo: any;
   defaultMeals = false;
   featuredMealSetTime = 0;
- constructor(private apiService: ApiService, private cdRef: ChangeDetectorRef, private router:Router ) {
-  this.userInfo = this.apiService.getUser();
- }
+  recipeHistory: any[] = [];
+
+ constructor(private apiService: ApiService, private cdRef: ChangeDetectorRef, private router:Router ) {}
 
   ngOnInit(): void {
+
+    this.userInfo = this.apiService.getUser();
+    if(!this.userInfo){
+      this.apiService.getUserInfo().subscribe((user:any) => {
+        this.userInfo = user;  // Update local user info whenever it changes
+        if(!this.userInfo){
+          this.userInfo = null;
+        }
+        console.log('Updated user info in RecipeDisplay:', this.userInfo);
+      });
+    }
 
     this.appsArr = JSON.parse(localStorage.getItem("appsArr") || "[]");
     this.entreeArr = JSON.parse(localStorage.getItem("entreeArr") || "[]");
@@ -56,10 +67,6 @@ export class FeaturedMealComponent implements OnInit {
       this.randNumArr[index] = Math.floor((Math.random() * num));
     }
     return this.randNumArr[index];
-  }
-
-  viewRecipe(id:string){
-    this.router.navigate(['/recipe', id]);
   }
 
   async createFeaturedMealArr(){
@@ -108,5 +115,25 @@ export class FeaturedMealComponent implements OnInit {
     // });
 
     localStorage.setItem("featuredMealArr",JSON.stringify(this.featuredMeals));
+  }
+
+  recipeRedirect(recipe : any){
+    if(this.userInfo){
+      this.recipeHistory = localStorage.getItem("recipeHistory") ? JSON.parse(localStorage.getItem("recipeHistory")!) : [];
+      const foundDuplicateIndex = this.recipeHistory.findIndex(e => e._id === recipe._id);
+      if (foundDuplicateIndex > -1) {
+        this.recipeHistory.splice(foundDuplicateIndex, 1);
+      }
+      if(this.recipeHistory.length === 30){
+        this.recipeHistory.splice(0, 1);
+      }
+      this.recipeHistory.push(recipe);
+      this.userInfo.recipe_history = this.recipeHistory;
+      localStorage.setItem("recipeHistory", JSON.stringify(this.recipeHistory));
+      this.apiService.updateUser(this.userInfo._id!, this.userInfo).subscribe((user) => {});
+      this.router.navigate(['/recipe', recipe._id]);
+    }else{
+      this.router.navigate(['/recipe', recipe._id]);
+    }
   }
 }

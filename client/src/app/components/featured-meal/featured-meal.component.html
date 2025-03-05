@@ -10,7 +10,7 @@
       </div>
       <div class="border-red-1px" style="border-width:.5px;width: 90%;margin-left: 5%;"></div>
       <div class="row initialSlideRecipeDiv">
-        <a *ngFor="let recipe of featuredMeals; index as i" class="col mx-1 initialCarouselAnchor pt-2" [routerLink]="['/recipe', recipe._id]">
+        <div *ngFor="let recipe of featuredMeals; index as i" class="col mx-1 initialCarouselAnchor pt-2" (click)="recipeRedirect(recipe)">
 
           <div *ngIf="recipe.images.length" class="blackFont">
             <img class="recipeImgInitialSlide" src="{{recipe.images[randNumGenerator(recipe.images.length, i)]?.imgDataArr[0].url}}" alt="">
@@ -24,11 +24,11 @@
           </div>
 
           <div>{{recipe.name}}</div>
-        </a>
+        </div>
       </div>
     </div>
 
-    <div *ngFor="let recipe of featuredMeals; index as i" class="carousel-item container" (click)="viewRecipe(recipe._id)">
+    <div *ngFor="let recipe of featuredMeals; index as i" class="carousel-item container" (click)="recipeRedirect(recipe)">
       <div class="row" matTooltip="click para ver receta" [matTooltipPosition]="'above'">
 
         <div class="titleDiv col-12" [ngClass]="isMobile ? 'text-center' : ''">

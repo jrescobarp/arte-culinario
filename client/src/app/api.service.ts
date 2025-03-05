@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, Subject, tap, lastValueFrom,catchError, of } from 'rxjs';
+import { Observable, Subject, tap, lastValueFrom,catchError, of, BehaviorSubject } from 'rxjs';
 import { Recipe, Comment, User, Image } from './models';
 import { HttpHeaders } from '@angular/common/http';
 
@@ -13,6 +13,9 @@ export class ApiService {
   private recipes$: any = [];
   private user$: any;
   private comments$: Subject<Comment[]> = new Subject();
+  private userSubject: BehaviorSubject<User | null> = new BehaviorSubject<User | null>(null);  // User state with BehaviorSubject
+  private observableUser$: Observable<User | null> = this.userSubject.asObservable();  // Observable to subscribe to
+
 
   constructor(private httpClient: HttpClient) { }
 
@@ -67,16 +70,31 @@ export class ApiService {
     return this.user$;
   }
 
+  getUserInfo() {
+    return this.observableUser$;
+  }
+
   registerUser(user:User): Observable<any>{
     return this.httpClient.post(`${this.url}/user/register`, user, {responseType: 'text'});
   }
 
   login(user:User): Observable<any>{
-    return this.httpClient.post(`${this.url}/user/login`, user, {responseType: 'text'});
+    // return this.httpClient.post(`${this.url}/user/login`, user, {responseType: 'text'});
+    return this.httpClient.post(`${this.url}/user/login`, user, { responseType: 'text' }).pipe(
+      catchError((error) => {
+        console.error('Login error', error);
+        return of(null); // Return null if login fails
+      })
+    );
   }
 
   logout():Observable<any>{
     return this.httpClient.get(`${this.url}/user/logout`);
+  }
+
+  // Set user data after login
+  setUserInfo(user: User | null) {
+    this.userSubject.next(user);  // Update the user subject
   }
 
   updateUser(id: string, user: User): Observable<any> {

@@ -30,6 +30,17 @@ export class UserMenuComponent {
     if(this.apiService.getUser()){
       this.userInfo = this.apiService.getUser();
       this.updateUserInfo();
+    }else{
+      this.apiService.getUserInfo().subscribe((user:any) => {
+        this.userInfo = user;  // Update local user info whenever it changes
+        if(this.userInfo){
+          this.updateUserInfo();
+        }else{
+          this.loggedIn = false;
+          this.userInfo = null;
+        }
+        console.log('Updated user info in UserComp:', this.userInfo);
+      });
     }
   }
 
@@ -65,7 +76,8 @@ export class UserMenuComponent {
       this.loggedIn = false;
       localStorage.setItem("recipeHistory", '[]');
       this._snackbar.open("sesión ha sido cerrada", '', {duration: 2500, panelClass: ['aac-red']});
-      setTimeout(function(){ location.reload(); }, 1200);
+      this.apiService.setUserInfo(null);
+      // setTimeout(function(){ location.reload(); }, 1200);
     });
   }
 

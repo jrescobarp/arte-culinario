@@ -33,6 +33,7 @@ export class ViewRecipeComponent{
   isFavorite = false;
   connectedRecipe: any;
   recipeDescription: any;
+  recipeId = "";
 
   constructor(
     private router: Router,
@@ -55,6 +56,7 @@ export class ViewRecipeComponent{
 
     this.apiService.getRecipe(id !).subscribe((recipe) => {
       this.recipe.next(recipe);
+      this.recipeId = recipe._id!;
       const descriptionDiv = document.getElementById("descriptionDiv");
       let descTxt = recipe.description;
 
@@ -97,10 +99,22 @@ export class ViewRecipeComponent{
         }
       }
       if(this.userInfo){
+        console.log("CF1");
         this.checkFavorites();
       }
       // console.log("RECIPEEE:", recipe);
     });
+
+    if(!this.userInfo){
+      this.apiService.getUserInfo().subscribe((user:any) => {
+        this.userInfo = user;  // Update local user info whenever it changes
+        console.log("CF2");
+        if(this.userInfo){
+          this.checkFavorites();
+        }
+        console.log('Updated user info in commentDisplay:', this.userInfo);
+      });
+    }
   }
 
   // check for : in ingredients and steps (dont add number or dot to those steps/ingredients)
@@ -159,8 +173,13 @@ export class ViewRecipeComponent{
   }
 
   recheckFavorites($event:any){
-    this.userInfo = JSON.parse($event);
-    this.checkFavorites();
+
+    // if($event === "logout"){
+    //   this.
+    // }else{
+    //   this.userInfo = JSON.parse($event);
+    // }
+    // this.checkFavorites();
   }
 
   createLI(values:any,listId:string){

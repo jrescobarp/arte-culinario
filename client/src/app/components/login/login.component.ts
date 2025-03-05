@@ -35,7 +35,12 @@ export class LoginComponent {
 
   login(){
     this.apiService.login(this.user).subscribe((result: any) =>{
-      this.logInChangeStatus.emit(result);
+      // this.logInChangeStatus.emit(result);
+      if (result) {
+        this.logInChangeStatus.emit(result);
+        const loggedInUser = JSON.parse(result);  // Assuming result contains user info
+        this.apiService.setUserInfo(loggedInUser);  // Update the BehaviorSubject with new user
+      }
     });
   }
 
