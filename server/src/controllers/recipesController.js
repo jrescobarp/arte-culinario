@@ -3,7 +3,13 @@ const asyncHandler = require("express-async-handler");
 
 
 exports.get_all_recipes = asyncHandler(async(req, res, next) => {
-    const allRecipeInstances = await Recipe.find().exec();
+    const allRecipeInstances = await Recipe.find().populate({
+        path: 'images',
+        populate: { 
+            path:'comments', 
+            populate: 'replies'
+        }
+    }).exec();
     res.status(200).send(allRecipeInstances);
 });
 

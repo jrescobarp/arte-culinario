@@ -55,6 +55,7 @@ export class ApiService {
       // If the user data is received, set it
       if (userResponse) {
         this.user$ = userResponse;
+        this.setUserInfo(userResponse as User);
       } else {
         this.user$ = null; // No user data, so set user$ to null
       }

@@ -36,16 +36,10 @@ export class CommentsSectionComponent {
 ) { }
 
   ngOnInit(){
-    this.userInfo = this.apiService.getUser();
-    if(!this.userInfo){
-      this.apiService.getUserInfo().subscribe((user:any) => {
-        this.userInfo = user;  // Update local user info whenever it changes
-        if(!this.userInfo){
-          this.userInfo = null;
-        }
-        console.log('Updated user info in commentDisplay:', this.userInfo);
-      });
-    }
+    this.apiService.getUserInfo().subscribe((user:any) => {
+      this.userInfo = user;  // Update local user info whenever it changes
+      console.log('Updated user info in commentDisplay:', this.userInfo);
+    });
   }
 
   resetComment(){

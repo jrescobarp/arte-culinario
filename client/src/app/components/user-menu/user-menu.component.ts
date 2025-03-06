@@ -27,21 +27,16 @@ export class UserMenuComponent {
     private router:Router) {}
 
   ngOnInit(): void {
-    if(this.apiService.getUser()){
-      this.userInfo = this.apiService.getUser();
-      this.updateUserInfo();
-    }else{
-      this.apiService.getUserInfo().subscribe((user:any) => {
-        this.userInfo = user;  // Update local user info whenever it changes
-        if(this.userInfo){
-          this.updateUserInfo();
-        }else{
-          this.loggedIn = false;
-          this.userInfo = null;
-        }
-        console.log('Updated user info in UserComp:', this.userInfo);
-      });
-    }
+    this.apiService.getUserInfo().subscribe((user:any) => {
+      this.userInfo = user;  // Update local user info whenever it changes
+      if(this.userInfo){
+        this.updateUserInfo();
+      }else{
+        this.loggedIn = false;
+        this.userInfo = null;
+      }
+      console.log('Updated user info in UserComp:', this.userInfo);
+    });
   }
 
   ngOnChanges(){

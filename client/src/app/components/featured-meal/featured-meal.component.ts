@@ -27,17 +27,10 @@ export class FeaturedMealComponent implements OnInit {
  constructor(private apiService: ApiService, private cdRef: ChangeDetectorRef, private router:Router ) {}
 
   ngOnInit(): void {
-
-    this.userInfo = this.apiService.getUser();
-    if(!this.userInfo){
-      this.apiService.getUserInfo().subscribe((user:any) => {
-        this.userInfo = user;  // Update local user info whenever it changes
-        if(!this.userInfo){
-          this.userInfo = null;
-        }
-        console.log('Updated user info in RecipeDisplay:', this.userInfo);
-      });
-    }
+    this.apiService.getUserInfo().subscribe((user:any) => {
+      this.userInfo = user;  // Update local user info whenever it changes
+      console.log('Updated user info in RecipeDisplay:', this.userInfo);
+    });
 
     this.appsArr = JSON.parse(localStorage.getItem("appsArr") || "[]");
     this.entreeArr = JSON.parse(localStorage.getItem("entreeArr") || "[]");

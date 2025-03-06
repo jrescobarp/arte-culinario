@@ -52,7 +52,9 @@ export class ViewRecipeComponent{
       alert('No id provided');
     }
 
-    this.userInfo = this.apiService.getUser();
+    this.apiService.getUserInfo().subscribe((user:any) => {
+      this.userInfo = user;  // Update local user info whenever it changes
+    });
 
     this.apiService.getRecipe(id !).subscribe((recipe) => {
       this.recipe.next(recipe);
@@ -104,16 +106,16 @@ export class ViewRecipeComponent{
       // console.log("RECIPEEE:", recipe);
     });
 
-    if(!this.userInfo){
-      this.apiService.getUserInfo().subscribe((user:any) => {
-        this.userInfo = user;  // Update local user info whenever it changes
-        console.log("CF2");
-        if(this.userInfo){
-          this.checkFavorites();
-        }
-        console.log('Updated user info in commentDisplay:', this.userInfo);
-      });
-    }
+    // if(!this.userInfo){
+    //   this.apiService.getUserInfo().subscribe((user:any) => {
+    //     this.userInfo = user;  // Update local user info whenever it changes
+    //     console.log("CF2");
+    //     if(this.userInfo){
+    //       this.checkFavorites();
+    //     }
+    //     console.log('Updated user info in commentDisplay:', this.userInfo);
+    //   });
+    // }
   }
 
   // check for : in ingredients and steps (dont add number or dot to those steps/ingredients)
