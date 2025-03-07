@@ -4,22 +4,22 @@
 
     <div class="carousel-item active container px-0">
       <div class="pb-1">
-        <div class="mainHeader blackFont" style="color:rgba(206,60,81,1)">¡Aprendamos a Cocinar!</div>
+        <div class="mainHeader redFont">¡Aprendamos a Cocinar!</div>
         <div class="subTxt">recetas de Vilma G. de Escobar</div>
         <div class="col-12 initialSlideRecipeTitle" style="color: rgba(80,131,17,1);">¿Qué comeremos hoy?</div>
       </div>
       <div class="border-red-1px" style="border-width:.5px;width: 90%;margin-left: 5%;"></div>
       <div class="row initialSlideRecipeDiv">
-        <div *ngFor="let recipe of featuredMeals; index as i" class="col mx-1 initialCarouselAnchor pt-2" (click)="recipeRedirect(recipe)">
-
+        <div *ngFor="let recipe of featuredMeals; index as i" class="col-4 initialCarouselAnchor pt-2" (click)="recipeRedirect(recipe)">
+        <!-- Initial Slide Recipe Display -->
           <div *ngIf="recipe.images.length" class="blackFont">
             <img class="recipeImgInitialSlide" src="{{recipe.images[randNumGenerator(recipe.images.length, i)]?.imgDataArr[0].url}}" alt="">
           </div>
 
-          <div *ngIf="!recipe.images.length" class="blackFont">
+          <div *ngIf="!recipe.images.length" class="blackFont" [ngClass]="isMobile ? 'border-red-1px': ''">
             <div class="text-center noImgDivInitialCarousel">
-              <div class="mb-2"><i class="fa-solid fa-kitchen-set fa-2xl"></i></div>
-              <div class="pt-3 noImgTxt blackFont">No hay imágenes para esta receta.</div>
+              <div class="mb-2" [ngClass]="isMobile ? 'pt-5': ''"><i class="fa-solid fa-kitchen-set fa-2xl"></i></div>
+              <div *ngIf="!isMobile" class="pt-3 noImgTxt blackFont">No hay imágenes para esta receta.</div>
             </div>
           </div>
 
@@ -30,15 +30,18 @@
 
     <div *ngFor="let recipe of featuredMeals; index as i" class="carousel-item container" (click)="recipeRedirect(recipe)">
       <div class="row" matTooltip="click para ver receta" [matTooltipPosition]="'above'">
-
+        <!-- Separate Recipe display -->
         <div class="titleDiv col-12" [ngClass]="isMobile ? 'text-center' : ''">
-          <div class="titleTxt pt-2" style="color:rgba(206,60,81,1)"><h1>{{recipe.name.toLowerCase()}}</h1></div>
+          <div class="titleTxt pt-2"><h1>{{recipe.name.toLowerCase()}}</h1></div>
         </div>
-        <div *ngIf="recipe.images.length" class="blackFont" [ngClass]="isMobile ? 'col-12' : 'col-7'">
-          <img class="recipeImg" src="{{recipe.images[randNumGenerator(recipe.images.length, i)]?.imgDataArr[0].url}}" alt="">
+        <!-- <div *ngIf="recipe.images.length" class="blackFont" [ngClass]="isMobile ? 'col-12' : 'col-7'"> -->
+        <div *ngIf="recipe.images.length" class="blackFont col-12 stepListTopBorder" style="height: 18em;overflow-y: scroll;">
+          <div *ngFor="let img of recipe.images" class="pt-1">
+            <img class="recipeImg" src="{{img.imgDataArr[0].url}}" alt="" style="height: 20em;width: auto;">
+          </div>
         </div>
 
-        <div *ngIf="!recipe.images.length" class="blackFont" [ngClass]="isMobile ? 'col-12' : 'col-7'">
+        <div *ngIf="!recipe.images.length" class="blackFont col-12 stepListTopBorder">
           <div class="text-center noImgDiv my-4">
             <div class="mt-4 mb-2"><i class="fa-solid fa-kitchen-set fa-2xl"></i></div>
             <div class="pt-3 blackFont">No hay imágenes para esta receta.</div>
@@ -48,9 +51,9 @@
           </div>
         </div>
 
-        <div class="blackFont" [ngClass]="isMobile ? 'col-12' : 'col-5'">
-          <div *ngIf="recipe.ingredients[0]" class="text-left mainTxt ingredientList">
-            <h3 style="color:rgba(206,60,81,1)">Ingredientes:</h3>
+        <div class="blackFont stepListTopBorder mt-1" [ngClass]="isMobile ? 'col-12' : 'col-6'">
+          <div *ngIf="recipe.ingredients[0]" class="text-center mainTxt ingredientList">
+            <h3 class="redFont mt-1">Ingredientes:</h3>
             <ul>
               <li *ngFor="let ingredient of recipe.ingredients ; let i = index">
                 {{ingredient}}
@@ -59,9 +62,9 @@
           </div>
         </div>
 
-        <div *ngIf="recipe.steps[0]"  class="blackFont col-12">
-          <div class="stepList" [ngClass]="recipe.ingredients[0] ? 'stepListTopBorder' : ''">
-            <h3 style="color:rgba(206,60,81,1)">Instrucciones:</h3>
+        <div *ngIf="recipe.steps[0]"  class="blackFont stepListTopBorder mt-1" [ngClass]="isMobile ? 'col-12' : 'col-6'">
+          <div class="stepList text-center">
+            <h3 class="redFont mt-1">Instrucciones:</h3>
             <ol>
               <li *ngFor="let step of recipe.steps ; let i = index">
                 {{step}}
