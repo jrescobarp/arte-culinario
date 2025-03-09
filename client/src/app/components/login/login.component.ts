@@ -31,6 +31,8 @@ export class LoginComponent {
   registerUser(){
     this.apiService.registerUser(this.user).subscribe(result =>{
       this.logInChangeStatus.emit(result);
+      const loggedInUser = JSON.parse(result);  // Assuming result contains user info
+      this.apiService.setUserInfo(loggedInUser);  // Update the BehaviorSubject with new user
     });
   }
 
